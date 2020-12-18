@@ -53,8 +53,10 @@ dependencies {
     testImplementation "org.koin:koin-test:$koin_version"
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     //Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.11.0'
