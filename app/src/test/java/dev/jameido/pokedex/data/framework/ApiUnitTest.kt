@@ -1,6 +1,7 @@
-package dev.jameido.pokedex.data.api
+package dev.jameido.pokedex.data.framework
 
 import dev.jameido.pokedex.data.models.PkmnElement
+import dev.jameido.pokedex.framework.RetrofitPkmnDataSource
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -18,7 +19,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class ApiUnitTest {
 
     lateinit var server: MockWebServer
-    lateinit var mockApi: PkmnApi
+    lateinit var mockApi: RetrofitPkmnDataSource
 
     @Test
     fun getPkmnList() {
@@ -47,7 +48,7 @@ class ApiUnitTest {
                 .baseUrl(server.url("/"))
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
-                .create(PkmnApi::class.java)
+                .create(RetrofitPkmnDataSource::class.java)
     }
 
     @After

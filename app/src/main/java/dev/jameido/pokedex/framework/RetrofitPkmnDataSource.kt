@@ -1,5 +1,6 @@
-package dev.jameido.pokedex.data.api
+package dev.jameido.pokedex.framework
 
+import dev.jameido.pokedex.data.datasource.PkmnDataSource
 import dev.jameido.pokedex.data.models.ResPkmnList
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -8,11 +9,11 @@ import retrofit2.http.Query
 /**
  * Created by Jameido on 17/12/2020.
  */
-interface PkmnApi {
+interface RetrofitPkmnDataSource : PkmnDataSource {
 
     @GET(ENDPOINT_LIST)
     @Headers("Content-type: application/json")
-    suspend fun list(@Query(QRY_LIMIT) limit: Int, @Query(QRY_OFFSET) offset: Int) : ResPkmnList
+    override suspend fun list(@Query(QRY_LIMIT) limit: Int, @Query(QRY_OFFSET) offset: Int) : ResPkmnList
 
     companion object {
         const val ENDPOINT_LIST = "pokemon"
