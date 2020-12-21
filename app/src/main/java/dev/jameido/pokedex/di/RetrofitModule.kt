@@ -2,6 +2,7 @@ package dev.jameido.pokedex.di
 
 import com.squareup.moshi.Moshi
 import dev.jameido.pokedex.BuildConfig
+import dev.jameido.pokedex.data.datasource.PkmnDataSource
 import dev.jameido.pokedex.framework.RetrofitPkmnDataSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,7 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val retrofitModule = module {
     single { buildOkHttpClient() }
     factory { buildMoshi() }
-    single { createApiImpl(RetrofitPkmnDataSource::class.java, get(), "https://pokeapi.co/api/v2/") }
+    single<PkmnDataSource> { createApiImpl(RetrofitPkmnDataSource::class.java, get(), "https://pokeapi.co/api/v2/") }
 }
 
 private fun buildMoshi(): Moshi {
