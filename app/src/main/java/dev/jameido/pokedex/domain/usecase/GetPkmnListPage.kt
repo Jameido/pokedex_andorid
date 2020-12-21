@@ -3,7 +3,6 @@ package dev.jameido.pokedex.domain.usecase
 import androidx.paging.PagingSource
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.PkmnEntity
-import java.io.IOException
 import java.lang.Exception
 
 /**
