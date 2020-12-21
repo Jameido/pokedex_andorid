@@ -10,13 +10,9 @@ import dev.jameido.pokedex.domain.entity.PkmnListEntity
  */
 class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepository {
 
-    override suspend fun pkmnList(page: Int): PkmnListEntity {
-        val limit = page * PAGE_SIZE
-        val response = dataSource.list(limit, limit + PAGE_SIZE)
-        return PkmnListEntity(response.next?.let { page + 1 }, response.results.map { PkmnEntity(it.name, it.url) }.toTypedArray())
-    }
-
-    companion object {
-        const val PAGE_SIZE = 5
+    override suspend fun pkmnList(page: Int, pageSize: Int): PkmnListEntity {
+        val limit = page * pageSize
+        val response = dataSource.list(limit, limit + pageSize)
+        return PkmnListEntity(response.previous?.let { page - 1 }, response.next?.let { page + 1 }, response.results.map { PkmnEntity(it.name, it.url) })
     }
 }
