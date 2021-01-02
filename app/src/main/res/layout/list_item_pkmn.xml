@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: placeholders shimmer
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_auto_start="false">
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/list_item_padding">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_icon"
+        android:layout_width="@dimen/list_item_icon"
+        android:layout_height="@dimen/list_item_icon" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/list_item_padding"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -1,10 +1,7 @@
 package dev.jameido.pokedex.presentation.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.RecyclerView
 import dev.jameido.pokedex.domain.entity.PkmnEntity
 
 /**
@@ -20,12 +17,3 @@ class PkmnAdapter() : PagingDataAdapter<PkmnEntity, PkmnViewHolder>(PkmnComparat
     }
 }
 
-class PkmnViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context)
-                .inflate(android.R.layout.simple_list_item_1, parent, false)
-) {
-
-    fun bind(pkmn: PkmnEntity?) {
-        (itemView as TextView).text = pkmn?.name
-    }
-}
