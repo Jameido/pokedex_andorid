@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
  * Created by Jameido on 02/01/2021.
  */
 @JsonClass(generateAdapter = true)
-data class PkmnDetail(
+data class ResPkmnDetail(
         val id: Int,
         val name: String,
         val sprites: Sprites,
@@ -17,7 +17,7 @@ data class PkmnDetail(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as PkmnDetail
+        other as ResPkmnDetail
 
         if (id != other.id) return false
         if (name != other.name) return false
@@ -40,7 +40,7 @@ data class PkmnDetail(
 
 @JsonClass(generateAdapter = true)
 data class Sprites(
-        val front_default: String
+        val front_default: String?
 )
 
 @JsonClass(generateAdapter = true)

@@ -1,5 +1,6 @@
 package dev.jameido.pokedex.data.datasource
 
+import dev.jameido.pokedex.data.models.ResPkmnDetail
 import dev.jameido.pokedex.data.models.ResPkmnList
 
 /**
@@ -7,4 +8,6 @@ import dev.jameido.pokedex.data.models.ResPkmnList
  */
 interface PkmnDataSource {
     suspend fun list(limit: Int, offset: Int) : ResPkmnList
+
+    suspend fun detail(name: String) : ResPkmnDetail
 }
