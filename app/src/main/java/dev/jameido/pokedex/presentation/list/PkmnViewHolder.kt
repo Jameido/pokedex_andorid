@@ -25,6 +25,8 @@ class PkmnViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             //shimmerContainer.hideShimmer()
             Glide.with(imgIcon)
                     .load(it.spriteUrl)
+                    .placeholder(R.drawable.missingno)
+                    .error(R.drawable.missingno)
                     .into(imgIcon)
             txtName.text = it.name
         } ?: run {
