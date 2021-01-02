@@ -18,6 +18,7 @@ class PkmnListVM(application: Application) : AndroidViewModel(application) {
     val list = Pager(
             config = PagingConfig(
                     pageSize = 20,
+                    initialLoadSize = 20,
                     enablePlaceholders = true
             ),
             pagingSourceFactory = { get(GetPkmnListPage::class.java) }

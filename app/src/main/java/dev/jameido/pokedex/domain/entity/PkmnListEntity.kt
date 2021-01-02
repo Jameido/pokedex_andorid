@@ -8,4 +8,4 @@ data class PkmnListEntity(
         val previous: Int?,
         val results: List<PkmnEntity>
 )
-data class PkmnEntity(val name: String = "", val url: String?)
+data class PkmnEntity(val name: String = "", val url: String?, val index: Int?, val spriteUrl: String?)

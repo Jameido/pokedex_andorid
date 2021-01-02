@@ -1,9 +1,12 @@
 package dev.jameido.pokedex.framework
 
+import android.net.Uri
 import dev.jameido.pokedex.data.datasource.PkmnDataSource
+import dev.jameido.pokedex.data.models.PkmnElement
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.PkmnEntity
 import dev.jameido.pokedex.domain.entity.PkmnListEntity
+import java.net.URI
 
 /**
  * Created by Jameido on 17/12/2020.
@@ -25,12 +28,21 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
 
     private suspend fun readFromService(page: Int, pageSize: Int): PkmnListEntity {
         val offset = page * pageSize
-        val response = dataSource.list(offset + pageSize, offset)
-        val list = PkmnListEntity(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { PkmnEntity(it.name, it.url) })
-
+        val response = dataSource.list(pageSize, offset)
+        val list = PkmnListEntity(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { mapEntity(it) })
         addToCache(page, list)
 
         return list
+    }
+
+    private fun mapEntity(element: PkmnElement): PkmnEntity {
+        var index: Int? = null
+        var sprite: String? = null
+        element.url?.let { url ->
+            index = Uri.parse(url).lastPathSegment?.toInt()
+            sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png"
+        }
+        return PkmnEntity(element.name, element.url, index, sprite)
     }
 
     private fun readFromCache(page: Int): PkmnListEntity? {

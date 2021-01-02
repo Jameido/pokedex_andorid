@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnEntity
@@ -22,10 +23,14 @@ class PkmnViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         pkmn?.let {
             //TODO: placeholders shimmer
             //shimmerContainer.hideShimmer()
+            Glide.with(imgIcon)
+                    .load(it.spriteUrl)
+                    .into(imgIcon)
             txtName.text = it.name
         } ?: run {
             //TODO: placeholders shimmer
             //shimmerContainer.showShimmer(true)
+            Glide.with(imgIcon).clear(imgIcon)
             txtName.text = ""
         }
     }
