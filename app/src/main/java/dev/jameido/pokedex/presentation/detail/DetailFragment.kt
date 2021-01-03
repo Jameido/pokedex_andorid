@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.jameido.pokedex.R
@@ -63,7 +64,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     private fun displayType(type: String?, txtView: AppCompatTextView) {
         type?.let {
-            txtView.text = type
+            txtView.text = it
             txtView.visibility = View.VISIBLE
         } ?: run {
             txtView.text = ""

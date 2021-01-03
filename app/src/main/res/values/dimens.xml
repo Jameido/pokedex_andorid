@@ -4,5 +4,7 @@
     <dimen name="list_item_padding">10dp</dimen>
 
     <dimen name="detail_text_horizontal_padding">8dp</dimen>
+    <dimen name="detail_type_margin">4dp</dimen>
+    <dimen name="detail_type_padding">2dp</dimen>
     <dimen name="detail_text_vertical_padding">4dp</dimen>
 </resources>
