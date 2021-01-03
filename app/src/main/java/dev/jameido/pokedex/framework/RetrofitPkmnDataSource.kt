@@ -22,7 +22,7 @@ interface RetrofitPkmnDataSource : PkmnDataSource {
     override suspend fun detail(@Path(PATH_NAME) name: String) : ResPkmnDetail
 
     companion object {
-        const val LIST_ENDPOINT = "pokemon"
+        const val LIST_ENDPOINT = "pokemon-species"
         const val PATH_NAME = "name"
         const val DETAIL_ENDPOINT = "pokemon/{$PATH_NAME}"
         const val QRY_LIMIT = "limit"
