@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.jameido.pokedex.R
-import dev.jameido.pokedex.presentation.list.PkmnListVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -23,6 +22,7 @@ class DetailFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
+        const val TAG = "DetailFragment"
         private const val KEY_NAME = "NAME"
 
         fun newInstance(name: String): DetailFragment {

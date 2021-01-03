@@ -9,11 +9,11 @@ import dev.jameido.pokedex.domain.entity.PkmnEntity
 /**
  * Created by Jameido on 21/12/2020.
  */
-class PkmnAdapter() : PagingDataAdapter<PkmnEntity, PkmnViewHolder>(PkmnComparator()) {
+class PkmnAdapter(private val onItemClick: (name: String) -> Unit) : PagingDataAdapter<PkmnEntity, PkmnViewHolder>(PkmnComparator()) {
 
     override fun onBindViewHolder(holder: PkmnViewHolder, position: Int) = holder.bind(getItem(position))
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PkmnViewHolder = PkmnViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PkmnViewHolder = PkmnViewHolder(parent, onItemClick)
 
     fun withLoadStateLoaderHeaderFooter(
             loader: LoadStateAdapter<*>,

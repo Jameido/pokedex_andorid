@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.jameido.pokedex.R
+import dev.jameido.pokedex.presentation.detail.DetailFragment
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-        adapter = PkmnAdapter()
+        adapter = PkmnAdapter { name -> DetailFragment.newInstance(name).show(supportFragmentManager, DetailFragment.TAG)}
         rv_pkmn.adapter = adapter.withLoadStateLoaderHeaderFooter(
                 loader = PkmnLoadStateAdapter(adapter::retry),
                 header = PkmnLoadStateAdapter(adapter::retry),

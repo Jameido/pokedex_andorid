@@ -10,7 +10,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnEntity
 
-class PkmnViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+class PkmnViewHolder(parent: ViewGroup, private val onClick: (name: String) -> Unit) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_item_pkmn, parent, false)
 ) {
@@ -20,15 +20,16 @@ class PkmnViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     private val txtName: AppCompatTextView = itemView.findViewById(R.id.txt_name)
 
     fun bind(pkmn: PkmnEntity?) {
-        pkmn?.let {
+        pkmn?.let { pokemon ->
+            itemView.setOnClickListener { onClick.invoke(pokemon.name) }
             //TODO: placeholders shimmer
             //shimmerContainer.hideShimmer()
             Glide.with(imgIcon)
-                    .load(it.spriteUrl)
+                    .load(pokemon.spriteUrl)
                     .placeholder(R.drawable.missingno)
                     .error(R.drawable.missingno)
                     .into(imgIcon)
-            txtName.text = it.name
+            txtName.text = pokemon.name
         } ?: run {
             //TODO: placeholders shimmer
             //shimmerContainer.showShimmer(true)
