@@ -3,7 +3,7 @@
     <string name="error_load">Something went wrong 	(╥﹏╥)</string>
     <string name="retry">Try again</string>
 
-    <string name="height">HT</string>
-    <string name="weight">WT</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
     <string name="nr">n° %d</string>
 </resources>
