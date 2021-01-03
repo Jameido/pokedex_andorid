@@ -1,10 +1,10 @@
 package dev.jameido.pokedex.presentation.list
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import dev.jameido.pokedex.R
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.coroutines.flow.collectLatest
@@ -26,6 +26,7 @@ class ListActivity : AppCompatActivity() {
                 footer = PkmnLoadStateAdapter(adapter::retry)
         )
 
+        rv_pkmn.addItemDecoration(DividerItemDecoration(this, RecyclerView.VERTICAL))
         lifecycleScope.launch {
             viewModel.list.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
