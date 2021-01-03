@@ -53,6 +53,7 @@ class DetailFragment : BottomSheetDialogFragment() {
                 .error(R.drawable.missingno)
                 .into(img_detail_sprite)
         txt_detail_name.text = pkmn.name
+        txt_detail_nr.text = getString(R.string.nr, pkmn.id)
         txt_detail_weight.text = pkmn.weight.toString()
         txt_detail_height.text = pkmn.height.toString()
 

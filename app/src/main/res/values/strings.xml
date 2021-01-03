@@ -5,5 +5,5 @@
 
     <string name="height">HT</string>
     <string name="weight">WT</string>
-    <string name="nr">n°</string>
+    <string name="nr">n° %d</string>
 </resources>

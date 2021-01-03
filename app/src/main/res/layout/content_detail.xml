@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_detail_top"
@@ -30,7 +31,7 @@
             android:paddingTop="@dimen/detail_text_vertical_padding"
             android:paddingEnd="@dimen/detail_text_horizontal_padding"
             android:paddingBottom="@dimen/detail_text_vertical_padding"
-            android:text="@string/nr"
+            tools:text="@string/nr"
             app:layout_constraintEnd_toStartOf="@+id/txt_detail_first_type"
             app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +74,7 @@
             android:paddingStart="@dimen/detail_text_horizontal_padding"
             android:paddingTop="@dimen/detail_text_vertical_padding"
             android:paddingEnd="@dimen/detail_text_horizontal_padding"
-            android:paddingBottom="@dimen/detail_text_vertical_padding"q
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
             app:layout_constraintTop_toBottomOf="@+id/txt_detail_name" />

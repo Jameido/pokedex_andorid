@@ -1,14 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><!-- TODO: placeholders shimmer
-<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/shimmer_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:shimmer_auto_start="false">
--->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
@@ -17,14 +10,31 @@
     android:padding="@dimen/list_item_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_icon"
+        android:id="@+id/img_list_sprite"
         android:layout_width="@dimen/list_item_icon"
-        android:layout_height="@dimen/list_item_icon" />
+        android:layout_height="@dimen/list_item_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_name"
+        android:id="@+id/txt_list_nr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/list_item_padding"
-        android:layout_weight="1" />
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_list_sprite"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nr 1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_list_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/list_item_padding"
+        android:layout_marginTop="@dimen/list_item_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_list_sprite"
+        app:layout_constraintTop_toBottomOf="@+id/txt_list_nr"
+        tools:text="Bulbasaur" />
+</androidx.constraintlayout.widget.ConstraintLayout>
