@@ -4,125 +4,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_detail_sprite"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_detail_top"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
-        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_nr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        android:text="@string/nr"
-        app:layout_constraintEnd_toStartOf="@+id/txt_detail_first_type"
-        app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_detail_sprite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_first_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_detail_nr"
-        app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
-        app:layout_constraintStart_toEndOf="@+id/txt_detail_nr"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_nr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            android:text="@string/nr"
+            app:layout_constraintEnd_toStartOf="@+id/txt_detail_first_type"
+            app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_second_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_detail_nr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_detail_first_type"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_first_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_detail_nr"
+            app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
+            app:layout_constraintStart_toEndOf="@+id/txt_detail_nr"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_nr" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_second_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_detail_nr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_detail_first_type"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_nr" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_height_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        android:text="@string/height"
-        app:layout_constraintEnd_toStartOf="@+id/txt_detail_height"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_category" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"q
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_height"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@+id/txt_detail_height_label"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_category" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_height_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            android:text="@string/height"
+            app:layout_constraintEnd_toStartOf="@+id/txt_detail_height"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_category" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_weight_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        android:text="@string/weight"
-        app:layout_constraintEnd_toStartOf="@+id/txt_detail_weight"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintStart_toEndOf="@+id/txt_detail_height_label"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_category" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_weight"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/detail_text_horizontal_padding"
-        android:paddingTop="@dimen/detail_text_vertical_padding"
-        android:paddingEnd="@dimen/detail_text_horizontal_padding"
-        android:paddingBottom="@dimen/detail_text_vertical_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@+id/txt_detail_weight_label"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_weight_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            android:text="@string/weight"
+            app:layout_constraintEnd_toStartOf="@+id/txt_detail_weight"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_detail_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/detail_text_horizontal_padding"
+            android:paddingTop="@dimen/detail_text_vertical_padding"
+            android:paddingEnd="@dimen/detail_text_horizontal_padding"
+            android:paddingBottom="@dimen/detail_text_vertical_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintStart_toEndOf="@+id/txt_detail_weight_label"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/sep_detail"
@@ -131,7 +140,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_detail_sprite" />
+        app:layout_constraintTop_toBottomOf="@+id/container_detail_top" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_detail_description"

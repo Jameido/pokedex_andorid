@@ -33,6 +33,7 @@ class PkmnViewHolder(parent: ViewGroup, private val onClick: (name: String) -> U
         } ?: run {
             //TODO: placeholders shimmer
             //shimmerContainer.showShimmer(true)
+            itemView.setOnClickListener(null)
             Glide.with(imgIcon).clear(imgIcon)
             txtName.text = ""
         }
