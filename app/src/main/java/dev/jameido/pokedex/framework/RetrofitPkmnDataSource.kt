@@ -5,6 +5,7 @@ import dev.jameido.pokedex.data.models.ResPkmnDetail
 import dev.jameido.pokedex.data.models.ResPkmnList
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -12,17 +13,18 @@ import retrofit2.http.Query
  */
 interface RetrofitPkmnDataSource : PkmnDataSource {
 
-    @GET(ENDPOINT)
+    @GET(LIST_ENDPOINT)
     @Headers("Content-type: application/json")
     override suspend fun list(@Query(QRY_LIMIT) limit: Int, @Query(QRY_OFFSET) offset: Int) : ResPkmnList
 
-    @GET(ENDPOINT)
+    @GET(DETAIL_ENDPOINT)
     @Headers("Content-type: application/json")
-    override suspend fun detail(@Query(QRY_NAME) name: String) : ResPkmnDetail
+    override suspend fun detail(@Path(PATH_NAME) name: String) : ResPkmnDetail
 
     companion object {
-        const val ENDPOINT = "pokemon"
-        const val QRY_NAME = "name"
+        const val LIST_ENDPOINT = "pokemon"
+        const val PATH_NAME = "name"
+        const val DETAIL_ENDPOINT = "pokemon/{$PATH_NAME}"
         const val QRY_LIMIT = "limit"
         const val QRY_OFFSET = "offset"
     }
