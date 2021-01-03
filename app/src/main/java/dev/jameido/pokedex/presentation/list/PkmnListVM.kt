@@ -14,7 +14,6 @@ import org.koin.java.KoinJavaComponent.get
  */
 class PkmnListVM(application: Application) : AndroidViewModel(application) {
 
-
     val list = Pager(
             config = PagingConfig(
                     pageSize = 20,
