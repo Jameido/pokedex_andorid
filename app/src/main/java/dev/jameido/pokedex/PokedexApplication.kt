@@ -4,6 +4,7 @@ import android.app.Application
 import dev.jameido.pokedex.di.repositoryModule
 import dev.jameido.pokedex.di.retrofitModule
 import dev.jameido.pokedex.di.useCaseModule
+import dev.jameido.pokedex.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -19,9 +20,9 @@ class PokedexApplication : Application() {
             modules(listOf(
                     retrofitModule,
                     repositoryModule,
-                    useCaseModule
-            )
-            )
+                    useCaseModule,
+                    viewModelModule
+            ))
         }
     }
 }
