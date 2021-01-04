@@ -14,3 +14,7 @@ interface PkmnDataSource {
 
     suspend fun species(name: String) : ResPkmnSpecies
 }
+
+interface NetworkPkmnDataSource : PkmnDataSource
+
+interface LocalPkmnDataSource : PkmnDataSource

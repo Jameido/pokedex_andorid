@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.framework
 
-import dev.jameido.pokedex.data.datasource.PkmnDataSource
+import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
 import dev.jameido.pokedex.data.models.ResPkmnDetail
 import dev.jameido.pokedex.data.models.ResPkmnList
 import dev.jameido.pokedex.data.models.ResPkmnSpecies
@@ -12,7 +12,7 @@ import retrofit2.http.Query
 /**
  * Created by Jameido on 17/12/2020.
  */
-interface RetrofitPkmnDataSource : PkmnDataSource {
+interface RetrofitPkmnDataSource : NetworkPkmnDataSource {
 
     @GET(LIST_ENDPOINT)
     @Headers("Content-type: application/json")

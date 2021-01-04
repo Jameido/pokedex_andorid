@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.framework
 
-import dev.jameido.pokedex.data.datasource.PkmnDataSource
+import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
 import dev.jameido.pokedex.data.mappers.PkmnDetailMapper
 import dev.jameido.pokedex.data.mappers.PkmnMapper
 import dev.jameido.pokedex.data.mappers.PkmnSpeciesMapper
@@ -10,7 +10,7 @@ import dev.jameido.pokedex.domain.entity.*
 /**
  * Created by Jameido on 17/12/2020.
  */
-class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepository {
+class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource) : PkmnRepository {
 
     private var listCache = hashMapOf<Int, PkmnListEntity>()
     private var listCachePageSize = 0
@@ -39,7 +39,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     //region list
     private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity {
         val offset = page * pageSize
-        val response = dataSource.list(pageSize, offset)
+        val response = networkDataSource.list(pageSize, offset)
         val pkmnMapper = PkmnMapper()
         val list = PkmnListEntity(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { pkmnMapper.map(it) })
         addListToCache(page, list)
@@ -65,7 +65,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     
     //region detail
     private suspend fun readDetailFromService(name: String): PkmnDetailEntity {
-        val response = dataSource.detail(name)
+        val response = networkDataSource.detail(name)
         val detail = PkmnDetailMapper().map(response)
         addDetailToCache(name, detail)
 
@@ -91,7 +91,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
 
     //region species
     private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity {
-        val response = dataSource.species(name)
+        val response = networkDataSource.species(name)
         val species = PkmnSpeciesMapper().map(response)
         addSpeciesToCache(name, species)
 
