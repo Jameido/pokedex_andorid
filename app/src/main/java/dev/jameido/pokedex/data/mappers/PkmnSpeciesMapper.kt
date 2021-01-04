@@ -11,7 +11,7 @@ class PkmnSpeciesMapper : EntityMapper<ResPkmnSpecies, PkmnSpeciesEntity> {
     override fun map(model: ResPkmnSpecies): PkmnSpeciesEntity {
         val pkmnMapper = PkmnMapper()
         val varieties = model.varieties.map { pkmnMapper.map(it.pokemon) }
-        val description = model.flavor_text_entries.first { it.language.name == "en" }.flavor_text
+        val description = model.flavor_text_entries.first { it.language.name == "en" }.flavor_text.replace("\n"," ")
         return PkmnSpeciesEntity(model.id, model.name, description, varieties, model.evolution_chain.url)
     }
 }
