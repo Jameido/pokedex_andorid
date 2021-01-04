@@ -3,6 +3,7 @@ package dev.jameido.pokedex.framework
 import dev.jameido.pokedex.data.datasource.PkmnDataSource
 import dev.jameido.pokedex.data.mappers.PkmnDetailMapper
 import dev.jameido.pokedex.data.mappers.PkmnMapper
+import dev.jameido.pokedex.data.mappers.PkmnSpeciesMapper
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.*
 
@@ -15,6 +16,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     private var listCachePageSize = 0
 
     private var detailCache = hashMapOf<String, PkmnDetailEntity>()
+    private var speciesCache = hashMapOf<String, PkmnSpeciesEntity>()
 
     override suspend fun pkmnList(page: Int, pageSize: Int): PkmnListEntity {
         if (pageSize != listCachePageSize) {
@@ -28,6 +30,10 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
 
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
         return readDetailFromCache(name) ?: readDetailFromService(name)
+    }
+    
+    override suspend fun pkmnSpecies(name: String): PkmnSpeciesEntity {
+        return readSpeciesFromCache(name) ?: readSpeciesFromService(name)
     }
 
     //region list
@@ -56,8 +62,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
         listCache.clear()
     }
     //endregion
-
-
+    
     //region detail
     private suspend fun readDetailFromService(name: String): PkmnDetailEntity {
         val response = dataSource.detail(name)
@@ -80,6 +85,32 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
 
     private fun clearDetailCache() {
         detailCache.clear()
+    }
+    //endregion
+
+
+    //region species
+    private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity {
+        val response = dataSource.species(name)
+        val species = PkmnSpeciesMapper().map(response)
+        addSpeciesToCache(name, species)
+
+        return species
+    }
+
+    private fun readSpeciesFromCache(name: String): PkmnSpeciesEntity? {
+        if (speciesCache.containsKey(name)) {
+            return speciesCache[name]
+        }
+        return null
+    }
+
+    private fun addSpeciesToCache(name: String, species: PkmnSpeciesEntity) {
+        speciesCache[name] = species
+    }
+
+    private fun clearSpeciesCache() {
+        speciesCache.clear()
     }
     //endregion
 }
