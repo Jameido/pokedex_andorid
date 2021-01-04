@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
 import io.uniflow.androidx.flow.onStates
@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Created by Jameido on 03/01/2021.
  */
-class DetailFragment : BottomSheetDialogFragment() {
+class DetailFragment : Fragment() {
 
     private val viewModel: PkmnDetailVM by viewModel()
 
