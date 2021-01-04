@@ -35,5 +35,3 @@ data class ResPkmnList(
     }
 }
 
-@JsonClass(generateAdapter = true)
-data class PkmnElement(val name: String = "", val url: String?)
