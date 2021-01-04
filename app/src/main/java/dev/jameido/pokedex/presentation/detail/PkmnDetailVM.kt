@@ -2,7 +2,6 @@ package dev.jameido.pokedex.presentation.detail
 
 import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
 import io.uniflow.androidx.flow.AndroidDataFlow
-import io.uniflow.core.flow.data.UIState
 import org.koin.java.KoinJavaComponent.get
 
 /**
@@ -12,9 +11,9 @@ class PkmnDetailVM() : AndroidDataFlow() {
 
     fun loadDetail(name: String) = action(
             onAction = {
-                setState(UIState.Loading)
-                setState(PkmnDetailState(get(GetPkmnDetail::class.java).load(name)))
+                setState(PkmnDetailStates.Loading)
+                setState(PkmnDetailStates.Loaded(get(GetPkmnDetail::class.java).load(name)))
             },
-            onError = { error, _ -> setState(UIState.Failed(error.localizedMessage, error)) }
+            onError = { error, _ -> setState(PkmnDetailStates.Error(error.localizedMessage)) }
     )
 }

@@ -27,7 +27,7 @@ class DetailFragment : Fragment() {
             when (state) {
                 is UIState.Loading -> onDataLoading()
                 is UIState.Failed -> onDataError()
-                is PkmnDetailState -> onDataLoaded(state.detail)
+                is PkmnDetailStates -> onDataLoaded(state.detail)
             }
         }
         loadData()
