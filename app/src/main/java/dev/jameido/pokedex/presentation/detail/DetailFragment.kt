@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
+import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIState
 import kotlinx.android.synthetic.main.content_detail.*
@@ -25,9 +26,12 @@ class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         onStates(viewModel) { state ->
             when (state) {
-                is UIState.Loading -> onDataLoading()
-                is UIState.Failed -> onDataError()
-                is PkmnDetailStates -> onDataLoaded(state.detail)
+                is PkmnDetailStates.Loading -> onDataLoading()
+                is PkmnDetailStates.Error -> onDataError()
+                is PkmnDetailStates.Loaded -> onDataLoaded(state.detail)
+                is PkmnSpeciesStates.Loading -> onSpeciesLoading()
+                is PkmnSpeciesStates.Error -> onSpeciesError()
+                is PkmnSpeciesStates.Loaded -> onSpeciesLoaded(state.species)
             }
         }
         loadData()
@@ -80,6 +84,17 @@ class DetailFragment : Fragment() {
             txtView.text = ""
             txtView.visibility = View.INVISIBLE
         }
+    }
+
+
+    private fun onSpeciesLoading() {
+    }
+
+    private fun onSpeciesError() {
+    }
+
+    private fun onSpeciesLoaded(species: PkmnSpeciesEntity) {
+
     }
 
     companion object {
