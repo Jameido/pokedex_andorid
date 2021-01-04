@@ -1,9 +1,8 @@
 package dev.jameido.pokedex.framework
 
-import android.net.Uri
 import dev.jameido.pokedex.data.datasource.PkmnDataSource
-import dev.jameido.pokedex.data.models.PkmnElement
-import dev.jameido.pokedex.data.models.ResPkmnDetail
+import dev.jameido.pokedex.data.mappers.PkmnDetailMapper
+import dev.jameido.pokedex.data.mappers.PkmnMapper
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.*
 
@@ -35,20 +34,11 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity {
         val offset = page * pageSize
         val response = dataSource.list(pageSize, offset)
-        val list = PkmnListEntity(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { mapPkmnEntity(it) })
+        val pkmnMapper = PkmnMapper()
+        val list = PkmnListEntity(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { pkmnMapper.map(it) })
         addListToCache(page, list)
 
         return list
-    }
-
-    private fun mapPkmnEntity(element: PkmnElement): PkmnEntity {
-        var index: Int? = null
-        var sprite: String? = null
-        element.url?.let { url ->
-            index = Uri.parse(url).lastPathSegment?.toInt()
-            sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png"
-        }
-        return PkmnEntity(element.name, element.url, index, sprite)
     }
 
     private fun readListFromCache(page: Int): PkmnListEntity? {
@@ -71,16 +61,10 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     //region detail
     private suspend fun readDetailFromService(name: String): PkmnDetailEntity {
         val response = dataSource.detail(name)
-        val detail = mapPkmnDetailEntity(response)
+        val detail = PkmnDetailMapper().map(response)
         addDetailToCache(name, detail)
 
         return detail
-    }
-
-    private fun mapPkmnDetailEntity(response: ResPkmnDetail): PkmnDetailEntity {
-        val types = response.types.map { it.type.name }
-        val stats = response.stats.map { Stat(it.base_stat, it.stat.name) }
-        return PkmnDetailEntity(response.id, response.name, response.height.toFloat() * 10F, response.weight.toFloat() / 10F, response.sprites.front_default, stats, types)
     }
 
     private fun readDetailFromCache(name: String): PkmnDetailEntity? {
