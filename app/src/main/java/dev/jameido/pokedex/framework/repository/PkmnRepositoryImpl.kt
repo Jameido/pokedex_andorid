@@ -38,8 +38,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource) :
 
     //region list
     private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity {
-        val offset = page * pageSize
-        val response = networkDataSource.list(pageSize, offset)
+        val response = networkDataSource.list(pageSize, page)
         val pkmnMapper = PkmnEntityMapper()
         val list = PkmnListEntity(response.next, response.previous, response.results.map { pkmnMapper.map(it) })
         addListToCache(page, list)
