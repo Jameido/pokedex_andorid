@@ -18,7 +18,7 @@ class PkmnSpeciesUnitTest {
     fun mapPkmnSpecies() {
         try {
             val model = moshi.adapter(ResPkmnSpecies::class.java).fromJson(DETAIL_CHARIZARD)
-            val mapped = PkmnSpeciesMapper().map(model!!)
+            val mapped = PkmnSpeciesEntityMapper().map(model!!)
             
             assertNotNull(mapped)
             assertEquals(mapped!!.id, 6)

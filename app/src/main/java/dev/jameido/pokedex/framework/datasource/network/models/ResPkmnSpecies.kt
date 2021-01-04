@@ -1,4 +1,4 @@
-package dev.jameido.pokedex.data.models
+package dev.jameido.pokedex.framework.datasource.network.models
 
 import com.squareup.moshi.JsonClass
 
@@ -65,5 +65,5 @@ data class Version(
 @JsonClass(generateAdapter = true)
 data class Variety(
     val is_default: Boolean,
-    val pokemon: PkmnElement
+    val pokemon: ResPkmnElement
 )

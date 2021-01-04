@@ -1,7 +1,8 @@
-package dev.jameido.pokedex.data.models
+package dev.jameido.pokedex.framework.network.models
 
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnDetail
 import org.junit.Assert
 import org.junit.Test
 

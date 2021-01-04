@@ -1,4 +1,4 @@
-package dev.jameido.pokedex.data.models
+package dev.jameido.pokedex.framework.datasource.network.models
 
 import com.squareup.moshi.JsonClass
 

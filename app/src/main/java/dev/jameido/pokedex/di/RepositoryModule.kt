@@ -1,7 +1,7 @@
 package dev.jameido.pokedex.di
 
 import dev.jameido.pokedex.data.repository.PkmnRepository
-import dev.jameido.pokedex.framework.PkmnRepositoryImpl
+import dev.jameido.pokedex.framework.repository.PkmnRepositoryImpl
 import org.koin.dsl.module
 
 /**

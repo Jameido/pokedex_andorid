@@ -1,7 +1,9 @@
-package dev.jameido.pokedex.data.models
+package dev.jameido.pokedex.framework.network.models
 
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnElement
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnList
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -22,7 +24,7 @@ class PkmnListUnitTest {
             assertNull(listResponse!!.previous)
             assertNotNull(listResponse!!.results)
             assertEquals(listResponse!!.results.size, 20)
-            assertEquals(listResponse!!.results[0], PkmnElement("bulbasaur", "https://pokeapi.co/api/v2/pokemon-species/1/"))
+            assertEquals(listResponse!!.results[0], ResPkmnElement("bulbasaur", "https://pokeapi.co/api/v2/pokemon-species/1/"))
         } catch (ex: JsonDataException) {
             fail()
         }
@@ -38,7 +40,7 @@ class PkmnListUnitTest {
             assertEquals(listResponse!!.previous, "https://pokeapi.co/api/v2/pokemon-species/?offset=860&limit=20")
             assertNotNull(listResponse!!.results)
             assertEquals(listResponse!!.results.size, 18)
-            assertEquals(listResponse!!.results[0], PkmnElement("arctozolt", "https://pokeapi.co/api/v2/pokemon-species/881/"))
+            assertEquals(listResponse!!.results[0], ResPkmnElement("arctozolt", "https://pokeapi.co/api/v2/pokemon-species/881/"))
         } catch (ex: JsonDataException) {
             fail()
         }
@@ -54,7 +56,7 @@ class PkmnListUnitTest {
             assertEquals(listResponse!!.previous, "https://pokeapi.co/api/v2/pokemon-species/?offset=480&limit=20")
             assertNotNull(listResponse!!.results)
             assertEquals(listResponse!!.results.size, 20)
-            assertEquals(listResponse!!.results[0], PkmnElement("oshawott", "https://pokeapi.co/api/v2/pokemon-species/501/"))
+            assertEquals(listResponse!!.results[0], ResPkmnElement("oshawott", "https://pokeapi.co/api/v2/pokemon-species/501/"))
         } catch (ex: JsonDataException) {
             fail()
         }
@@ -79,7 +81,7 @@ class PkmnListUnitTest {
     @Test
     fun parsePkmnListElement() {
         try {
-            val bulbasaur = moshi.adapter(PkmnElement::class.java).fromJson(ELEMENT)
+            val bulbasaur = moshi.adapter(ResPkmnElement::class.java).fromJson(ELEMENT)
             assertNotNull(bulbasaur)
             assertEquals(bulbasaur!!.name, "bulbasaur")
             assertEquals(bulbasaur!!.url, "https://pokeapi.co/api/v2/pokemon/1/")
@@ -91,7 +93,7 @@ class PkmnListUnitTest {
     @Test
     fun parseNullContentPkmnListElement() {
         try {
-            moshi.adapter(PkmnElement::class.java).fromJson(NULL_CONTENT_ELEMENT)
+            moshi.adapter(ResPkmnElement::class.java).fromJson(NULL_CONTENT_ELEMENT)
             fail()
         } catch (ex: JsonDataException) {
         }
@@ -100,7 +102,7 @@ class PkmnListUnitTest {
     @Test
     fun parseEmptyPkmnListElement() {
         try {
-            val bulbasaur = moshi.adapter(PkmnElement::class.java).fromJson(EMPTY_ELEMENT)
+            val bulbasaur = moshi.adapter(ResPkmnElement::class.java).fromJson(EMPTY_ELEMENT)
             assertNotNull(bulbasaur)
             assertEquals(bulbasaur!!.name, "")
             assertNull(bulbasaur!!.url)

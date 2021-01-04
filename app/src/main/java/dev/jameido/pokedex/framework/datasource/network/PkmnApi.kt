@@ -1,9 +1,9 @@
-package dev.jameido.pokedex.framework
+package dev.jameido.pokedex.framework.datasource.network
 
 import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
-import dev.jameido.pokedex.data.models.ResPkmnDetail
-import dev.jameido.pokedex.data.models.ResPkmnList
-import dev.jameido.pokedex.data.models.ResPkmnSpecies
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnDetail
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnList
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnSpecies
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -12,19 +12,19 @@ import retrofit2.http.Query
 /**
  * Created by Jameido on 17/12/2020.
  */
-interface RetrofitPkmnDataSource : NetworkPkmnDataSource {
+interface PkmnApi {
 
     @GET(LIST_ENDPOINT)
     @Headers("Content-type: application/json")
-    override suspend fun list(@Query(QRY_LIMIT) limit: Int, @Query(QRY_OFFSET) offset: Int) : ResPkmnList
+    suspend fun list(@Query(QRY_LIMIT) limit: Int, @Query(QRY_OFFSET) offset: Int) : ResPkmnList
 
     @GET(DETAIL_ENDPOINT)
     @Headers("Content-type: application/json")
-    override suspend fun detail(@Path(PATH_NAME) name: String) : ResPkmnDetail
+    suspend fun detail(@Path(PATH_NAME) name: String) : ResPkmnDetail
 
     @GET(SPECIES_ENDPOINT)
     @Headers("Content-type: application/json")
-    override suspend fun species(@Path(PATH_NAME) name: String) : ResPkmnSpecies
+    suspend fun species(@Path(PATH_NAME) name: String) : ResPkmnSpecies
 
     companion object {
         const val LIST_ENDPOINT = "pokemon-species"
