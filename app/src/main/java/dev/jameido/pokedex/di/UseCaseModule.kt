@@ -2,6 +2,7 @@ package dev.jameido.pokedex.di
 
 import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
 import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
+import dev.jameido.pokedex.domain.usecase.GetPkmnSpecies
 import org.koin.dsl.module
 
 /**
@@ -10,4 +11,5 @@ import org.koin.dsl.module
 val useCaseModule = module {
     factory { GetPkmnListPage(get()) }
     factory { GetPkmnDetail(get()) }
+    factory { GetPkmnSpecies(get()) }
 }

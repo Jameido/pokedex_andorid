@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:gravity="center_vertical"
@@ -10,36 +10,28 @@
     android:padding="@dimen/spacing_16">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_list_sprite"
+        android:id="@+id/img_variety_sprite"
         android:layout_width="@dimen/list_item_sprite"
         android:layout_height="@dimen/list_item_sprite"
+        android:layout_marginStart="@dimen/spacing_4"
+        android:layout_marginEnd="@dimen/spacing_4"
         android:background="@drawable/sprite_backgorund"
         android:padding="@dimen/detail_sprite_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txt_variety_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_list_nr"
+        android:id="@+id/txt_variety_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_16"
         android:layout_marginTop="@dimen/spacing_8"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_list_sprite"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Nr 1" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_list_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_16"
-        android:layout_marginTop="@dimen/spacing_8"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_list_sprite"
-        app:layout_constraintTop_toBottomOf="@+id/txt_list_nr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_variety_sprite"
         tools:text="Bulbasaur" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,213 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_detail_data"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shimmer_auto_start="false">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_detail_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_auto_start="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_detail_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_detail_sprite"
+                    android:layout_width="@dimen/detail_sprite"
+                    android:layout_height="@dimen/detail_sprite"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_nr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/nr" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_nr"
+                    tools:text="Bulbasaur" />
+
+                <dev.jameido.pokedex.views.TypeTextView
+                    android:id="@+id/txt_detail_first_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:layout_marginEnd="@dimen/spacing_4"
+                    android:gravity="center"
+                    android:padding="@dimen/detail_type_padding"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
+                    tools:text="fire"
+                    tools:visibility="visible" />
+
+                <dev.jameido.pokedex.views.TypeTextView
+                    android:id="@+id/txt_detail_second_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_4"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:gravity="center"
+                    android:padding="@dimen/detail_type_padding"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_detail_first_type"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
+                    tools:text="flying"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_height_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:layout_marginBottom="@dimen/spacing_8"
+                    android:text="@string/height_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_detail_height"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_first_type" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_height"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:layout_marginBottom="@dimen/spacing_8"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@+id/txt_detail_height_label"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_first_type" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_weight_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_4"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:layout_marginBottom="@dimen/spacing_8"
+                    android:text="@string/weight_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_detail_weight"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_detail_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_4"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:layout_marginBottom="@dimen/spacing_8"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@+id/txt_detail_weight_label"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_detail_top"
+            android:id="@+id/container_detail_data_error"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:padding="@dimen/spacing_16"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/shimmer_detail_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="invisible">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_detail_sprite"
-                android:layout_width="@dimen/detail_sprite"
-                android:layout_height="@dimen/detail_sprite"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_16"
-                app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_detail_data_error"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_8"
+                android:gravity="center"
+                android:text="@string/error_load"
+                app:layout_constraintBottom_toTopOf="@+id/btn_detail_data_retry"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_nr"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_detail_data_retry"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_16"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/nr" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_nr"
-                tools:text="Bulbasaur" />
-
-            <dev.jameido.pokedex.views.TypeTextView
-                android:id="@+id/txt_detail_first_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_8"
-                android:layout_marginEnd="@dimen/spacing_4"
-                android:gravity="center"
-                android:padding="@dimen/detail_type_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
-                app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
-                tools:text="fire"
-                tools:visibility="visible" />
-
-            <dev.jameido.pokedex.views.TypeTextView
-                android:id="@+id/txt_detail_second_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_4"
-                android:layout_marginTop="@dimen/spacing_8"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:gravity="center"
-                android:padding="@dimen/detail_type_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txt_detail_first_type"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
-                tools:text="flying"
-                tools:visibility="visible" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_height_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_16"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:text="@string/height_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintEnd_toStartOf="@+id/txt_detail_height"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_first_type" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_height"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_16"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintStart_toEndOf="@+id/txt_detail_height_label"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_first_type" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_weight_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_4"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:text="@string/weight_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txt_detail_weight"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_weight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_marginTop="@dimen/spacing_4"
-                android:layout_marginEnd="@dimen/spacing_16"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:text="@string/retry"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintStart_toEndOf="@+id/txt_detail_weight_label"
-                app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_detail_data_error"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="@dimen/spacing_16"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/shimmer_detail_data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">
+        <View
+            android:id="@+id/sep_detail"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shimmer_detail_data" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_detail_data_error"
+            android:id="@+id/txt_detail_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingTop="@dimen/spacing_8"
+            android:paddingEnd="@dimen/spacing_16"
+            android:paddingBottom="@dimen/spacing_8"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sep_detail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_varieties_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_16"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:layout_marginEnd="@dimen/spacing_16"
+            android:text="@string/forms_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_detail_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_varieties"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_8"
-            android:gravity="center"
-            android:text="@string/error_load"
-            app:layout_constraintBottom_toTopOf="@+id/btn_detail_data_retry"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_varieties_title"
+            tools:listitem="@layout/list_item_variety" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_detail_data_retry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/retry"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/sep_detail"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shimmer_detail_data" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_detail_description"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingStart="@dimen/spacing_16"
-        android:paddingTop="@dimen/spacing_8"
-        android:paddingEnd="@dimen/spacing_16"
-        android:paddingBottom="@dimen/spacing_8"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sep_detail" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

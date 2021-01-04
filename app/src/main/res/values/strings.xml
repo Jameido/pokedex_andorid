@@ -8,4 +8,5 @@
     <string name="height_format">%.0f cm</string>
     <string name="weight_format">%.2f kg</string>
     <string name="nr">n° %d</string>
+    <string name="forms_label">Forms</string>
 </resources>

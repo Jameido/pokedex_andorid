@@ -10,19 +10,46 @@ import org.koin.java.KoinJavaComponent.get
  */
 class PkmnDetailVM() : AndroidDataFlow() {
 
-    fun loadDetail(name: String) = action(
-            onAction = {
-                setState(PkmnDetailStates.Loading)
-                setState(PkmnDetailStates.Loaded(get(GetPkmnDetail::class.java).load(name)))
-            },
-            onError = { error, _ -> setState(PkmnDetailStates.Error(error.localizedMessage)) }
-    )
+    private var detailName = ""
+    private var speciesName = ""
 
-    fun loadSpecies(name: String) = action(
-            onAction = {
-                setState(PkmnSpeciesStates.Loading)
-                setState(PkmnSpeciesStates.Loaded(get(GetPkmnSpecies::class.java).load(name)))
-            },
-            onError = { error, _ -> setState(PkmnSpeciesStates.Error(error.localizedMessage)) }
-    )
+    fun loadData(name: String) {
+        loadDetail(name)
+        loadSpecies(name)
+    }
+
+    fun reLoadData() {
+        reLoadDetail()
+        reLoadSpecies()
+    }
+
+    fun loadDetail(name: String) {
+        detailName = name
+        reLoadDetail()
+    }
+
+    fun reLoadDetail() {
+        action(
+                onAction = {
+                    setState(PkmnDetailStates.Loading)
+                    setState(PkmnDetailStates.Loaded(get(GetPkmnDetail::class.java).load(detailName)))
+                },
+                onError = { error, _ -> setState(PkmnDetailStates.Error(error.localizedMessage)) }
+        )
+    }
+
+    fun loadSpecies(name: String) {
+        speciesName = name
+        reLoadSpecies()
+    }
+
+    fun reLoadSpecies() {
+        action(
+                onAction = {
+                    setState(PkmnSpeciesStates.Loading)
+                    setState(PkmnSpeciesStates.Loaded(get(GetPkmnSpecies::class.java).load(speciesName)))
+                },
+                onError = { error, _ -> setState(PkmnSpeciesStates.Error(error.localizedMessage)) }
+        )
+    }
 }

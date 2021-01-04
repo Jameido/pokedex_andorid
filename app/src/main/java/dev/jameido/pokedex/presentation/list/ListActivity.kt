@@ -1,10 +1,8 @@
 package dev.jameido.pokedex.presentation.list
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +14,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class ListActivity : AppCompatActivity() {
 
     private val viewModel: PkmnListVM by viewModel()
-    private lateinit var adapter: PkmnAdapter
     private var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +25,7 @@ class ListActivity : AppCompatActivity() {
 
         twoPane = findViewById<View>(R.id.container_detail) != null
 
-        adapter = PkmnAdapter { name -> openDetail(name) }
+        val adapter = PkmnAdapter { name -> openDetail(name) }
         rv_pkmn.adapter = adapter.withLoadStateLoaderHeaderFooter(
                 loader = PkmnLoadStateAdapter(adapter::retry),
                 header = PkmnLoadStateAdapter(adapter::retry),

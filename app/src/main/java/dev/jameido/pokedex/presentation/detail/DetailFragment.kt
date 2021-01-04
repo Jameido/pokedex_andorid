@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
 import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.data.UIState
 import kotlinx.android.synthetic.main.content_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -22,8 +23,12 @@ import java.util.*
 class DetailFragment : Fragment() {
 
     private val viewModel: PkmnDetailVM by viewModel()
+    private lateinit var varietyAdapter: VarietyAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        varietyAdapter = VarietyAdapter { name -> viewModel.loadDetail(name) }
+
         onStates(viewModel) { state ->
             when (state) {
                 is PkmnDetailStates.Loading -> onDataLoading()
@@ -34,18 +39,24 @@ class DetailFragment : Fragment() {
                 is PkmnSpeciesStates.Loaded -> onSpeciesLoaded(state.species)
             }
         }
-        loadData()
+
+        if (savedInstanceState == null) {
+            arguments?.getString(KEY_NAME, null)?.let {
+                viewModel.loadData(it)
+            }
+        } else {
+            viewModel.reLoadData()
+        }
+
         return inflater.inflate(R.layout.content_detail, container,
                 false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_detail_data_retry.setOnClickListener { loadData() }
-    }
-
-    private fun loadData() {
-        viewModel.loadDetail(arguments?.getString(KEY_NAME, "") ?: "")
+        btn_detail_data_retry.setOnClickListener { viewModel.reLoadDetail() }
+        rv_varieties.adapter = varietyAdapter
+        rv_varieties.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.HORIZONTAL))
     }
 
     private fun onDataLoading() {
@@ -94,7 +105,8 @@ class DetailFragment : Fragment() {
     }
 
     private fun onSpeciesLoaded(species: PkmnSpeciesEntity) {
-
+        txt_detail_description.text = species.description
+        varietyAdapter.updateItems(species.varieties)
     }
 
     companion object {
