@@ -6,8 +6,8 @@ package dev.jameido.pokedex.domain.entity
 data class PkmnDetailEntity(
         val id: Int,
         val name: String,
-        val height: Int,
-        val weight: Int,
+        val height: Float,
+        val weight: Float,
         val sprite: String?,
         val stats: List<Stat>,
         val types: List<String>

@@ -3,7 +3,9 @@
     <string name="error_load">Something went wrong 	(╥﹏╥)</string>
     <string name="retry">Try again</string>
 
-    <string name="height">Height</string>
-    <string name="weight">Weight</string>
+    <string name="height_label">Height</string>
+    <string name="weight_label">Weight</string>
+    <string name="height_format">%.0f cm</string>
+    <string name="weight_format">%.2f kg</string>
     <string name="nr">n° %d</string>
 </resources>

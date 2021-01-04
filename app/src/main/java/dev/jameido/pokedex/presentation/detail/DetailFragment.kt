@@ -65,8 +65,8 @@ class DetailFragment : BottomSheetDialogFragment() {
                 .into(img_detail_sprite)
         txt_detail_name.text = pkmn.name.capitalize(Locale.getDefault())
         txt_detail_nr.text = getString(R.string.nr, pkmn.id)
-        txt_detail_weight.text = pkmn.weight.toString()
-        txt_detail_height.text = pkmn.height.toString()
+        txt_detail_weight.text = getString(R.string.weight_format, pkmn.weight)
+        txt_detail_height.text = getString(R.string.height_format, pkmn.height)
 
         displayType(pkmn.types.getOrNull(0), txt_detail_first_type)
         displayType(pkmn.types.getOrNull(1), txt_detail_second_type)

@@ -28,7 +28,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     }
 
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
-       return readDetailFromCache(name) ?: readDetailFromService(name)
+        return readDetailFromCache(name) ?: readDetailFromService(name)
     }
 
     //region list
@@ -80,7 +80,7 @@ class PkmnRepositoryImpl(private val dataSource: PkmnDataSource) : PkmnRepositor
     private fun mapPkmnDetailEntity(response: ResPkmnDetail): PkmnDetailEntity {
         val types = response.types.map { it.type.name }
         val stats = response.stats.map { Stat(it.base_stat, it.stat.name) }
-        return PkmnDetailEntity(response.id, response.name, response.height, response.weight, response.sprites.front_default, stats, types)
+        return PkmnDetailEntity(response.id, response.name, response.height.toFloat() * 10F, response.weight.toFloat() / 10F, response.sprites.front_default, stats, types)
     }
 
     private fun readDetailFromCache(name: String): PkmnDetailEntity? {
