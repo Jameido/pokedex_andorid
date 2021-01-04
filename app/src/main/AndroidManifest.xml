@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.list.ListActivity">
+        <activity
+            android:name=".presentation.list.ListActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,8 +23,8 @@
         </activity>
         <activity
             android:name=".presentation.detail.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".presentation.list.ListActivity" />
+            android:parentActivityName=".presentation.list.ListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
