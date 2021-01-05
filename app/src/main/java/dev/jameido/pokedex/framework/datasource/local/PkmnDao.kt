@@ -4,10 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.jameido.pokedex.framework.datasource.local.models.DbPkmn
-import dev.jameido.pokedex.framework.datasource.local.models.DbPkmnSpecies
-import dev.jameido.pokedex.framework.datasource.local.models.DbPkmnSpeciesData
-import dev.jameido.pokedex.framework.datasource.local.models.DbPkmnSpeciesVariety
+import dev.jameido.pokedex.framework.datasource.local.models.*
 
 /**
  * Created by Jameido on 05/01/2021.
@@ -17,6 +14,17 @@ interface PkmnDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSpecies(pokemon: List<DbPkmn>, speciesData: List<DbPkmnSpeciesData>, varieties: List<DbPkmnSpeciesVariety>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDetail(
+            detail: List<DbPkmnDetailData>,
+            stats: List<DbStat>,
+            pkmnStats: List<DbPkmnStats>,
+            types: List<DbType>,
+            pkmnTypes: List<DbPkmnTypes>)
+
     @Query("SELECT * FROM species WHERE name = :name LIMIT 1")
-    suspend fun getByName(name: String): DbPkmnSpecies?
+    suspend fun getSpeciesByName(name: String): DbPkmnSpecies?
+
+    @Query("SELECT * FROM detail WHERE name = :name LIMIT 1")
+    suspend fun getDetailByName(name: String): DbPkmnDetail?
 }

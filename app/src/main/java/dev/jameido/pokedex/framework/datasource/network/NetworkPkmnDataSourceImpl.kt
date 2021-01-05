@@ -19,7 +19,7 @@ class NetworkPkmnDataSourceImpl(val api: PkmnApi) : NetworkPkmnDataSource {
         return PkmnListModel(response.next?.let { page + 1 }, response.previous?.let { page - 1 }, response.results.map { pkmnMapper.map(it) })
     }
 
-    override suspend fun detail(name: String): PkmnDetailModel {
+    override suspend fun detail(name: String): PkmnDetailModel? {
         return PkmnDetailMapper().map(api.detail(name))
     }
 

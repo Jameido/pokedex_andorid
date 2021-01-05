@@ -10,7 +10,7 @@ import dev.jameido.pokedex.data.models.PkmnSpeciesModel
 interface PkmnDataSource {
     suspend fun list(pageSize: Int, page: Int) : PkmnListModel
 
-    suspend fun detail(name: String) : PkmnDetailModel
+    suspend fun detail(name: String) : PkmnDetailModel?
 
     suspend fun species(name: String) : PkmnSpeciesModel?
 }

@@ -30,7 +30,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     }
 
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
-        return readDetailFromCache(name) ?: readDetailFromService(name)
+        return readDetailFromDb(name) ?: readDetailFromService(name)!!
     }
 
     override suspend fun pkmnSpecies(name: String): PkmnSpeciesEntity {
@@ -64,11 +64,18 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     //endregion
 
     //region detail
-    private suspend fun readDetailFromService(name: String): PkmnDetailEntity {
+    private suspend fun readDetailFromService(name: String): PkmnDetailEntity? {
         return networkDataSource.detail(name)?.let {
+            localPkmnDataSource.insertDetail(it)
             val detail = PkmnDetailEntityMapper().map(it)
             addDetailToCache(name, detail)
             return detail
+        }
+    }
+
+    private suspend fun readDetailFromDb(name: String): PkmnDetailEntity? {
+        return localPkmnDataSource.detail(name)?.let {
+            PkmnDetailEntityMapper().map(it)
         }
     }
 
@@ -91,12 +98,12 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
 
     //region species
     private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity? {
-        val response = networkDataSource.species(name)
-        localPkmnDataSource.insertSpecies(response!!)
-        val species = PkmnSpeciesEntityMapper().map(response!!)
-        addSpeciesToCache(name, species)
-
-        return species
+        return networkDataSource.species(name)?.let {
+            localPkmnDataSource.insertSpecies(it)
+            val species = PkmnSpeciesEntityMapper().map(it)
+            addSpeciesToCache(name, species)
+            return species
+        }
     }
 
     private suspend fun readSpeciesFromDb(name: String): PkmnSpeciesEntity? {

@@ -14,6 +14,6 @@ data class PkmnDetailModel(
 )
 
 data class Stat(
-        val value: Int,
-        val name: String
+        val name: String,
+        val value: Int
 )

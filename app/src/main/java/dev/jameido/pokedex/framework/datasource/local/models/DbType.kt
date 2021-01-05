@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 /**
  * Created by Jameido on 05/01/2021.
  */
-@Entity(tableName = "stat")
-data class DbStat(@PrimaryKey val name: String)
+@Entity(tableName = "type")
+data class DbType(@PrimaryKey val name: String)
