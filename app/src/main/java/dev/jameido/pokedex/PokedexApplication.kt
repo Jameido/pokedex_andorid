@@ -16,6 +16,7 @@ class PokedexApplication : Application() {
             androidContext(this@PokedexApplication)
             modules(listOf(
                     retrofitModule,
+                    roomModule,
                     dataSourceModule,
                     repositoryModule,
                     useCaseModule,
