@@ -12,9 +12,15 @@ interface PkmnDataSource {
 
     suspend fun detail(name: String) : PkmnDetailModel
 
-    suspend fun species(name: String) : PkmnSpeciesModel
+    suspend fun species(name: String) : PkmnSpeciesModel?
 }
 
 interface NetworkPkmnDataSource : PkmnDataSource
 
-interface LocalPkmnDataSource : PkmnDataSource
+interface LocalPkmnDataSource : PkmnDataSource {
+
+    suspend fun insertDetail(detail: PkmnDetailModel)
+
+    suspend fun insertSpecies(species: PkmnSpeciesModel)
+
+}

@@ -32,9 +32,9 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
         return readDetailFromCache(name) ?: readDetailFromService(name)
     }
-    
+
     override suspend fun pkmnSpecies(name: String): PkmnSpeciesEntity {
-        return readSpeciesFromCache(name) ?: readSpeciesFromService(name)
+        return readSpeciesFromDb(name) ?: readSpeciesFromService(name)!!
     }
 
     //region list
@@ -62,14 +62,14 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
         listCache.clear()
     }
     //endregion
-    
+
     //region detail
     private suspend fun readDetailFromService(name: String): PkmnDetailEntity {
-        val response = networkDataSource.detail(name)
-        val detail = PkmnDetailEntityMapper().map(response)
-        addDetailToCache(name, detail)
-
-        return detail
+        return networkDataSource.detail(name)?.let {
+            val detail = PkmnDetailEntityMapper().map(it)
+            addDetailToCache(name, detail)
+            return detail
+        }
     }
 
     private fun readDetailFromCache(name: String): PkmnDetailEntity? {
@@ -90,12 +90,19 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
 
 
     //region species
-    private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity {
+    private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity? {
         val response = networkDataSource.species(name)
-        val species = PkmnSpeciesEntityMapper().map(response)
+        localPkmnDataSource.insertSpecies(response!!)
+        val species = PkmnSpeciesEntityMapper().map(response!!)
         addSpeciesToCache(name, species)
 
         return species
+    }
+
+    private suspend fun readSpeciesFromDb(name: String): PkmnSpeciesEntity? {
+        return localPkmnDataSource.species(name)?.let {
+            PkmnSpeciesEntityMapper().map(it)
+        }
     }
 
     private fun readSpeciesFromCache(name: String): PkmnSpeciesEntity? {

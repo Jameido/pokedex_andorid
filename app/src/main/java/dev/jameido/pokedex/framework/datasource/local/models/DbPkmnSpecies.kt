@@ -8,15 +8,6 @@ import androidx.room.Relation
 /**
  * Created by Jameido on 05/01/2021.
  */
-data class DbPkmnSpecies(
-        @Embedded val species: DbPkmnSpeciesData,
-        @Relation(
-                parentColumn = "name",
-                entityColumn = "speciesName"
-        )
-        val varieties: List<DbPkmnVariety>
-)
-
 @Entity(tableName = "species")
 class DbPkmnSpeciesData(
         @PrimaryKey
@@ -24,5 +15,24 @@ class DbPkmnSpeciesData(
         val id: Int,
         val description: String,
         val evolutionChain: String?
+)
+
+@Entity(tableName = "variety")
+class DbPkmnSpeciesVariety(
+        @PrimaryKey
+        val pokemonName: String,
+        val speciesName: String,
+)
+
+data class DbPkmnVariety(
+        @Embedded val variety: DbPkmnSpeciesVariety,
+        @Relation(parentColumn = "pokemonName", entityColumn = "name")
+        val pokemon: DbPkmn,
+)
+
+data class DbPkmnSpecies(
+        @Embedded val species: DbPkmnSpeciesData,
+        @Relation(parentColumn = "name", entityColumn = "speciesName", entity = DbPkmnSpeciesVariety::class)
+        val varieties: List<DbPkmnVariety>
 )
 

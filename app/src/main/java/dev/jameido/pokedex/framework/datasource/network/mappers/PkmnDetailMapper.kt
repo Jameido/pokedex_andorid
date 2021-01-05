@@ -9,9 +9,9 @@ import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnDetail
  */
 class PkmnDetailMapper : ResponseMapper<ResPkmnDetail, PkmnDetailModel> {
 
-    override fun map(model: ResPkmnDetail): PkmnDetailModel {
-        val types = model.types.map { it.type.name }
-        val stats = model.stats.map { Stat(it.base_stat, it.stat.name) }
-        return PkmnDetailModel(model.id, model.name, model.height.toFloat(), model.weight.toFloat(), model.sprites.front_default, stats, types)
+    override fun map(response: ResPkmnDetail): PkmnDetailModel {
+        val types = response.types.map { it.type.name }
+        val stats = response.stats.map { Stat(it.base_stat, it.stat.name) }
+        return PkmnDetailModel(response.id, response.name, response.height.toFloat(), response.weight.toFloat(), response.sprites.front_default, stats, types)
     }
 }

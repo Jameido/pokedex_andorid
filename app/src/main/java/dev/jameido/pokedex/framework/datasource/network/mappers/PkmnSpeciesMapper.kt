@@ -7,10 +7,10 @@ import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnSpecies
  */
 class PkmnSpeciesMapper : ResponseMapper<ResPkmnSpecies, PkmnSpeciesModel> {
 
-    override fun map(model: ResPkmnSpecies): PkmnSpeciesModel {
+    override fun map(response: ResPkmnSpecies): PkmnSpeciesModel {
         val pkmnMapper = PkmnMapper()
-        val varieties = model.varieties.map { pkmnMapper.map(it.pokemon) }
-        val description = model.flavor_text_entries.first { it.language.name == "en" }.flavor_text
-        return PkmnSpeciesModel(model.id, model.name, description, varieties, model.evolution_chain.url)
+        val varieties = response.varieties.map { pkmnMapper.map(it.pokemon) }
+        val description = response.flavor_text_entries.first { it.language.name == "en" }.flavor_text
+        return PkmnSpeciesModel(response.id, response.name, description, varieties, response.evolution_chain.url)
     }
 }

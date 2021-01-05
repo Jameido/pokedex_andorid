@@ -11,5 +11,5 @@ import org.koin.dsl.module
  */
 val dataSourceModule = module {
     single<NetworkPkmnDataSource> { NetworkPkmnDataSourceImpl(api = get()) }
-    single<LocalPkmnDataSource> { LocalPkmnDataSourceImpl(database = get()) }
+    single<LocalPkmnDataSource> { LocalPkmnDataSourceImpl(dao = get()) }
 }

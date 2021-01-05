@@ -10,7 +10,7 @@ import dev.jameido.pokedex.framework.datasource.local.models.DbPkmnSpeciesVariet
 /**
  * Created by Jameido on 05/01/2021.
  */
-@Database(entities = arrayOf(DbPkmn::class, DbPkmnSpeciesVariety::class, DbPkmnDetail::class, DbPkmnSpeciesData::class), version = 1)
+@Database(entities = [DbPkmn::class, DbPkmnSpeciesVariety::class, DbPkmnDetail::class, DbPkmnSpeciesData::class], version = 1)
 abstract class PkmnDatabase : RoomDatabase() {
     abstract fun pkmnDao(): PkmnDao
 }

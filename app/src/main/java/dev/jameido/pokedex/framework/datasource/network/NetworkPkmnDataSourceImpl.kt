@@ -23,7 +23,7 @@ class NetworkPkmnDataSourceImpl(val api: PkmnApi) : NetworkPkmnDataSource {
         return PkmnDetailMapper().map(api.detail(name))
     }
 
-    override suspend fun species(name: String): PkmnSpeciesModel {
+    override suspend fun species(name: String): PkmnSpeciesModel? {
         return PkmnSpeciesMapper().map(api.species(name))
     }
 }

@@ -12,8 +12,8 @@ data class DbPkmnDetail(
         val id: Int,
         val height: Float,
         val weight: Float,
-        val sprite: String?,
-        val stats: List<DbStat>,
-        val types: List<String>
+        val sprite: String?
+/*        val stats: List<DbStat>,
+        val types: List<String>*/
 )
 
