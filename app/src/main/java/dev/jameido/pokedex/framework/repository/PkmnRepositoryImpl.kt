@@ -1,5 +1,6 @@
 package dev.jameido.pokedex.framework.repository
 
+import dev.jameido.pokedex.data.datasource.LocalPkmnDataSource
 import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
 import dev.jameido.pokedex.data.mappers.PkmnDetailEntityMapper
 import dev.jameido.pokedex.data.mappers.PkmnEntityMapper
@@ -10,7 +11,7 @@ import dev.jameido.pokedex.domain.entity.*
 /**
  * Created by Jameido on 17/12/2020.
  */
-class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource) : PkmnRepository {
+class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, private val localPkmnDataSource: LocalPkmnDataSource) : PkmnRepository {
 
     private var listCache = hashMapOf<Int, PkmnListEntity>()
     private var listCachePageSize = 0

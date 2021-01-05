@@ -16,7 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val retrofitModule = module {
     single { buildOkHttpClient() }
     factory { buildMoshi() }
-    single { createApiImpl(PkmnApi::class.java, get(), "https://pokeapi.co/api/v2/") }
+    single { createApiImpl(PkmnApi::class.java, client = get(), "https://pokeapi.co/api/v2/") }
 }
 
 private fun buildMoshi(): Moshi {

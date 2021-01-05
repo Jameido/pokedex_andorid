@@ -9,7 +9,7 @@ import org.koin.dsl.module
  * Created by Jameido on 21/12/2020.
  */
 val useCaseModule = module {
-    factory { GetPkmnListPage(get()) }
-    factory { GetPkmnDetail(get()) }
-    factory { GetPkmnSpecies(get()) }
+    factory { GetPkmnListPage(repository = get()) }
+    factory { GetPkmnDetail(repository = get()) }
+    factory { GetPkmnSpecies(repository = get()) }
 }
