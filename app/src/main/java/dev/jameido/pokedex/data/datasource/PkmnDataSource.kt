@@ -9,7 +9,7 @@ import dev.jameido.pokedex.data.models.PkmnSpeciesModel
  * Created by Jameido on 19/12/2020.
  */
 interface PkmnDataSource {
-    suspend fun list(pageSize: Int, page: Int) : PkmnListModel
+    suspend fun list(pageSize: Int, page: Int) : PkmnListModel?
 
     suspend fun detail(name: String) : PkmnDetailModel?
 

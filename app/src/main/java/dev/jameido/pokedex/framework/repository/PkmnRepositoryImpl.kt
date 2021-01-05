@@ -20,12 +20,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     private var speciesCache = hashMapOf<String, PkmnSpeciesEntity>()
 
     override suspend fun pkmnList(page: Int, pageSize: Int): PkmnListEntity {
-        if (pageSize != listCachePageSize) {
-            clearListCache()
-            listCachePageSize = pageSize
-            readListFromService(page, pageSize)
-        }
-        return readListFromCache(page) ?: readListFromService(page, pageSize)
+        return readListFromDatabase(page, pageSize) ?: readListFromService(page, pageSize)!!
 
     }
 
@@ -38,13 +33,20 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     }
 
     //region list
-    private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity {
-        val response = networkDataSource.list(pageSize, page)
-        val pkmnMapper = PkmnEntityMapper()
-        val list = PkmnListEntity(response.next, response.previous, response.results.map { pkmnMapper.map(it) })
-        addListToCache(page, list)
-
-        return list
+    private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity? {
+        return networkDataSource.list(pageSize, page)?.let {
+            localPkmnDataSource.insertPokemon(it.results)
+            val pkmnMapper = PkmnEntityMapper()
+            val list = PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
+            addListToCache(page, list)
+            return list
+        }
+    }
+    private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity? {
+        return localPkmnDataSource.list(pageSize, page)?.let {
+            val pkmnMapper = PkmnEntityMapper()
+            return PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
+        }
     }
 
     private fun readListFromCache(page: Int): PkmnListEntity? {

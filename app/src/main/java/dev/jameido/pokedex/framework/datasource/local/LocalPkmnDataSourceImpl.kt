@@ -40,8 +40,25 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
         dao.insertPkmn(pokemon.map { mapper.mapToDb(it) })
     }
 
-    override suspend fun list(pageSize: Int, page: Int): PkmnListModel {
-        TODO("Not yet implemented")
+    override suspend fun list(pageSize: Int, page: Int): PkmnListModel? {
+        val offset = page * pageSize
+        val dbList = dao.getPaginatedPokemon(pageSize, offset)
+        if (dbList.isNullOrEmpty()) {
+            return null
+        }
+        val mapper = PkmnMapper()
+        val mappedList = dbList.map { mapper.mapFromDb(it) }
+        val next = if (mappedList.size == pageSize) {
+            page + 1
+        } else {
+            null
+        }
+        val previous = if (page == 0) {
+            null
+        } else {
+            page - 1
+        }
+        return PkmnListModel(next, previous, mappedList)
     }
 
     override suspend fun detail(name: String): PkmnDetailModel? {

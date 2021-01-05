@@ -30,4 +30,7 @@ interface PkmnDao {
 
     @Query("SELECT * FROM detail WHERE name = :name LIMIT 1")
     suspend fun getDetailByName(name: String): DbPkmnDetail?
+
+    @Query("SELECT * FROM pokemon LIMIT :limit OFFSET :offset")
+    suspend fun getPaginatedPokemon(limit: Int, offset: Int): List<DbPkmn>?
 }

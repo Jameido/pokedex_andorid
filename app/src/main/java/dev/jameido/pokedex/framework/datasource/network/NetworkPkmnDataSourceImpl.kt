@@ -12,7 +12,7 @@ import dev.jameido.pokedex.framework.datasource.network.mappers.PkmnSpeciesMappe
  * Created by Jameido on 04/01/2021.
  */
 class NetworkPkmnDataSourceImpl(val api: PkmnApi) : NetworkPkmnDataSource {
-    override suspend fun list(pageSize: Int, page: Int): PkmnListModel {
+    override suspend fun list(pageSize: Int, page: Int): PkmnListModel? {
         val offset = page * pageSize
         val response = api.list(pageSize, offset)
         val pkmnMapper = PkmnMapper()
