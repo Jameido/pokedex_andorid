@@ -6,7 +6,7 @@ import dev.jameido.pokedex.data.models.PkmnListModel
 import dev.jameido.pokedex.data.models.PkmnModel
 import dev.jameido.pokedex.data.models.PkmnSpeciesModel
 import dev.jameido.pokedex.framework.datasource.local.mappers.DetailMapper
-import dev.jameido.pokedex.framework.datasource.local.mappers.PkmnMapper
+import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesElementMapper
 import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesMapper
 import dev.jameido.pokedex.framework.datasource.local.models.DbStat
 import dev.jameido.pokedex.framework.datasource.local.models.DbType
@@ -28,25 +28,24 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
 
     override suspend fun insertSpecies(species: PkmnSpeciesModel) {
         val mapped = SpeciesMapper().mapToDb(species)
-        dao.insertSpecies(
-                mapped.varieties.map { it.pokemon },
-                listOf(mapped.species),
-                mapped.varieties.map { it.variety }
-        )
+        dao.insertSpeciesData(mapped.speciesData)
+        mapped.varieties?.let {
+            dao.insertSpeciesVarieties(it)
+        }
     }
 
     override suspend fun insertPokemon(pokemon: List<PkmnModel>) {
-        val mapper = PkmnMapper()
-        dao.insertPkmn(pokemon.map { mapper.mapToDb(it) })
+        val mapper = SpeciesElementMapper()
+        dao.insertSpeciesElement(pokemon.map { mapper.mapToDb(it) })
     }
 
     override suspend fun list(pageSize: Int, page: Int): PkmnListModel? {
         val offset = page * pageSize
-        val dbList = dao.getPaginatedPokemon(pageSize, offset)
+        val dbList = dao.getPaginatedSpecies(pageSize, offset)
         if (dbList.isNullOrEmpty()) {
             return null
         }
-        val mapper = PkmnMapper()
+        val mapper = SpeciesElementMapper()
         val mappedList = dbList.map { mapper.mapFromDb(it) }
         val next = if (mappedList.size == pageSize) {
             page + 1

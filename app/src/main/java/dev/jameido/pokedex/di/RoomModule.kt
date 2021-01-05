@@ -10,6 +10,7 @@ import org.koin.dsl.module
 val roomModule = module {
     single {
         Room.databaseBuilder(get(), PkmnDatabase::class.java, "pokemon-db")
+                .fallbackToDestructiveMigration()
                 .build()
     }
 

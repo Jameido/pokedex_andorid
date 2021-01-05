@@ -1,9 +1,6 @@
 package dev.jameido.pokedex.framework.datasource.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import dev.jameido.pokedex.framework.datasource.local.models.*
 
 /**
@@ -11,11 +8,15 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
  */
 @Dao
 interface PkmnDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPkmn(pokemon: List<DbPkmn>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSpecies(pokemon: List<DbPkmn>, speciesData: List<DbPkmnSpeciesData>, varieties: List<DbPkmnSpeciesVariety>)
+    suspend fun insertSpeciesElement(pokemon: List<DbPkmnSpeciesElement>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSpeciesVarieties(pokemon: List<DbPkmn>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSpeciesData(speciesData: DbPkmnSpeciesData)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetail(
@@ -25,12 +26,12 @@ interface PkmnDao {
             types: List<DbType>,
             pkmnTypes: List<DbPkmnTypes>)
 
-    @Query("SELECT * FROM species WHERE name = :name LIMIT 1")
+    @Query("SELECT * FROM species_data WHERE name = :name LIMIT 1")
     suspend fun getSpeciesByName(name: String): DbPkmnSpecies?
 
     @Query("SELECT * FROM detail WHERE name = :name LIMIT 1")
     suspend fun getDetailByName(name: String): DbPkmnDetail?
 
-    @Query("SELECT * FROM pokemon LIMIT :limit OFFSET :offset")
-    suspend fun getPaginatedPokemon(limit: Int, offset: Int): List<DbPkmn>?
+    @Query("SELECT * FROM species LIMIT :limit OFFSET :offset")
+    suspend fun getPaginatedSpecies(limit: Int, offset: Int): List<DbPkmnSpeciesElement>?
 }

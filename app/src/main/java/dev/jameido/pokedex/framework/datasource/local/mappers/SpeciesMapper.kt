@@ -9,13 +9,14 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
 class SpeciesMapper : DbMapper<DbPkmnSpecies, PkmnSpeciesModel> {
     override fun mapFromDb(dbEntity: DbPkmnSpecies): PkmnSpeciesModel {
         val pkmnMapper = PkmnMapper()
-        val varieties = dbEntity.varieties.map { pkmnMapper.mapFromDb(it.pokemon) }
-        return PkmnSpeciesModel(dbEntity.species.id, dbEntity.species.name, dbEntity.species.description, varieties, dbEntity.species.evolutionChain)
+        val varieties = dbEntity.varieties?.map { pkmnMapper.mapFromDb(it) }
+        return PkmnSpeciesModel(dbEntity.speciesData.id, dbEntity.speciesData.name, dbEntity.speciesData.description, varieties.orEmpty(), dbEntity.speciesData.evolutionChain)
     }
 
     override fun mapToDb(model: PkmnSpeciesModel): DbPkmnSpecies {
-        val pkmnMapper = PkmnMapper()
-        val varieties = model.varieties.map { DbPkmnVariety(variety = DbPkmnSpeciesVariety(pokemonName = it.name, speciesName = model.name), pokemon = pkmnMapper.mapToDb(it)) }
-        return DbPkmnSpecies(DbPkmnSpeciesData(model.name, model.id, model.description, model.evolutionChain), varieties = varieties)
+        val varieties = model.varieties.map { DbPkmn(model.name, it.name, it.url) }
+        return DbPkmnSpecies(
+                DbPkmnSpeciesData(model.name, model.id, model.description, model.evolutionChain),
+                varieties)
     }
 }

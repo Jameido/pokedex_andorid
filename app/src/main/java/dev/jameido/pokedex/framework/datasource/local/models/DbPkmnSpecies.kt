@@ -9,6 +9,13 @@ import androidx.room.Relation
  * Created by Jameido on 05/01/2021.
  */
 @Entity(tableName = "species")
+class DbPkmnSpeciesElement(
+        @PrimaryKey
+        val name: String,
+        val url: String?
+)
+
+@Entity(tableName = "species_data")
 class DbPkmnSpeciesData(
         @PrimaryKey
         val name: String,
@@ -17,22 +24,16 @@ class DbPkmnSpeciesData(
         val evolutionChain: String?
 )
 
-@Entity(tableName = "variety")
-class DbPkmnSpeciesVariety(
-        @PrimaryKey
-        val pokemonName: String,
+@Entity(tableName = "pokemon")
+data class DbPkmn(
         val speciesName: String,
-)
-
-data class DbPkmnVariety(
-        @Embedded val variety: DbPkmnSpeciesVariety,
-        @Relation(parentColumn = "pokemonName", entityColumn = "name")
-        val pokemon: DbPkmn,
+        @PrimaryKey val name: String = "",
+        val url: String?
 )
 
 data class DbPkmnSpecies(
-        @Embedded val species: DbPkmnSpeciesData,
-        @Relation(parentColumn = "name", entityColumn = "speciesName", entity = DbPkmnSpeciesVariety::class)
-        val varieties: List<DbPkmnVariety>
+        @Embedded val speciesData: DbPkmnSpeciesData,
+        @Relation(parentColumn = "name", entityColumn = "speciesName")
+        val varieties: List<DbPkmn>?
 )
 
