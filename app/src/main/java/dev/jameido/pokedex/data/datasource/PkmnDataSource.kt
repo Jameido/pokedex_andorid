@@ -2,6 +2,7 @@ package dev.jameido.pokedex.data.datasource
 
 import dev.jameido.pokedex.data.models.PkmnDetailModel
 import dev.jameido.pokedex.data.models.PkmnListModel
+import dev.jameido.pokedex.data.models.PkmnModel
 import dev.jameido.pokedex.data.models.PkmnSpeciesModel
 
 /**
@@ -22,5 +23,7 @@ interface LocalPkmnDataSource : PkmnDataSource {
     suspend fun insertDetail(detail: PkmnDetailModel)
 
     suspend fun insertSpecies(species: PkmnSpeciesModel)
+
+    suspend fun insertPokemon(pokemon: List<PkmnModel>)
 
 }

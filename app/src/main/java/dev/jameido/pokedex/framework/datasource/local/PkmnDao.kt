@@ -12,6 +12,9 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
 @Dao
 interface PkmnDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPkmn(pokemon: List<DbPkmn>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSpecies(pokemon: List<DbPkmn>, speciesData: List<DbPkmnSpeciesData>, varieties: List<DbPkmnSpeciesVariety>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
