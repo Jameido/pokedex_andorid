@@ -5,6 +5,7 @@ import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
 import dev.jameido.pokedex.data.mappers.PkmnDetailEntityMapper
 import dev.jameido.pokedex.data.mappers.PkmnEntityMapper
 import dev.jameido.pokedex.data.mappers.PkmnSpeciesEntityMapper
+import dev.jameido.pokedex.data.models.RemotePageKey
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.*
 
@@ -13,6 +14,11 @@ import dev.jameido.pokedex.domain.entity.*
  */
 class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, private val localPkmnDataSource: LocalPkmnDataSource) : PkmnRepository {
 
+    companion object {
+        const val REMOTE_PAGE_SIZE = 60
+        const val REMOTE_SPECIES_LIST = "species_list"
+    }
+
     private var listCache = hashMapOf<Int, PkmnListEntity>()
     private var listCachePageSize = 0
 
@@ -20,8 +26,15 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     private var speciesCache = hashMapOf<String, PkmnSpeciesEntity>()
 
     override suspend fun pkmnList(page: Int, pageSize: Int): PkmnListEntity {
-        return readListFromDatabase(page, pageSize) ?: readListFromService(page, pageSize)!!
-
+        var localPage = readListFromDatabase(page, pageSize)
+        if (localPage.next == null) {
+            val nextRemoteKey = localPkmnDataSource.getNextRemotePageKey(REMOTE_SPECIES_LIST)
+            if ((nextRemoteKey?.nextPage != null) || page == 0) {
+                updateListFromNetwork(nextRemoteKey?.nextPage ?: 0, REMOTE_PAGE_SIZE)
+                localPage = readListFromDatabase(page, pageSize)
+            }
+        }
+        return localPage
     }
 
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
@@ -33,20 +46,22 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     }
 
     //region list
-    private suspend fun readListFromService(page: Int, pageSize: Int): PkmnListEntity? {
+    private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity {
+        return localPkmnDataSource.list(pageSize, page)?.let {
+            val pkmnMapper = PkmnEntityMapper()
+            return PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
+        } ?: PkmnListEntity(null, null, emptyList())
+    }
+
+    private suspend fun updateListFromNetwork(page: Int, pageSize: Int): PkmnListEntity {
         return networkDataSource.list(pageSize, page)?.let {
             localPkmnDataSource.insertPokemon(it.results)
+            localPkmnDataSource.insertNextRemotePageKey(RemotePageKey(REMOTE_SPECIES_LIST, it.next))
             val pkmnMapper = PkmnEntityMapper()
             val list = PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
             addListToCache(page, list)
             return list
-        }
-    }
-    private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity? {
-        return localPkmnDataSource.list(pageSize, page)?.let {
-            val pkmnMapper = PkmnEntityMapper()
-            return PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
-        }
+        } ?: PkmnListEntity(null, null, emptyList())
     }
 
     private fun readListFromCache(page: Int): PkmnListEntity? {

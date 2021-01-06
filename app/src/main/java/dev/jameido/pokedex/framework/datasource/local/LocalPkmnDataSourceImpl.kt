@@ -1,11 +1,9 @@
 package dev.jameido.pokedex.framework.datasource.local
 
 import dev.jameido.pokedex.data.datasource.LocalPkmnDataSource
-import dev.jameido.pokedex.data.models.PkmnDetailModel
-import dev.jameido.pokedex.data.models.PkmnListModel
-import dev.jameido.pokedex.data.models.PkmnModel
-import dev.jameido.pokedex.data.models.PkmnSpeciesModel
+import dev.jameido.pokedex.data.models.*
 import dev.jameido.pokedex.framework.datasource.local.mappers.DetailMapper
+import dev.jameido.pokedex.framework.datasource.local.mappers.RemotePageKeyMapper
 import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesElementMapper
 import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesMapper
 import dev.jameido.pokedex.framework.datasource.local.models.DbStat
@@ -37,6 +35,14 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
     override suspend fun insertPokemon(pokemon: List<PkmnModel>) {
         val mapper = SpeciesElementMapper()
         dao.insertSpeciesElement(pokemon.map { mapper.mapToDb(it) })
+    }
+
+    override suspend fun insertNextRemotePageKey(pageKey: RemotePageKey) {
+        dao.insertRemotePageKey(RemotePageKeyMapper().mapToDb(pageKey))
+    }
+
+    override suspend fun getNextRemotePageKey(pageKey: String): RemotePageKey? {
+        return dao.getRemotePageKey(pageKey)
     }
 
     override suspend fun list(pageSize: Int, page: Int): PkmnListModel? {

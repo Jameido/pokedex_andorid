@@ -1,6 +1,7 @@
 package dev.jameido.pokedex.framework.datasource.local
 
 import androidx.room.*
+import dev.jameido.pokedex.data.models.RemotePageKey
 import dev.jameido.pokedex.framework.datasource.local.models.*
 
 /**
@@ -26,6 +27,9 @@ interface PkmnDao {
             types: List<DbType>,
             pkmnTypes: List<DbPkmnTypes>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRemotePageKey(remotePageKey: DbRemotePageKey)
+
     @Query("SELECT * FROM species_data WHERE name = :name LIMIT 1")
     suspend fun getSpeciesByName(name: String): DbPkmnSpecies?
 
@@ -34,4 +38,8 @@ interface PkmnDao {
 
     @Query("SELECT * FROM species LIMIT :limit OFFSET :offset")
     suspend fun getPaginatedSpecies(limit: Int, offset: Int): List<DbPkmnSpeciesElement>?
+
+    @Query("SELECT * FROM remote_page_key WHERE listName = :listName LIMIT 1")
+    suspend fun getRemotePageKey(listName: String): RemotePageKey?
+
 }

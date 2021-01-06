@@ -1,9 +1,6 @@
 package dev.jameido.pokedex.data.datasource
 
-import dev.jameido.pokedex.data.models.PkmnDetailModel
-import dev.jameido.pokedex.data.models.PkmnListModel
-import dev.jameido.pokedex.data.models.PkmnModel
-import dev.jameido.pokedex.data.models.PkmnSpeciesModel
+import dev.jameido.pokedex.data.models.*
 
 /**
  * Created by Jameido on 19/12/2020.
@@ -25,5 +22,9 @@ interface LocalPkmnDataSource : PkmnDataSource {
     suspend fun insertSpecies(species: PkmnSpeciesModel)
 
     suspend fun insertPokemon(pokemon: List<PkmnModel>)
+
+    suspend fun insertNextRemotePageKey(pageKey: RemotePageKey)
+
+    suspend fun getNextRemotePageKey(pageKey: String) : RemotePageKey?
 
 }
