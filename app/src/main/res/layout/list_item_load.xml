@@ -7,17 +7,41 @@
     android:gravity="center_vertical"
     android:padding="@dimen/spacing_16">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_loading"
+        android:layout_width="@dimen/list_item_loading"
+        android:layout_height="@dimen/list_item_loading"
+        android:src="@drawable/loading_animation"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_error"
+        android:layout_width="@dimen/list_item_loading"
+        android:layout_height="@dimen/list_item_loading"
+        android:layout_marginStart="@dimen/spacing_4"
+        android:src="@drawable/ic_tired_pikachu"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_error"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_8"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/spacing_8"
+        android:layout_marginEnd="@dimen/spacing_8"
+        android:gravity="center_vertical"
         android:text="@string/error_load"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_retry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_retry"
+        app:layout_constraintStart_toEndOf="@+id/img_error"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
@@ -29,18 +53,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_error"
-        tools:visibility="visible" />
-
-    <ProgressBar
-        android:id="@+id/prg_loading"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_error"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

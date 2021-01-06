@@ -2,6 +2,7 @@
 <resources>
     <dimen name="list_item_sprite">80dp</dimen>
     <dimen name="list_item_sprite_padding">4dp</dimen>
+    <dimen name="list_item_loading">56dp</dimen>
     <dimen name="detail_sprite">96dp</dimen>
     <dimen name="detail_sprite_padding">6dp</dimen>
 

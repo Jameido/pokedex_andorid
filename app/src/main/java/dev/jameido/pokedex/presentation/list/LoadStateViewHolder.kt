@@ -1,13 +1,16 @@
 package dev.jameido.pokedex.presentation.list
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import dev.jameido.pokedex.R
 
 /**
@@ -18,7 +21,20 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
                 LayoutInflater.from(parent.context)
                         .inflate(R.layout.list_item_load, parent, false)
         ) {
-    private val progressBar: ProgressBar = itemView.findViewById(R.id.prg_loading)
+
+    private val imgLoading = itemView.findViewById<AppCompatImageView>(R.id.img_loading)
+            .also {
+                AnimatedVectorDrawableCompat.create(itemView.context, R.drawable.loading_animation)?.let { animated ->
+                    animated.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
+                        override fun onAnimationEnd(drawable: Drawable?) {
+                            it.post { animated.start() }
+                        }
+                    })
+                    it.setImageDrawable(animated)
+                    animated.start()
+                }
+            }
+    private val imgError = itemView.findViewById<AppCompatImageView>(R.id.img_error)
     private val txtError: AppCompatTextView = itemView.findViewById(R.id.txt_error)
     private val btnRetry = itemView.findViewById<AppCompatButton>(R.id.btn_retry)
             .also {
@@ -30,12 +46,14 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
             is LoadState.Error -> {
                 txtError.visibility = View.VISIBLE
                 btnRetry.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
+                imgError.visibility = View.VISIBLE
+                imgLoading.visibility = View.GONE
             }
             is LoadState.Loading -> {
                 txtError.visibility = View.GONE
                 btnRetry.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
+                imgError.visibility = View.GONE
+                imgLoading.visibility = View.VISIBLE
             }
         }
     }
