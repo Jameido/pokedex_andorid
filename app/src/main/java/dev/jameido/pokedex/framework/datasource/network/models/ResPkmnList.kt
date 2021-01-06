@@ -1,4 +1,4 @@
-package dev.jameido.pokedex.data.models
+package dev.jameido.pokedex.framework.datasource.network.models
 
 import com.squareup.moshi.JsonClass
 
@@ -10,7 +10,7 @@ data class ResPkmnList(
         val count: Int,
         val next: String?,
         val previous: String?,
-        val results: Array<PkmnElement>
+        val results: Array<ResPkmnElement>
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
