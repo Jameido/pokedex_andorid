@@ -19,6 +19,11 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
         const val REMOTE_SPECIES_LIST = "species_list"
     }
 
+    /**
+     * Get list of pokemon species page.
+     * First read from local data source. If the retrieved page is empty or not fully populated
+     * update the local data from the network data source, then read it again from local data source.
+     */
     override suspend fun pkmnList(page: Int, pageSize: Int): PkmnListEntity {
         var localPage = readListFromDatabase(page, pageSize)
         if (localPage.next == null) {
@@ -31,15 +36,28 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
         return localPage
     }
 
+    /**
+     * Get pokemon detail data.
+     * First read from local data source. If the local data is null readt the new data from the
+     * network data from the data source and return it after updating the local data.
+     */
     override suspend fun pkmnDetail(name: String): PkmnDetailEntity {
-        return readDetailFromDb(name) ?: readDetailFromService(name)!!
+        return readDetailFromDb(name) ?: readDetailFromNetwork(name)!!
     }
 
+    /**
+     * Get pokemon species detail data.
+     * First read from local data source. If the local data is null readt the new data from the
+     * network data from the data source and return it after updating the local data.
+     */
     override suspend fun pkmnSpecies(name: String): PkmnSpeciesEntity {
-        return readSpeciesFromDb(name) ?: readSpeciesFromService(name)!!
+        return readSpeciesFromDb(name) ?: readSpeciesFromNetwork(name)!!
     }
 
     //region list
+    /**
+     * Get list of pokemon species page from local data source
+     */
     private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity {
         return localPkmnDataSource.list(pageSize, page)?.let {
             val pkmnMapper = PkmnEntityMapper()
@@ -47,6 +65,10 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
         } ?: PkmnListEntity(null, null, emptyList())
     }
 
+    /**
+     * Get list of pokemon species page from network data source, then store the retrieved data and
+     * next page key into local data source.
+     */
     private suspend fun updateListFromNetwork(page: Int, pageSize: Int): PkmnListEntity {
         return networkDataSource.list(pageSize, page)?.let {
             localPkmnDataSource.insertPokemon(it.results)
@@ -58,32 +80,44 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     //endregion
 
     //region detail
-    private suspend fun readDetailFromService(name: String): PkmnDetailEntity? {
-        return networkDataSource.detail(name)?.let {
-            localPkmnDataSource.insertDetail(it)
-            return PkmnDetailEntityMapper().map(it)
-        }
-    }
-
+    /**
+     * Get pokemon detail data from local data source.
+     */
     private suspend fun readDetailFromDb(name: String): PkmnDetailEntity? {
         return localPkmnDataSource.detail(name)?.let {
             PkmnDetailEntityMapper().map(it)
+        }
+    }
+
+    /**
+     * Get pokemon detail data from network data source and store it in local data source
+     */
+    private suspend fun readDetailFromNetwork(name: String): PkmnDetailEntity? {
+        return networkDataSource.detail(name)?.let {
+            localPkmnDataSource.insertDetail(it)
+            return PkmnDetailEntityMapper().map(it)
         }
     }
     //endregion
 
 
     //region species
-    private suspend fun readSpeciesFromService(name: String): PkmnSpeciesEntity? {
-        return networkDataSource.species(name)?.let {
-            localPkmnDataSource.insertSpecies(it)
-            return PkmnSpeciesEntityMapper().map(it)
-        }
-    }
-
+    /**
+     * Get pokemon species detail data from local data source
+     */
     private suspend fun readSpeciesFromDb(name: String): PkmnSpeciesEntity? {
         return localPkmnDataSource.species(name)?.let {
             PkmnSpeciesEntityMapper().map(it)
+        }
+    }
+
+    /**
+     * Get pokemon species detail data from network data source and store it in local data source
+     */
+    private suspend fun readSpeciesFromNetwork(name: String): PkmnSpeciesEntity? {
+        return networkDataSource.species(name)?.let {
+            localPkmnDataSource.insertSpecies(it)
+            return PkmnSpeciesEntityMapper().map(it)
         }
     }
     //endregion
