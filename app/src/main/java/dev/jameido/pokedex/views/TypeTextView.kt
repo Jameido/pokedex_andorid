@@ -124,7 +124,7 @@ class TypeTextView @JvmOverloads constructor(context: Context, attrs: AttributeS
         return ContextCompat.getColor(
                 context,
                 when (type?.toString()?.toLowerCase(Locale.getDefault())) {
-                    Type.dark, Type.ghost, Type.shadow, Type.unknown ->
+                    Type.dark, Type.fighting, Type.ghost, Type.shadow, Type.water, Type.unknown ->
                         R.color.type_text_light
 
                     else ->
