@@ -9,11 +9,11 @@ data class PkmnDetailEntity(
         val height: Float,
         val weight: Float,
         val sprite: String?,
-        val stats: List<Stat>,
+        val stats: List<StatEntity>,
         val types: List<String>
 )
 
-data class Stat(
+data class StatEntity(
         val value: Int,
         val name: String
 )

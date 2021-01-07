@@ -13,8 +13,7 @@ data class DbPkmnDetailData(
         @PrimaryKey val name: String,
         val id: Int,
         val height: Float,
-        val weight: Float,
-        val sprite: String?
+        val weight: Float
 )
 
 @Entity(tableName = "pokemon_stat", primaryKeys = ["pokemonName", "statName"])

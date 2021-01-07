@@ -11,7 +11,6 @@ data class ResPkmnDetail(
         val name: String,
         val height: Int,
         val weight: Int,
-        val sprites: Sprites,
         val stats: Array<StatOrdinal>,
         val types: Array<TypeOrdinal>
 ) {
@@ -25,7 +24,6 @@ data class ResPkmnDetail(
         if (name != other.name) return false
         if (height != other.height) return false
         if (weight != other.weight) return false
-        if (sprites != other.sprites) return false
         if (!stats.contentEquals(other.stats)) return false
         if (!types.contentEquals(other.types)) return false
 
@@ -37,17 +35,11 @@ data class ResPkmnDetail(
         result = 31 * result + name.hashCode()
         result = 31 * result + height.hashCode()
         result = 31 * result + weight.hashCode()
-        result = 31 * result + sprites.hashCode()
         result = 31 * result + stats.contentHashCode()
         result = 31 * result + types.contentHashCode()
         return result
     }
 }
-
-@JsonClass(generateAdapter = true)
-data class Sprites(
-        val front_default: String?
-)
 
 @JsonClass(generateAdapter = true)
 data class TypeOrdinal(

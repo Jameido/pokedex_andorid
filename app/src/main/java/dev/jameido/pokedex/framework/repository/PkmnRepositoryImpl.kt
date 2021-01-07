@@ -2,9 +2,7 @@ package dev.jameido.pokedex.framework.repository
 
 import dev.jameido.pokedex.data.datasource.LocalPkmnDataSource
 import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
-import dev.jameido.pokedex.data.mappers.PkmnDetailEntityMapper
-import dev.jameido.pokedex.data.mappers.PkmnEntityMapper
-import dev.jameido.pokedex.data.mappers.PkmnSpeciesEntityMapper
+import dev.jameido.pokedex.data.mappers.*
 import dev.jameido.pokedex.data.models.RemotePageKey
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.*
@@ -12,7 +10,10 @@ import dev.jameido.pokedex.domain.entity.*
 /**
  * Created by Jameido on 17/12/2020.
  */
-class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, private val localPkmnDataSource: LocalPkmnDataSource) : PkmnRepository {
+class PkmnRepositoryImpl(
+        private val networkDataSource: NetworkPkmnDataSource,
+        private val localPkmnDataSource: LocalPkmnDataSource
+) : PkmnRepository {
 
     companion object {
         const val REMOTE_PAGE_SIZE = 60
@@ -60,8 +61,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
      */
     private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity {
         return localPkmnDataSource.list(pageSize, page)?.let {
-            val pkmnMapper = PkmnEntityMapper()
-            return PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
+            return PkmnListEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
         } ?: PkmnListEntity(null, null, emptyList())
     }
 
@@ -73,8 +73,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
         return networkDataSource.list(pageSize, page)?.let {
             localPkmnDataSource.insertPokemon(it.results)
             localPkmnDataSource.insertNextRemotePageKey(RemotePageKey(REMOTE_SPECIES_LIST, it.next))
-            val pkmnMapper = PkmnEntityMapper()
-            return PkmnListEntity(it.next, it.previous, it.results.map { pkmn -> pkmnMapper.map(pkmn) })
+            return PkmnListEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
         } ?: PkmnListEntity(null, null, emptyList())
     }
     //endregion
@@ -85,7 +84,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
      */
     private suspend fun readDetailFromDb(name: String): PkmnDetailEntity? {
         return localPkmnDataSource.detail(name)?.let {
-            PkmnDetailEntityMapper().map(it)
+            PkmnDetailEntityMapper(SpriteMapper(), StatEntityMapper()).map(it)
         }
     }
 
@@ -95,7 +94,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     private suspend fun readDetailFromNetwork(name: String): PkmnDetailEntity? {
         return networkDataSource.detail(name)?.let {
             localPkmnDataSource.insertDetail(it)
-            return PkmnDetailEntityMapper().map(it)
+            return PkmnDetailEntityMapper(SpriteMapper(), StatEntityMapper()).map(it)
         }
     }
     //endregion
@@ -107,7 +106,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
      */
     private suspend fun readSpeciesFromDb(name: String): PkmnSpeciesEntity? {
         return localPkmnDataSource.species(name)?.let {
-            PkmnSpeciesEntityMapper().map(it)
+            PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
         }
     }
 
@@ -117,7 +116,7 @@ class PkmnRepositoryImpl(private val networkDataSource: NetworkPkmnDataSource, p
     private suspend fun readSpeciesFromNetwork(name: String): PkmnSpeciesEntity? {
         return networkDataSource.species(name)?.let {
             localPkmnDataSource.insertSpecies(it)
-            return PkmnSpeciesEntityMapper().map(it)
+            return PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
         }
     }
     //endregion

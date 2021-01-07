@@ -1,7 +1,7 @@
 package dev.jameido.pokedex.framework.datasource.local.mappers
 
 import dev.jameido.pokedex.data.models.PkmnDetailModel
-import dev.jameido.pokedex.data.models.Stat
+import dev.jameido.pokedex.data.models.StatModel
 import dev.jameido.pokedex.framework.datasource.local.models.*
 
 /**
@@ -9,14 +9,13 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
  */
 class DetailMapper : DbMapper<DbPkmnDetail, PkmnDetailModel> {
     override fun mapFromDb(dbEntity: DbPkmnDetail): PkmnDetailModel {
-        val stats = dbEntity.stats.map { Stat(it.statName, it.value) }
+        val stats = dbEntity.stats.map { StatModel(it.statName, it.value) }
         val type = dbEntity.types.map { it.typeName }
         return PkmnDetailModel(
                 dbEntity.detail.id,
                 dbEntity.detail.name,
                 dbEntity.detail.height,
                 dbEntity.detail.weight,
-                dbEntity.detail.sprite,
                 stats,
                 type
         )
@@ -30,7 +29,6 @@ class DetailMapper : DbMapper<DbPkmnDetail, PkmnDetailModel> {
                 model.id,
                 model.height,
                 model.weight,
-                model.sprite,
         )
         return DbPkmnDetail(detail, stats, type)
     }

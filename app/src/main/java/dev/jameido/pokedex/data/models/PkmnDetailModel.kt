@@ -8,12 +8,11 @@ data class PkmnDetailModel(
         val name: String,
         val height: Float,
         val weight: Float,
-        val sprite: String?,
-        val stats: List<Stat>,
+        val stats: List<StatModel>,
         val types: List<String>
 )
 
-data class Stat(
+data class StatModel(
         val name: String,
         val value: Int
 )
