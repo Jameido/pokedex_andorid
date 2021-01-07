@@ -1,4 +1,4 @@
-package dev.jameido.pokedex.domain.usecase
+package dev.jameido.pokedex.usecase
 
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
+import dev.jameido.pokedex.usecase.GetPkmnListPage
 import org.koin.java.KoinJavaComponent.get
 
 /**

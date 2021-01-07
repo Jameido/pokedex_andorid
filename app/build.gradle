@@ -37,7 +37,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation project(path: ':domain')
 
     //Jetpack
     implementation 'androidx.core:core-ktx:1.3.2'

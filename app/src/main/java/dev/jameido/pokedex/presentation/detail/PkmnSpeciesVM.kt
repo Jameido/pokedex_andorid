@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.presentation.detail
 
-import dev.jameido.pokedex.domain.usecase.GetPkmnSpecies
+import dev.jameido.pokedex.usecase.GetPkmnSpecies
 import io.uniflow.androidx.flow.AndroidDataFlow
 import org.koin.java.KoinJavaComponent.get
 

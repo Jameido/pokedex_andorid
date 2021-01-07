@@ -2,7 +2,6 @@ package dev.jameido.pokedex.data.mappers
 
 import dev.jameido.pokedex.data.models.PkmnDetailModel
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
-import dev.jameido.pokedex.domain.entity.StatEntity
 
 /**
  * Created by Jameido on 04/01/2021.

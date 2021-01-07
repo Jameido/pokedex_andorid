@@ -1,8 +1,8 @@
 package dev.jameido.pokedex.di
 
-import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
-import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
-import dev.jameido.pokedex.domain.usecase.GetPkmnSpecies
+import dev.jameido.pokedex.usecase.GetPkmnDetail
+import dev.jameido.pokedex.usecase.GetPkmnListPage
+import dev.jameido.pokedex.usecase.GetPkmnSpecies
 import org.koin.dsl.module
 
 /**

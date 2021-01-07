@@ -2,7 +2,6 @@ package dev.jameido.pokedex.presentation.detail
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import dev.jameido.pokedex.domain.entity.PkmnEntity
 import dev.jameido.pokedex.domain.entity.PkmnVarietyEntity
 
 /**

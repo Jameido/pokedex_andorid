@@ -1,4 +1,4 @@
-package dev.jameido.pokedex.domain.usecase
+package dev.jameido.pokedex.usecase
 
 import androidx.paging.PagingSource
 import dev.jameido.pokedex.data.repository.PkmnRepository
