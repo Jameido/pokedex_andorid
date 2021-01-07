@@ -22,7 +22,6 @@ class VarietyViewHolder(parent: ViewGroup, private val onClick: (name: String) -
     fun bind(pkmn: PkmnVarietyEntity?) {
         pkmn?.let { variety ->
             itemView.setOnClickListener { onClick.invoke(variety.pokemon.name) }
-            imgSprite.setBackgroundResource(R.drawable.sprite_backgorund)
             Glide.with(imgSprite)
                     .load(variety.pokemon.spriteUrl)
                     .placeholder(R.drawable.ic_missingno)
