@@ -20,8 +20,6 @@ class PkmnDetailUnitTest {
             Assert.assertNotNull(detailResponse)
             Assert.assertEquals(detailResponse!!.id, 132)
             Assert.assertEquals(detailResponse!!.name, "ditto")
-            Assert.assertNotNull(detailResponse!!.sprites)
-            Assert.assertEquals(detailResponse!!.sprites.front_default, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png")
             Assert.assertEquals(detailResponse!!.stats.size, 6)
             Assert.assertNotNull(detailResponse!!.stats[0])
             Assert.assertEquals(detailResponse!!.stats[0].base_stat, 48)

@@ -1,6 +1,7 @@
 package dev.jameido.pokedex.framework
 
 import dev.jameido.pokedex.framework.datasource.network.PkmnApi
+import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnElement
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -33,7 +34,7 @@ class ApiUnitTest {
         assertNull(response.previous)
         assertNotNull(response.results)
         assertEquals(response.results.size, 20)
-        assertEquals(response.results[0], PkmnElement("bulbasaur", "https://pokeapi.co/api/v2/pokemon-species/1/"))
+        assertEquals(response.results[0], ResPkmnElement("bulbasaur", "https://pokeapi.co/api/v2/pokemon-species/1/"))
 
     }
     @Test
@@ -47,8 +48,6 @@ class ApiUnitTest {
         assertNotNull(response)
         assertEquals(response!!.id, 132)
         assertEquals(response!!.name, "ditto")
-        assertNotNull(response!!.sprites)
-        assertEquals(response!!.sprites.front_default, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png")
         assertEquals(response!!.stats.size, 6)
         assertNotNull(response!!.stats[0])
         assertEquals(response!!.stats[0].base_stat, 48)

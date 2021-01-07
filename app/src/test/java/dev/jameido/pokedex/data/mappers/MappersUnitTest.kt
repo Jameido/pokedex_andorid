@@ -2,7 +2,9 @@ package dev.jameido.pokedex.data.mappers
 
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
-import dev.jameido.pokedex.data.models.ResPkmnSpecies
+import dev.jameido.pokedex.data.models.PkmnModel
+import dev.jameido.pokedex.data.models.PkmnSpeciesModel
+import dev.jameido.pokedex.data.models.PkmnVarietyModel
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -11,14 +13,24 @@ import org.junit.Test
  */
 
 class PkmnSpeciesUnitTest {
-    private val moshi = Moshi.Builder()
-            .build()
 
     @Test
     fun mapPkmnSpecies() {
         try {
-            val model = moshi.adapter(ResPkmnSpecies::class.java).fromJson(DETAIL_CHARIZARD)
-            val mapped = PkmnSpeciesEntityMapper().map(model!!)
+            val model = PkmnSpeciesModel(
+                    6,
+                    "charizard",
+                    "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.",
+                    listOf(
+                            PkmnVarietyModel(PkmnModel("charizard", "https://pokeapi.co/api/v2/pokemon/6/"), true),
+                            PkmnVarietyModel(PkmnModel("charizard-mega-x", "https://pokeapi.co/api/v2/pokemon/10034/"), false),
+                            PkmnVarietyModel(PkmnModel("charizard-mega-y", "https://pokeapi.co/api/v2/pokemon/10085/"), false),
+                            PkmnVarietyModel(PkmnModel("charizard-gmax", "https://pokeapi.co/api/v2/pokemon/10187/"), false),
+                    ),
+                    "https://pokeapi.co/api/v2/evolution-chain/2/",
+
+            )
+            val mapped = PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(model)
             
             assertNotNull(mapped)
             assertEquals(mapped!!.id, 6)
@@ -29,11 +41,13 @@ class PkmnSpeciesUnitTest {
             assertEquals(mapped!!.description, "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.")
             assertEquals(mapped!!.varieties.size, 4)
             assertNotNull(mapped!!.varieties[0])
-            assertEquals(mapped!!.varieties[0].url, "https://pokeapi.co/api/v2/pokemon/6/")
-            assertEquals(mapped!!.varieties[0].name, "charizard")
+            assertNotNull(mapped!!.varieties[0].pokemon)
+            assertEquals(mapped!!.varieties[0].pokemon.url, "https://pokeapi.co/api/v2/pokemon/6/")
+            assertEquals(mapped!!.varieties[0].pokemon.name, "charizard")
             //Since Url.parse cannot be used in UT spriteUrl and index cannot be retrieved
-            assertNull(mapped!!.varieties[0].index)
-            assertNull(mapped!!.varieties[0].spriteUrl)
+            assertNull(mapped!!.varieties[0].pokemon.index)
+            assertNull(mapped!!.varieties[0].pokemon.spriteUrl)
+            assertEquals(mapped!!.varieties[0].isDefault, true)
 
         } catch (ex: JsonDataException) {
             fail()
