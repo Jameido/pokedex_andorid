@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import dev.jameido.pokedex.R
+import dev.jameido.pokedex.framework.datasource.network.NetworkException
+import dev.jameido.pokedex.views.ErrorViewUtil
 
 /**
  * Created by Jameido on 02/01/2021.
@@ -36,6 +38,7 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
             }
     private val containerError: View = itemView.findViewById(R.id.container_list_error)
     private val txtError: AppCompatTextView = itemView.findViewById(R.id.txt_error)
+    private val imgError = itemView.findViewById<AppCompatImageView>(R.id.img_error)
     private val btnRetry = itemView.findViewById<AppCompatButton>(R.id.btn_retry)
             .also {
                 it.setOnClickListener { retry() }
@@ -44,6 +47,7 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
     fun bind(loadState: LoadState) {
         when (loadState) {
             is LoadState.Error -> {
+                ErrorViewUtil.showErrorContent(loadState.error, txtError, imgError)
                 containerError.visibility = View.VISIBLE
                 imgLoading.visibility = View.GONE
             }

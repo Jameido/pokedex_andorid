@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
 import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
+import dev.jameido.pokedex.views.ErrorViewUtil
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import kotlinx.android.synthetic.main.content_detail.*
@@ -36,7 +37,7 @@ class DetailFragment : Fragment() {
         onStates(speciesVM) { state ->
             when (state) {
                 is PkmnSpeciesStates.Loading -> onSpeciesLoading()
-                is PkmnSpeciesStates.Error -> onSpeciesError(state.name)
+                is PkmnSpeciesStates.Error -> onSpeciesError(state.error, state.name)
                 is PkmnSpeciesStates.Loaded -> onSpeciesLoaded(state.species)
             }
         }
@@ -50,7 +51,7 @@ class DetailFragment : Fragment() {
         onStates(varietyVM) { state ->
             when (state) {
                 is PkmnVarietyStates.Loading -> onVarietyLoading()
-                is PkmnVarietyStates.Error -> onVarietyError(state.name)
+                is PkmnVarietyStates.Error -> onVarietyError(state.error, state.name)
                 is PkmnVarietyStates.Loaded -> onVarietyLoaded(state.detail)
             }
         }
@@ -79,10 +80,11 @@ class DetailFragment : Fragment() {
         shimmer_detail_data.showShimmer(true)
     }
 
-    private fun onVarietyError(name: String) {
+    private fun onVarietyError(error: Throwable, name: String) {
         shimmer_detail_data.hideShimmer()
         shimmer_detail_data.visibility = View.INVISIBLE
         container_detail_data_error.visibility = View.VISIBLE
+        ErrorViewUtil.showErrorContent(error, container_detail_data_error.findViewById(R.id.txt_error), container_detail_data_error.findViewById(R.id.img_error))
         container_detail_data_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { varietyVM.load(name) }
     }
 
@@ -140,10 +142,11 @@ class DetailFragment : Fragment() {
         shimmer_varieties.showShimmer(true)
     }
 
-    private fun onSpeciesError(name: String) {
+    private fun onSpeciesError(error: Throwable, name: String) {
         container_varieties_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { speciesVM.load(name) }
         shimmer_varieties.hideShimmer()
         shimmer_varieties.visibility = View.INVISIBLE
+        ErrorViewUtil.showErrorContent(error, container_varieties_error.findViewById(R.id.txt_error), container_varieties_error.findViewById(R.id.img_error))
         container_varieties_error.visibility = View.VISIBLE
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pokédex</string>
-    <string name="error_load">Something went wrong</string>
+    <string name="error_generic">Something went wrong, the pokémon escaped</string>
+    <string name="error_connection">Connection trouble, don\'t make it double!</string>
     <string name="retry">Retry</string>
 
     <string name="height_label">Height</string>

@@ -15,11 +15,7 @@ import org.koin.java.KoinJavaComponent.get
 class PkmnListVM(application: Application) : AndroidViewModel(application) {
 
     val list = Pager(
-            config = PagingConfig(
-                    pageSize = 20,
-                    initialLoadSize = 20,
-                    enablePlaceholders = true
-            ),
+            config = PagingConfig(pageSize = 20),
             pagingSourceFactory = { get(GetPkmnListPage::class.java) }
     )
             .flow

@@ -21,7 +21,6 @@ class GetPkmnListPage(private val repository: PkmnRepository) : PagingSource<Int
                     nextKey = response.next
             )
         } catch (exception: Exception) {
-            //TODO: handle different exceptions/errors
             return LoadResult.Error(exception)
         }
     }

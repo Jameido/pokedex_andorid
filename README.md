@@ -1,4 +1,4 @@
-# Pokédex Andorid
+# Pokédex Android
 
 Master/detail pokémons app
 

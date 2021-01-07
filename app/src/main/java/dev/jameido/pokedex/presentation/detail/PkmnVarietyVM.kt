@@ -28,7 +28,7 @@ class PkmnVarietyVM() : AndroidDataFlow() {
                         lastDetailName = name
                     },
                     onError = { error, _ ->
-                        setState(PkmnVarietyStates.Error(error.localizedMessage, name))
+                        setState(PkmnVarietyStates.Error(error, name))
                     }
             )
         }

@@ -32,7 +32,7 @@ class PkmnSpeciesVM() : AndroidDataFlow() {
                         lastSpeciesName = name
                     },
                     onError = { error, _ ->
-                        setState(PkmnSpeciesStates.Error(error.localizedMessage, name))
+                        setState(PkmnSpeciesStates.Error(error, name))
                     }
             )
         }
