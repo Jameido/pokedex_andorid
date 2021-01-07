@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
-import dev.jameido.pokedex.domain.entity.PkmnEntity
 import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
+import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import kotlinx.android.synthetic.main.content_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,21 +24,34 @@ import java.util.*
  */
 class DetailFragment : Fragment() {
 
-    private val viewModel: PkmnDetailVM by viewModel()
+    private val varietyVM: PkmnVarietyVM by viewModel()
+    private val speciesVM: PkmnSpeciesVM by viewModel()
+
     private lateinit var varietyAdapter: VarietyAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        varietyAdapter = VarietyAdapter { name -> viewModel.loadDetail(name) }
+        varietyAdapter = VarietyAdapter { name -> varietyVM.load(name) }
 
-        onStates(viewModel) { state ->
+        onStates(speciesVM) { state ->
             when (state) {
-                is PkmnDetailStates.Loading -> onDataLoading()
-                is PkmnDetailStates.Error -> onDataError(state.name)
-                is PkmnDetailStates.Loaded -> onDataLoaded(state.detail)
                 is PkmnSpeciesStates.Loading -> onSpeciesLoading()
                 is PkmnSpeciesStates.Error -> onSpeciesError(state.name)
                 is PkmnSpeciesStates.Loaded -> onSpeciesLoaded(state.species)
+            }
+        }
+
+        onEvents(speciesVM) { event ->
+            when (val data = event.take()) {
+                is PkmnSpeciesEvents.SpeciesLoaded -> varietyVM.load(data.defaultVariety)
+            }
+
+        }
+        onStates(varietyVM) { state ->
+            when (state) {
+                is PkmnVarietyStates.Loading -> onVarietyLoading()
+                is PkmnVarietyStates.Error -> onVarietyError(state.name)
+                is PkmnVarietyStates.Loaded -> onVarietyLoaded(state.detail)
             }
         }
 
@@ -54,28 +67,26 @@ class DetailFragment : Fragment() {
 
         if (savedInstanceState == null) {
             arguments?.getString(KEY_NAME, null)?.let {
-                viewModel.loadData(it)
+                speciesVM.load(it)
             }
-        } else {
-            viewModel.reLoadData()
         }
     }
 
-    private fun onDataLoading() {
+    private fun onVarietyLoading() {
         loadingDetailData()
         shimmer_detail_data.visibility = View.VISIBLE
         container_detail_data_error.visibility = View.INVISIBLE
         shimmer_detail_data.showShimmer(true)
     }
 
-    private fun onDataError(name: String) {
+    private fun onVarietyError(name: String) {
         shimmer_detail_data.hideShimmer()
         shimmer_detail_data.visibility = View.INVISIBLE
         container_detail_data_error.visibility = View.VISIBLE
-        container_detail_data_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.loadDetail(name) }
+        container_detail_data_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { varietyVM.load(name) }
     }
 
-    private fun onDataLoaded(pkmn: PkmnDetailEntity) {
+    private fun onVarietyLoaded(pkmn: PkmnDetailEntity) {
         shimmer_detail_data.hideShimmer()
         Glide.with(img_detail_sprite)
                 .load(pkmn.sprite)
@@ -130,7 +141,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun onSpeciesError(name: String) {
-        container_varieties_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.loadSpecies(name) }
+        container_varieties_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { speciesVM.load(name) }
         shimmer_varieties.hideShimmer()
         shimmer_varieties.visibility = View.INVISIBLE
         container_varieties_error.visibility = View.VISIBLE
