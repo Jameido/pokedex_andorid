@@ -24,16 +24,28 @@ class DbPkmnSpeciesData(
         val evolutionChain: String?
 )
 
+@Entity(tableName = "species_variety", primaryKeys = ["pokemonName", "speciesName"])
+data class DbPkmnSpeciesVarietyData(
+        val pokemonName: String,
+        val speciesName: String,
+        val isDefault: Boolean
+)
+
 @Entity(tableName = "pokemon")
 data class DbPkmn(
-        val speciesName: String,
         @PrimaryKey val name: String = "",
         val url: String?
 )
 
+data class DbPkmnSpeciesVariety(
+        @Embedded val variety: DbPkmnSpeciesVarietyData,
+        @Relation(parentColumn = "pokemonName", entityColumn = "name")
+        val pokemon: DbPkmn
+)
+
 data class DbPkmnSpecies(
         @Embedded val speciesData: DbPkmnSpeciesData,
-        @Relation(parentColumn = "name", entityColumn = "speciesName")
-        val varieties: List<DbPkmn>?
+        @Relation(parentColumn = "name", entityColumn = "speciesName", entity = DbPkmnSpeciesVarietyData::class)
+        val varieties: List<DbPkmnSpeciesVariety>?
 )
 

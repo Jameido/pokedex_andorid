@@ -14,7 +14,7 @@ interface PkmnDao {
     suspend fun insertSpeciesElement(pokemon: List<DbPkmnSpeciesElement>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSpeciesVarieties(pokemon: List<DbPkmn>)
+    suspend fun insertSpeciesVarieties(pokemon: List<DbPkmn>, varieties: List<DbPkmnSpeciesVarietyData>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSpeciesData(speciesData: DbPkmnSpeciesData)

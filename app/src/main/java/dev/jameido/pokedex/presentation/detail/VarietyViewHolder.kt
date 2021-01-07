@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnEntity
+import dev.jameido.pokedex.domain.entity.PkmnVarietyEntity
 import java.util.*
 
 class VarietyViewHolder(parent: ViewGroup, private val onClick: (name: String) -> Unit) : RecyclerView.ViewHolder(
@@ -18,17 +19,17 @@ class VarietyViewHolder(parent: ViewGroup, private val onClick: (name: String) -
     private val imgSprite: AppCompatImageView = itemView.findViewById(R.id.img_variety_sprite)
     private val txtName: AppCompatTextView = itemView.findViewById(R.id.txt_variety_name)
 
-    fun bind(pkmn: PkmnEntity?) {
-        pkmn?.let { pokemon ->
-            itemView.setOnClickListener { onClick.invoke(pokemon.name) }
+    fun bind(pkmn: PkmnVarietyEntity?) {
+        pkmn?.let { variety ->
+            itemView.setOnClickListener { onClick.invoke(variety.pokemon.name) }
             imgSprite.setBackgroundResource(R.drawable.sprite_backgorund)
             Glide.with(imgSprite)
-                    .load(pokemon.spriteUrl)
+                    .load(variety.pokemon.spriteUrl)
                     .placeholder(R.drawable.ic_missingno)
                     .error(R.drawable.ic_missingno)
                     .into(imgSprite)
 
-            txtName.text = pokemon.name.capitalize(Locale.getDefault())
+            txtName.text = variety.pokemon.name.capitalize(Locale.getDefault())
             txtName.background = null
         } ?: run {
             itemView.setOnClickListener(null)

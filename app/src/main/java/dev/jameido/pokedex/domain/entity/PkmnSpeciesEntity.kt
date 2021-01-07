@@ -7,6 +7,6 @@ class PkmnSpeciesEntity(
         val id: Int,
         val name: String,
         val description: String,
-        val varieties: List<PkmnEntity>,
+        val varieties: List<PkmnVarietyEntity>,
         val evolutionChain: String?
 )

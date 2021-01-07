@@ -13,11 +13,12 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
     DbPkmnSpeciesElement::class,
     DbPkmnSpeciesData::class,
     DbPkmn::class,
+    DbPkmnSpeciesVarietyData::class,
     DbPkmnDetailData::class,
     DbPkmnStats::class,
     DbPkmnTypes::class,
     DbRemotePageKey::class
-], version = 3)
+], version = 4)
 abstract class PkmnDatabase : RoomDatabase() {
     abstract fun pkmnDao(): PkmnDao
 }

@@ -28,7 +28,7 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
         val mapped = SpeciesMapper().mapToDb(species)
         dao.insertSpeciesData(mapped.speciesData)
         mapped.varieties?.let {
-            dao.insertSpeciesVarieties(it)
+            dao.insertSpeciesVarieties(it.map { speciesVariety -> speciesVariety.pokemon }, it.map { speciesVariety -> speciesVariety.variety })
         }
     }
 
