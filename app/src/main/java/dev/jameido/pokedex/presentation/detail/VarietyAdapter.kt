@@ -9,7 +9,7 @@ import dev.jameido.pokedex.domain.entity.PkmnEntity
  */
 class VarietyAdapter(private val onItemClick: (name: String) -> Unit) : RecyclerView.Adapter<VarietyViewHolder>() {
 
-    private var varieties: List<PkmnEntity> = emptyList()
+    private var varieties: List<PkmnEntity?> = emptyList()
 
     override fun onBindViewHolder(holder: VarietyViewHolder, position: Int) = holder.bind(getItem(position))
 
@@ -17,7 +17,7 @@ class VarietyAdapter(private val onItemClick: (name: String) -> Unit) : Recycler
 
     override fun getItemCount() = varieties.size
 
-    fun updateItems(items: List<PkmnEntity>){
+    fun updateItems(items: List<PkmnEntity?>){
         varieties = items
         notifyDataSetChanged()
     }

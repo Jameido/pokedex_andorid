@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shimmer_auto_start="false">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_detail_top"
@@ -29,6 +28,7 @@
                     android:layout_height="@dimen/detail_sprite"
                     android:layout_marginStart="@dimen/spacing_16"
                     android:layout_marginTop="@dimen/spacing_16"
+                    android:src="@drawable/ic_missingno"
                     app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -67,12 +67,12 @@
                     android:layout_marginEnd="@dimen/spacing_4"
                     android:gravity="center"
                     android:padding="@dimen/detail_type_padding"
+                    android:text=""
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
                     app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
-                    tools:text="fire"
                     tools:visibility="visible" />
 
                 <dev.jameido.pokedex.views.TypeTextView
@@ -84,6 +84,7 @@
                     android:layout_marginEnd="@dimen/spacing_16"
                     android:gravity="center"
                     android:padding="@dimen/detail_type_padding"
+                    android:text=""
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -151,44 +152,23 @@
                     app:layout_constraintHorizontal_weight="2"
                     app:layout_constraintStart_toEndOf="@+id/txt_detail_weight_label"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/container_detail_data_error"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="@dimen/spacing_16"
-            android:visibility="invisible"
+            layout="@layout/layout_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_16"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/shimmer_detail_data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="invisible">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_detail_data_error"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:gravity="center"
-                android:text="@string/error_load"
-                app:layout_constraintBottom_toTopOf="@+id/btn_detail_data_retry"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_detail_data_retry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retry"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@+id/shimmer_detail_data"
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/sep_detail"
@@ -225,18 +205,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_detail_description" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_varieties"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_varieties"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_8"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_varieties_title">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_varieties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_8"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_variety" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <include
+            android:id="@+id/container_varieties_error"
+            layout="@layout/layout_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_16"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_varieties_title"
-            tools:listitem="@layout/list_item_variety" />
-
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

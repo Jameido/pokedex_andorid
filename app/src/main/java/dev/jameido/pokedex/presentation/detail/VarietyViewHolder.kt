@@ -15,23 +15,27 @@ class VarietyViewHolder(parent: ViewGroup, private val onClick: (name: String) -
                 .inflate(R.layout.list_item_variety, parent, false)
 ) {
 
-    private val imgIcon: AppCompatImageView = itemView.findViewById(R.id.img_variety_sprite)
+    private val imgSprite: AppCompatImageView = itemView.findViewById(R.id.img_variety_sprite)
     private val txtName: AppCompatTextView = itemView.findViewById(R.id.txt_variety_name)
 
     fun bind(pkmn: PkmnEntity?) {
         pkmn?.let { pokemon ->
             itemView.setOnClickListener { onClick.invoke(pokemon.name) }
-            Glide.with(imgIcon)
+            imgSprite.setBackgroundResource(R.drawable.sprite_backgorund)
+            Glide.with(imgSprite)
                     .load(pokemon.spriteUrl)
-                    .placeholder(R.drawable.missingno)
-                    .error(R.drawable.missingno)
-                    .into(imgIcon)
+                    .placeholder(R.drawable.ic_missingno)
+                    .error(R.drawable.ic_missingno)
+                    .into(imgSprite)
 
             txtName.text = pokemon.name.capitalize(Locale.getDefault())
+            txtName.background = null
         } ?: run {
             itemView.setOnClickListener(null)
-            Glide.with(imgIcon).clear(imgIcon)
+            imgSprite.setImageResource(R.color.img_loading_shimmer)
+            imgSprite.background = null
             txtName.text = ""
+            txtName.setBackgroundResource(R.color.img_loading_shimmer)
         }
     }
 }

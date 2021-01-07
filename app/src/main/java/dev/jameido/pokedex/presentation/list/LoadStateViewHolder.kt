@@ -34,7 +34,7 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
                     animated.start()
                 }
             }
-    private val imgError = itemView.findViewById<AppCompatImageView>(R.id.img_error)
+    private val containerError: View = itemView.findViewById(R.id.container_list_error)
     private val txtError: AppCompatTextView = itemView.findViewById(R.id.txt_error)
     private val btnRetry = itemView.findViewById<AppCompatButton>(R.id.btn_retry)
             .also {
@@ -44,15 +44,11 @@ class LoadStateViewHolder(parent: ViewGroup, retry: () -> Unit) :
     fun bind(loadState: LoadState) {
         when (loadState) {
             is LoadState.Error -> {
-                txtError.visibility = View.VISIBLE
-                btnRetry.visibility = View.VISIBLE
-                imgError.visibility = View.VISIBLE
+                containerError.visibility = View.VISIBLE
                 imgLoading.visibility = View.GONE
             }
             is LoadState.Loading -> {
-                txtError.visibility = View.GONE
-                btnRetry.visibility = View.GONE
-                imgError.visibility = View.GONE
+                containerError.visibility = View.GONE
                 imgLoading.visibility = View.VISIBLE
             }
         }

@@ -35,4 +35,6 @@
 
     <color name="type_text_light">#ffffff</color>
     <color name="type_text_dark">#000000</color>
+
+    <color name="img_loading_shimmer">#434343</color>
 </resources>
