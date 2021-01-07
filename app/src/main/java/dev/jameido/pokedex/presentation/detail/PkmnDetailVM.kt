@@ -10,46 +10,51 @@ import org.koin.java.KoinJavaComponent.get
  */
 class PkmnDetailVM() : AndroidDataFlow() {
 
-    private var detailName = ""
-    private var speciesName = ""
+    private var lastDetailName = ""
+    private var lastSpeciesName = ""
 
     fun loadData(name: String) {
-        loadDetail(name)
         loadSpecies(name)
     }
 
     fun reLoadData() {
-        reLoadDetail()
-        reLoadSpecies()
+        loadDetail(lastDetailName)
+        loadSpecies(lastSpeciesName)
     }
 
     fun loadDetail(name: String) {
-        detailName = name
-        reLoadDetail()
-    }
-
-    fun reLoadDetail() {
-        action(
-                onAction = {
-                    setState(PkmnDetailStates.Loading)
-                    setState(PkmnDetailStates.Loaded(get(GetPkmnDetail::class.java).load(detailName)))
-                },
-                onError = { error, _ -> setState(PkmnDetailStates.Error(error.localizedMessage)) }
-        )
+        if(name != lastDetailName) {
+            action(
+                    onAction = {
+                        setState(PkmnDetailStates.Loading)
+                        setState(PkmnDetailStates.Loaded(get(GetPkmnDetail::class.java).load(name)))
+                        lastDetailName = name
+                    },
+                    onError = { error, _ ->
+                        setState(PkmnDetailStates.Error(error.localizedMessage, name))
+                    }
+            )
+        }
     }
 
     fun loadSpecies(name: String) {
-        speciesName = name
-        reLoadSpecies()
-    }
-
-    fun reLoadSpecies() {
-        action(
-                onAction = {
-                    setState(PkmnSpeciesStates.Loading)
-                    setState(PkmnSpeciesStates.Loaded(get(GetPkmnSpecies::class.java).load(speciesName)))
-                },
-                onError = { error, _ -> setState(PkmnSpeciesStates.Error(error.localizedMessage)) }
-        )
+        if(name != lastSpeciesName) {
+            action(
+                    onAction = {
+                        //TODO: use events instead of stage
+                        setState(PkmnDetailStates.Loading)
+                        setState(PkmnSpeciesStates.Loading)
+                        val species = get(GetPkmnSpecies::class.java).load(name)
+                        species.varieties.find { it.isDefault ?: false }?.pokemon?.name?.let {
+                            loadDetail(it)
+                        }
+                        setState(PkmnSpeciesStates.Loaded(species))
+                        lastSpeciesName = name
+                    },
+                    onError = { error, _ ->
+                        setState(PkmnSpeciesStates.Error(error.localizedMessage, name))
+                    }
+            )
+        }
     }
 }

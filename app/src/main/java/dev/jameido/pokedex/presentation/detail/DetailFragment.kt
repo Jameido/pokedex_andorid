@@ -34,10 +34,10 @@ class DetailFragment : Fragment() {
         onStates(viewModel) { state ->
             when (state) {
                 is PkmnDetailStates.Loading -> onDataLoading()
-                is PkmnDetailStates.Error -> onDataError()
+                is PkmnDetailStates.Error -> onDataError(state.name)
                 is PkmnDetailStates.Loaded -> onDataLoaded(state.detail)
                 is PkmnSpeciesStates.Loading -> onSpeciesLoading()
-                is PkmnSpeciesStates.Error -> onSpeciesError()
+                is PkmnSpeciesStates.Error -> onSpeciesError(state.name)
                 is PkmnSpeciesStates.Loaded -> onSpeciesLoaded(state.species)
             }
         }
@@ -48,9 +48,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        container_detail_data_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.reLoadDetail() }
-        container_varieties_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.reLoadSpecies() }
 
         rv_varieties.adapter = varietyAdapter
         rv_varieties.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.HORIZONTAL))
@@ -71,10 +68,11 @@ class DetailFragment : Fragment() {
         shimmer_detail_data.showShimmer(true)
     }
 
-    private fun onDataError() {
+    private fun onDataError(name: String) {
         shimmer_detail_data.hideShimmer()
         shimmer_detail_data.visibility = View.INVISIBLE
         container_detail_data_error.visibility = View.VISIBLE
+        container_detail_data_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.loadDetail(name) }
     }
 
     private fun onDataLoaded(pkmn: PkmnDetailEntity) {
@@ -131,7 +129,8 @@ class DetailFragment : Fragment() {
         shimmer_varieties.showShimmer(true)
     }
 
-    private fun onSpeciesError() {
+    private fun onSpeciesError(name: String) {
+        container_varieties_error.findViewById<AppCompatButton>(R.id.btn_retry).setOnClickListener { viewModel.loadSpecies(name) }
         shimmer_varieties.hideShimmer()
         shimmer_varieties.visibility = View.INVISIBLE
         container_varieties_error.visibility = View.VISIBLE

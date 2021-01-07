@@ -9,5 +9,5 @@ import io.uniflow.core.flow.data.UIState
 open class PkmnSpeciesStates : UIState() {
     object Loading : PkmnSpeciesStates()
     data class Loaded(val species: PkmnSpeciesEntity) : PkmnSpeciesStates()
-    data class Error(val message: String?) : PkmnSpeciesStates()
+    data class Error(val message: String?, val name: String) : PkmnSpeciesStates()
 }
