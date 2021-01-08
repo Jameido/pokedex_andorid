@@ -9,13 +9,13 @@ import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
 class PkmnDetailEntityMapper(private val spriteMapper: SpriteMapper, private val statMapper: StatEntityMapper) : EntityMapper<PkmnDetailModel, PkmnDetailEntity> {
 
     override fun map(model: PkmnDetailModel): PkmnDetailEntity {
-        val stats = model.stats.map { statMapper.map(it) }
         return PkmnDetailEntity(
                 model.id,
                 model.name,
                 model.height * 10F,
                 model.weight / 10F,
-                spriteMapper.map(model.id), stats,
+                spriteMapper.map(model.id),
+                model.stats.map { statMapper.map(it) },
                 model.types
         )
     }
