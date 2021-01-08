@@ -1,13 +1,12 @@
 package dev.jameido.pokedex.presentation.detail
 
-import dev.jameido.pokedex.usecase.GetPkmnDetail
+import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
 import io.uniflow.androidx.flow.AndroidDataFlow
-import org.koin.java.KoinJavaComponent.get
 
 /**
  * Created by Jameido on 03/01/2021.
  */
-class PkmnVarietyVM() : AndroidDataFlow() {
+class PkmnVarietyVM(private val getDetail: GetPkmnDetail) : AndroidDataFlow() {
 
     private var lastDetailName = ""
 
@@ -24,7 +23,7 @@ class PkmnVarietyVM() : AndroidDataFlow() {
             action(
                     onAction = {
                         setState(PkmnVarietyStates.Loading)
-                        setState(PkmnVarietyStates.Loaded(get(GetPkmnDetail::class.java).load(name)))
+                        setState(PkmnVarietyStates.Loaded(getDetail.load(name)))
                         lastDetailName = name
                     },
                     onError = { error, _ ->

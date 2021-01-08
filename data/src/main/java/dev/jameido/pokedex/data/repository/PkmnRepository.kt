@@ -1,7 +1,7 @@
 package dev.jameido.pokedex.data.repository
 
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
-import dev.jameido.pokedex.domain.entity.PkmnListEntity
+import dev.jameido.pokedex.domain.entity.PkmnListPageEntity
 import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
 
 /**
@@ -12,7 +12,7 @@ interface PkmnRepository {
     /**
      * Get list of pokemon species page
      */
-    suspend fun pkmnList(page: Int, pageSize: Int) : PkmnListEntity
+    suspend fun pkmnList(page: Int, pageSize: Int) : PkmnListPageEntity
 
     /**
      * Get pokemon detail data
