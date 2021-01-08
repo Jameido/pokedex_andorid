@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.data.mappers
 
-import dev.jameido.pokedex.data.DataUnitTestUtil
+import dev.jameido.pokedex.data.DataTestUtil
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -11,7 +11,7 @@ class MappersUnitTest {
 
     @Test
     fun speciesIdMapper() {
-        val model = DataUnitTestUtil.getSpeciesUrl()
+        val model = DataTestUtil.getSpeciesUrl()
         val entity = IdMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, 6)
@@ -19,7 +19,7 @@ class MappersUnitTest {
 
     @Test
     fun varietyIdMapper() {
-        val model = DataUnitTestUtil.getPokemonUrl()
+        val model = DataTestUtil.getPokemonUrl()
         val entity = IdMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, 6)
@@ -27,7 +27,7 @@ class MappersUnitTest {
 
     @Test
     fun speciesSpriteMapper() {
-        val model = DataUnitTestUtil.getSpeciesUrl()
+        val model = DataTestUtil.getSpeciesUrl()
         val entity = SpriteMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, "https://raw.githubusercontent.com/PokeAPI/sprites/368eb1ed07979ac00d6b91d2a5c1baaaf0e886bb/sprites/pokemon/other/official-artwork/6.png")
@@ -35,7 +35,7 @@ class MappersUnitTest {
 
     @Test
     fun varietySpriteMapper() {
-        val model = DataUnitTestUtil.getPokemonUrl()
+        val model = DataTestUtil.getPokemonUrl()
         val entity = SpriteMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, "https://raw.githubusercontent.com/PokeAPI/sprites/368eb1ed07979ac00d6b91d2a5c1baaaf0e886bb/sprites/pokemon/other/official-artwork/6.png")
@@ -43,7 +43,7 @@ class MappersUnitTest {
 
     @Test
     fun statMapper() {
-        val model = DataUnitTestUtil.getSpeedStat()
+        val model = DataTestUtil.getSpeedStat()
         val entity = StatEntityMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity.name, model.name)
@@ -52,7 +52,7 @@ class MappersUnitTest {
 
     @Test
     fun pkmnMapper() {
-        val model = DataUnitTestUtil.getPkmn()
+        val model = DataTestUtil.getPkmn()
         val entity = PkmnEntityMapper(IdMapper(), SpriteMapper()).map(model)
         assertNotNull(entity)
         assertEquals(entity.name, model.name)
@@ -63,7 +63,7 @@ class MappersUnitTest {
 
     @Test
     fun pkmnDetailMapper() {
-        val model = DataUnitTestUtil.getPkmnDetail()
+        val model = DataTestUtil.getPkmnDetail()
         val entity = PkmnDetailEntityMapper(SpriteMapper(), StatEntityMapper()).map(model)
         assertNotNull(entity)
         assertEquals(entity.id, model.id)
@@ -81,7 +81,7 @@ class MappersUnitTest {
 
     @Test
     fun speciesMapper() {
-        val model = DataUnitTestUtil.getPkmnSpecies()
+        val model = DataTestUtil.getPkmnSpecies()
         val entity = PkmnSpeciesEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(model)
 
         assertNotNull(entity)

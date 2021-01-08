@@ -5,7 +5,7 @@ import dev.jameido.pokedex.data.models.*
 /**
  * Created by Jameido on 08/01/2021.
  */
-object DataUnitTestUtil {
+object DataTestUtil {
 
     fun getPokemonUrl() = "https://pokeapi.co/api/v2/pokemon/6/"
     fun getSpeciesUrl() = "https://pokeapi.co/api/v2/pokemon-species/6/"
