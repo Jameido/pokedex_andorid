@@ -1,7 +1,8 @@
 package dev.jameido.pokedex
 
 import android.app.Application
-import dev.jameido.pokedex.di.*
+import dev.jameido.pokedex.framework.di.*
+import dev.jameido.pokedex.presentation.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -20,6 +21,7 @@ class PokedexApplication : Application() {
                     dataSourceModule,
                     repositoryModule,
                     useCaseModule,
+                    pagingSourceModule,
                     viewModelModule
             ))
         }

@@ -2,12 +2,11 @@ package dev.jameido.pokedex.presentation.detail
 
 import dev.jameido.pokedex.domain.usecase.GetPkmnSpecies
 import io.uniflow.androidx.flow.AndroidDataFlow
-import org.koin.java.KoinJavaComponent.get
 
 /**
  * Created by Jameido on 03/01/2021.
  */
-class PkmnSpeciesVM() : AndroidDataFlow() {
+class PkmnSpeciesVM(private val getSpecies: GetPkmnSpecies) : AndroidDataFlow() {
 
     private var lastSpeciesName = ""
 
@@ -24,7 +23,7 @@ class PkmnSpeciesVM() : AndroidDataFlow() {
             action(
                     onAction = {
                         setState(PkmnSpeciesStates.Loading)
-                        val species = get(GetPkmnSpecies::class.java).load(name)
+                        val species = getSpecies.load(name)
                         species.varieties.find { it.isDefault ?: false }?.pokemon?.name?.let {
                             sendEvent(PkmnSpeciesEvents.SpeciesLoaded(it))
                         }

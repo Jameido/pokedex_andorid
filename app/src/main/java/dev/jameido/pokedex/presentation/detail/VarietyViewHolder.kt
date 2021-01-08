@@ -7,7 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.jameido.pokedex.R
-import dev.jameido.pokedex.domain.entity.PkmnEntity
 import dev.jameido.pokedex.domain.entity.PkmnVarietyEntity
 import java.util.*
 
