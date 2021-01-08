@@ -61,7 +61,7 @@ class PkmnRepositoryImpl(
      */
     private suspend fun readListFromDatabase(page: Int, pageSize: Int): PkmnListEntity {
         return localPkmnDataSource.list(pageSize, page)?.let {
-            return PkmnListEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
+            return PkmnListEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(it)
         } ?: PkmnListEntity(null, null, emptyList())
     }
 
@@ -73,7 +73,7 @@ class PkmnRepositoryImpl(
         return networkDataSource.list(pageSize, page)?.let {
             localPkmnDataSource.insertPokemon(it.results)
             localPkmnDataSource.insertNextRemotePageKey(RemotePageKey(REMOTE_SPECIES_LIST, it.next))
-            return PkmnListEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
+            return PkmnListEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(it)
         } ?: PkmnListEntity(null, null, emptyList())
     }
     //endregion
@@ -106,7 +106,7 @@ class PkmnRepositoryImpl(
      */
     private suspend fun readSpeciesFromDb(name: String): PkmnSpeciesEntity? {
         return localPkmnDataSource.species(name)?.let {
-            PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
+            PkmnSpeciesEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(it)
         }
     }
 
@@ -116,7 +116,7 @@ class PkmnRepositoryImpl(
     private suspend fun readSpeciesFromNetwork(name: String): PkmnSpeciesEntity? {
         return networkDataSource.species(name)?.let {
             localPkmnDataSource.insertSpecies(it)
-            return PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(it)
+            return PkmnSpeciesEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(it)
         }
     }
     //endregion

@@ -1,7 +1,5 @@
 package dev.jameido.pokedex.data.mappers
 
-import com.squareup.moshi.JsonDataException
-import com.squareup.moshi.Moshi
 import dev.jameido.pokedex.data.models.PkmnModel
 import dev.jameido.pokedex.data.models.PkmnSpeciesModel
 import dev.jameido.pokedex.data.models.PkmnVarietyModel
@@ -11,47 +9,40 @@ import org.junit.Test
 /**
  * Created by Jameido on 04/01/2021.
  */
-
 class PkmnSpeciesUnitTest {
 
     @Test
     fun mapPkmnSpecies() {
-        try {
-            val model = PkmnSpeciesModel(
-                    6,
-                    "charizard",
-                    "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.",
-                    listOf(
-                            PkmnVarietyModel(PkmnModel("charizard", "https://pokeapi.co/api/v2/pokemon/6/"), true),
-                            PkmnVarietyModel(PkmnModel("charizard-mega-x", "https://pokeapi.co/api/v2/pokemon/10034/"), false),
-                            PkmnVarietyModel(PkmnModel("charizard-mega-y", "https://pokeapi.co/api/v2/pokemon/10085/"), false),
-                            PkmnVarietyModel(PkmnModel("charizard-gmax", "https://pokeapi.co/api/v2/pokemon/10187/"), false),
-                    ),
-                    "https://pokeapi.co/api/v2/evolution-chain/2/",
+        val model = PkmnSpeciesModel(
+                6,
+                "charizard",
+                "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.",
+                listOf(
+                        PkmnVarietyModel(PkmnModel("charizard", "https://pokeapi.co/api/v2/pokemon/6/"), true),
+                        PkmnVarietyModel(PkmnModel("charizard-mega-x", "https://pokeapi.co/api/v2/pokemon/10034/"), false),
+                        PkmnVarietyModel(PkmnModel("charizard-mega-y", "https://pokeapi.co/api/v2/pokemon/10085/"), false),
+                        PkmnVarietyModel(PkmnModel("charizard-gmax", "https://pokeapi.co/api/v2/pokemon/10187/"), false),
+                ),
+                "https://pokeapi.co/api/v2/evolution-chain/2/",
 
-            )
-            val mapped = PkmnSpeciesEntityMapper(PkmnEntityMapper(SpriteMapper())).map(model)
-            
-            assertNotNull(mapped)
-            assertEquals(mapped!!.id, 6)
-            assertEquals(mapped!!.name, "charizard")
-            assertEquals(mapped!!.evolutionChain, "https://pokeapi.co/api/v2/evolution-chain/2/")
-            // \f has been replaced with u000C to avoid compilation issues, as reported at https://kotlinlang.org/docs/reference/basic-types.html#characters
-            // The following escape sequences are supported: \t, \b, \n, \r, \', \", \\ and \$
-            assertEquals(mapped!!.description, "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.")
-            assertEquals(mapped!!.varieties.size, 4)
-            assertNotNull(mapped!!.varieties[0])
-            assertNotNull(mapped!!.varieties[0].pokemon)
-            assertEquals(mapped!!.varieties[0].pokemon.url, "https://pokeapi.co/api/v2/pokemon/6/")
-            assertEquals(mapped!!.varieties[0].pokemon.name, "charizard")
-            //Since Url.parse cannot be used in UT spriteUrl and index cannot be retrieved
-            assertNull(mapped!!.varieties[0].pokemon.index)
-            assertNull(mapped!!.varieties[0].pokemon.spriteUrl)
-            assertEquals(mapped!!.varieties[0].isDefault, true)
+                )
+        val mapped = PkmnSpeciesEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(model)
 
-        } catch (ex: JsonDataException) {
-            fail()
-        }
+        assertNotNull(mapped)
+        assertEquals(mapped!!.id, 6)
+        assertEquals(mapped!!.name, "charizard")
+        assertEquals(mapped!!.evolutionChain, "https://pokeapi.co/api/v2/evolution-chain/2/")
+        // \f has been replaced with u000C to avoid compilation issues, as reported at https://kotlinlang.org/docs/reference/basic-types.html#characters
+        // The following escape sequences are supported: \t, \b, \n, \r, \', \", \\ and \$
+        assertEquals(mapped!!.description, "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.")
+        assertEquals(mapped!!.varieties.size, 4)
+        assertNotNull(mapped!!.varieties[0])
+        assertNotNull(mapped!!.varieties[0].pokemon)
+        assertEquals(mapped!!.varieties[0].pokemon.url, "https://pokeapi.co/api/v2/pokemon/6/")
+        assertEquals(mapped!!.varieties[0].pokemon.name, "charizard")
+        assertEquals(mapped!!.varieties[0].pokemon.index, 6)
+        assertEquals(mapped!!.varieties[0].pokemon.spriteUrl, "https://raw.githubusercontent.com/PokeAPI/sprites/368eb1ed07979ac00d6b91d2a5c1baaaf0e886bb/sprites/pokemon/other/official-artwork/6.png")
+        assertEquals(mapped!!.varieties[0].isDefault, true)
     }
 
     companion object {

@@ -1,19 +1,17 @@
 package dev.jameido.pokedex.data.mappers
 
-import android.net.Uri
+import java.lang.NumberFormatException
 
 /**
  * Created by Jameido on 07/01/2021.
  */
 class SpriteMapper {
     fun map(url: String?): String? {
-        return url?.let {
-            map(Uri.parse(it))
+        return try {
+            map(url?.split("/")?.findLast { it.isNotBlank() }?.toInt())
+        } catch (ex: NumberFormatException) {
+            null
         }
-    }
-
-    fun map(url: Uri?): String? {
-        return map(url?.lastPathSegment?.toInt())
     }
 
     fun map(index: Int?): String? {
