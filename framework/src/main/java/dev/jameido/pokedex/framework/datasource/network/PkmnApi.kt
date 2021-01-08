@@ -1,6 +1,5 @@
 package dev.jameido.pokedex.framework.datasource.network
 
-import dev.jameido.pokedex.data.datasource.NetworkPkmnDataSource
 import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnDetail
 import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnList
 import dev.jameido.pokedex.framework.datasource.network.models.ResPkmnSpecies

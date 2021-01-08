@@ -20,8 +20,7 @@ class ApiUnitTest {
     private lateinit var mockApi: PkmnApi
 
     @Test
-    fun getPkmnList() {
-
+    fun listFirst() {
         server.enqueue(MockResponse().setBody(LIST_FIRST_ELEMENTS))
         val response = runBlocking {
             mockApi.list(0, 20)
@@ -36,25 +35,70 @@ class ApiUnitTest {
         assertEquals(response.results[0], ResPkmnElement("bulbasaur", "https://pokeapi.co/api/v2/pokemon-species/1/"))
 
     }
-    @Test
-    fun getPkmnDetail() {
 
+    @Test
+    fun listLast() {
+        server.enqueue(MockResponse().setBody(LIST_LAST_ELEMENTS))
+        val response = runBlocking {
+            mockApi.list(20, 880)
+        }
+        assertNotNull(response)
+        assertEquals(response.count, 898)
+        assertNull(response.next)
+        assertEquals(response.previous, "https://pokeapi.co/api/v2/pokemon-species/?offset=860&limit=20")
+        assertNotNull(response.results)
+        assertEquals(response.results.size, 18)
+        assertEquals(response.results[0], ResPkmnElement("arctozolt", "https://pokeapi.co/api/v2/pokemon-species/881/"))
+    }
+
+    @Test
+    fun listIntermediate() {
+        server.enqueue(MockResponse().setBody(LIST_INTERMEDIATE))
+        val response = runBlocking {
+            mockApi.list(20, 500)
+        }
+        assertNotNull(response)
+        assertEquals(response.count, 898)
+        assertEquals(response.next, "https://pokeapi.co/api/v2/pokemon-species/?offset=520&limit=20")
+        assertEquals(response.previous, "https://pokeapi.co/api/v2/pokemon-species/?offset=480&limit=20")
+        assertNotNull(response.results)
+        assertEquals(response.results.size, 20)
+        assertEquals(response.results[0], ResPkmnElement("oshawott", "https://pokeapi.co/api/v2/pokemon-species/501/"))
+    }
+
+    @Test
+    fun listOutOfBounds() {
+        server.enqueue(MockResponse().setBody(LIST_OUT_BOUNDS))
+        val response = runBlocking {
+            mockApi.list(20, 2000)
+        }
+        assertNotNull(response)
+        assertEquals(response.count, 898)
+        assertNull(response.next)
+        assertEquals(response.previous, "https://pokeapi.co/api/v2/pokemon-species/?offset=1980&limit=20")
+        assertNotNull(response.results)
+        assertEquals(response.results.size, 0)
+    }
+
+    @Test
+    fun detail() {
         server.enqueue(MockResponse().setBody(DETAIL_DITTO))
         val response = runBlocking {
             mockApi.detail("ditto")
         }
 
         assertNotNull(response)
-        assertEquals(response!!.id, 132)
-        assertEquals(response!!.name, "ditto")
-        assertEquals(response!!.stats.size, 6)
-        assertNotNull(response!!.stats[0])
-        assertEquals(response!!.stats[0].base_stat, 48)
-        assertNotNull(response!!.types[0].type)
-        assertEquals(response!!.types[0].type.name, "normal")
+        assertEquals(response.id, 132)
+        assertEquals(response.name, "ditto")
+        assertEquals(response.stats.size, 6)
+        assertNotNull(response.stats[0])
+        assertEquals(response.stats[0].base_stat, 48)
+        assertNotNull(response.types[0].type)
+        assertEquals(response.types[0].type.name, "normal")
     }
+
     @Test
-    fun getPkmnSpecies() {
+    fun species() {
 
         server.enqueue(MockResponse().setBody(DETAIL_CHARIZARD))
         val response = runBlocking {
@@ -62,23 +106,23 @@ class ApiUnitTest {
         }
 
         assertNotNull(response)
-        assertEquals(response!!.id, 6)
-        assertEquals(response!!.name, "charizard")
-        assertNotNull(response!!.evolution_chain)
-        assertEquals(response!!.evolution_chain.url, "https://pokeapi.co/api/v2/evolution-chain/2/")
-        assertEquals(response!!.flavor_text_entries.size, 154)
-        assertNotNull(response!!.flavor_text_entries[0])
+        assertEquals(response.id, 6)
+        assertEquals(response.name, "charizard")
+        assertNotNull(response.evolution_chain)
+        assertEquals(response.evolution_chain.url, "https://pokeapi.co/api/v2/evolution-chain/2/")
+        assertEquals(response.flavor_text_entries.size, 154)
+        assertNotNull(response.flavor_text_entries[0])
         // \f has been replaced with u000C to avoid compilation issues, as reported at https://kotlinlang.org/docs/reference/basic-types.html#characters
         // The following escape sequences are supported: \t, \b, \n, \r, \', \", \\ and \$
-        assertEquals(response!!.flavor_text_entries[0].flavor_text, "Spits fire that\nis hot enough to\nmelt boulders.\u000CKnown to cause\nforest fires\nunintentionally.")
-        assertNotNull(response!!.flavor_text_entries[0].language)
-        assertEquals(response!!.flavor_text_entries[0].language.name, "en")
-        assertEquals(response!!.varieties.size, 4)
-        assertNotNull(response!!.varieties[0])
-        assertEquals(response!!.varieties[0].is_default, true)
-        assertNotNull(response!!.varieties[0].pokemon)
-        assertEquals(response!!.varieties[0].pokemon.url, "https://pokeapi.co/api/v2/pokemon/6/")
-        assertEquals(response!!.varieties[0].pokemon.name, "charizard")
+        assertEquals(response.flavor_text_entries[0].flavor_text, "Spits fire that\nis hot enough to\nmelt boulders.\u000CKnown to cause\nforest fires\nunintentionally.")
+        assertNotNull(response.flavor_text_entries[0].language)
+        assertEquals(response.flavor_text_entries[0].language.name, "en")
+        assertEquals(response.varieties.size, 4)
+        assertNotNull(response.varieties[0])
+        assertEquals(response.varieties[0].is_default, true)
+        assertNotNull(response.varieties[0].pokemon)
+        assertEquals(response.varieties[0].pokemon.url, "https://pokeapi.co/api/v2/pokemon/6/")
+        assertEquals(response.varieties[0].pokemon.name, "charizard")
 
     }
 

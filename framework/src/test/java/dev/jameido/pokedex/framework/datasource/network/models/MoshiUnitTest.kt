@@ -72,7 +72,6 @@ class MoshiUnitTest {
         assertEquals(response.results.size, 0)
     }
 
-
     @Test
     fun listElement() {
         val response = moshi.adapter(ResPkmnElement::class.java).fromJson(ELEMENT)
