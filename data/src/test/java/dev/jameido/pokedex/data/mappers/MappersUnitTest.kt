@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.data.mappers
 
-import dev.jameido.pokedex.data.models.*
+import dev.jameido.pokedex.data.DataUnitTestUtil
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -10,8 +10,16 @@ import org.junit.Test
 class MappersUnitTest {
 
     @Test
-    fun idMapper() {
-        val model = "https://pokeapi.co/api/v2/pokemon/6/"
+    fun speciesIdMapper() {
+        val model = DataUnitTestUtil.getSpeciesUrl()
+        val entity = IdMapper().map(model)
+        assertNotNull(entity)
+        assertEquals(entity, 6)
+    }
+
+    @Test
+    fun varietyIdMapper() {
+        val model = DataUnitTestUtil.getPokemonUrl()
         val entity = IdMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, 6)
@@ -19,7 +27,7 @@ class MappersUnitTest {
 
     @Test
     fun speciesSpriteMapper() {
-        val model = "https://pokeapi.co/api/v2/pokemon-species/6/"
+        val model = DataUnitTestUtil.getSpeciesUrl()
         val entity = SpriteMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, "https://raw.githubusercontent.com/PokeAPI/sprites/368eb1ed07979ac00d6b91d2a5c1baaaf0e886bb/sprites/pokemon/other/official-artwork/6.png")
@@ -27,7 +35,7 @@ class MappersUnitTest {
 
     @Test
     fun varietySpriteMapper() {
-        val model = "https://pokeapi.co/api/v2/pokemon/6/"
+        val model = DataUnitTestUtil.getPokemonUrl()
         val entity = SpriteMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity, "https://raw.githubusercontent.com/PokeAPI/sprites/368eb1ed07979ac00d6b91d2a5c1baaaf0e886bb/sprites/pokemon/other/official-artwork/6.png")
@@ -35,7 +43,7 @@ class MappersUnitTest {
 
     @Test
     fun statMapper() {
-        val model = StatModel("speed", 48)
+        val model = DataUnitTestUtil.getSpeedStat()
         val entity = StatEntityMapper().map(model)
         assertNotNull(entity)
         assertEquals(entity.name, model.name)
@@ -44,7 +52,7 @@ class MappersUnitTest {
 
     @Test
     fun pkmnMapper() {
-        val model = PkmnModel("charizard", "https://pokeapi.co/api/v2/pokemon-species/6/")
+        val model = DataUnitTestUtil.getPkmn()
         val entity = PkmnEntityMapper(IdMapper(), SpriteMapper()).map(model)
         assertNotNull(entity)
         assertEquals(entity.name, model.name)
@@ -55,23 +63,7 @@ class MappersUnitTest {
 
     @Test
     fun pkmnDetailMapper() {
-        val model = PkmnDetailModel(
-                131,
-                "ditto",
-                3F,
-                40F,
-                listOf(
-                        StatModel("hp", 48),
-                        StatModel("attack", 48),
-                        StatModel("defense", 48),
-                        StatModel("special-attack", 48),
-                        StatModel("special-defense", 48),
-                        StatModel("speed", 48),
-                ),
-                listOf(
-                        "normal"
-                )
-        )
+        val model = DataUnitTestUtil.getPkmnDetail()
         val entity = PkmnDetailEntityMapper(SpriteMapper(), StatEntityMapper()).map(model)
         assertNotNull(entity)
         assertEquals(entity.id, model.id)
@@ -89,19 +81,7 @@ class MappersUnitTest {
 
     @Test
     fun speciesMapper() {
-        val model = PkmnSpeciesModel(
-                6,
-                "charizard",
-                "Spits fire that is hot enough to melt boulders.\u000CKnown to cause forest fires unintentionally.",
-                listOf(
-                        PkmnVarietyModel(PkmnModel("charizard", "https://pokeapi.co/api/v2/pokemon/6/"), true),
-                        PkmnVarietyModel(PkmnModel("charizard-mega-x", "https://pokeapi.co/api/v2/pokemon/10034/"), false),
-                        PkmnVarietyModel(PkmnModel("charizard-mega-y", "https://pokeapi.co/api/v2/pokemon/10085/"), false),
-                        PkmnVarietyModel(PkmnModel("charizard-gmax", "https://pokeapi.co/api/v2/pokemon/10187/"), false),
-                ),
-                "https://pokeapi.co/api/v2/evolution-chain/2/",
-
-                )
+        val model = DataUnitTestUtil.getPkmnSpecies()
         val entity = PkmnSpeciesEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(model)
 
         assertNotNull(entity)
