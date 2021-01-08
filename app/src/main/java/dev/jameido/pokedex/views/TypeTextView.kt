@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import dev.jameido.pokedex.R
-import dev.jameido.pokedex.data.Type
+import dev.jameido.pokedex.domain.Type
 import java.util.*
 
 /**
@@ -126,7 +126,6 @@ class TypeTextView @JvmOverloads constructor(context: Context, attrs: AttributeS
                 when (type?.toString()?.toLowerCase(Locale.getDefault())) {
                     Type.dark, Type.fighting, Type.ghost, Type.shadow, Type.water, Type.unknown ->
                         R.color.type_text_light
-
                     else ->
                         R.color.type_text_dark
                 }
