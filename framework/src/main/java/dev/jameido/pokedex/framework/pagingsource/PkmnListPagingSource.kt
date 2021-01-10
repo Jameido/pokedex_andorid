@@ -13,7 +13,7 @@ class PkmnListPagingSource(private val getListPage: GetPkmnListPage) : PagingSou
         val page = params.key ?: 0
         val size = params.loadSize
         return try {
-            val response = getListPage.load(page, size)
+            val response = getListPage.load("", page, size)
             LoadResult.Page(
                     data = response.results,
                     prevKey = response.previous,

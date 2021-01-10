@@ -15,7 +15,7 @@ import dev.jameido.pokedex.domain.entity.PkmnEntity
 class PkmnListVM(application: Application, factory: () -> PagingSource<Int, PkmnEntity>) : AndroidViewModel(application) {
 
     val list = Pager(
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(pageSize = 20, initialLoadSize = 20),
             pagingSourceFactory = factory
     )
             .flow

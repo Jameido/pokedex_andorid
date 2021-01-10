@@ -45,7 +45,7 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
         return dao.getRemotePageKey(pageKey)
     }
 
-    override suspend fun list(pageSize: Int, page: Int): PkmnListModel? {
+    override suspend fun list(query: String, pageSize: Int, page: Int): PkmnListModel? {
         val offset = page * pageSize
         val dbList = dao.getPaginatedSpecies(pageSize, offset)
         if (dbList.isNullOrEmpty()) {
