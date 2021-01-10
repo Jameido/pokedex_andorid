@@ -15,8 +15,8 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
     DbPkmn::class,
     DbPkmnSpeciesVarietyData::class,
     DbPkmnDetailData::class,
-    DbPkmnStats::class,
-    DbPkmnTypes::class,
+    DbPkmnStat::class,
+    DbPkmnType::class,
     DbRemotePageKey::class
 ], version = 4)
 abstract class PkmnDatabase : RoomDatabase() {

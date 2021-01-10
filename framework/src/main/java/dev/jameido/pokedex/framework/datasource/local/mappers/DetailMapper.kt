@@ -22,8 +22,8 @@ class DetailMapper : DbMapper<DbPkmnDetail, PkmnDetailModel> {
     }
 
     override fun mapToDb(model: PkmnDetailModel): DbPkmnDetail {
-        val stats = model.stats.map { DbPkmnStats(model.name, it.name, it.value) }
-        val type = model.types.map { DbPkmnTypes(model.name, it) }
+        val stats = model.stats.map { DbPkmnStat(model.name, it.name, it.value) }
+        val type = model.types.map { DbPkmnType(model.name, it) }
         val detail = DbPkmnDetailData(
                 model.name,
                 model.id,

@@ -17,14 +17,14 @@ data class DbPkmnDetailData(
 )
 
 @Entity(tableName = "pokemon_stat", primaryKeys = ["pokemonName", "statName"])
-data class DbPkmnStats(
+data class DbPkmnStat(
         val pokemonName: String,
         val statName: String,
         val value: Int
 )
 
 @Entity(tableName = "pokemon_type", primaryKeys = ["pokemonName", "typeName"])
-data class DbPkmnTypes(
+data class DbPkmnType(
         val pokemonName: String,
         val typeName: String,
 )
@@ -32,8 +32,8 @@ data class DbPkmnTypes(
 data class DbPkmnDetail(
         @Embedded val detail: DbPkmnDetailData,
         @Relation(parentColumn = "name", entityColumn = "pokemonName")
-        val stats: List<DbPkmnStats>,
+        val stats: List<DbPkmnStat>,
         @Relation(parentColumn = "name", entityColumn = "pokemonName")
-        val types: List<DbPkmnTypes>
+        val types: List<DbPkmnType>
 )
 

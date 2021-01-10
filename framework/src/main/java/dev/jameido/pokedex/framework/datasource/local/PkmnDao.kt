@@ -23,9 +23,9 @@ interface PkmnDao {
     suspend fun insertDetail(
             detail: List<DbPkmnDetailData>,
             stats: List<DbStat>,
-            pkmnStats: List<DbPkmnStats>,
+            pkmnStats: List<DbPkmnStat>,
             types: List<DbType>,
-            pkmnTypes: List<DbPkmnTypes>)
+            pkmnTypes: List<DbPkmnType>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRemotePageKey(remotePageKey: DbRemotePageKey)

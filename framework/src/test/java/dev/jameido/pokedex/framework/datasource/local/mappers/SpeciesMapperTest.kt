@@ -11,7 +11,7 @@ import org.junit.Test
 class SpeciesMapperTest {
 
     private val mapper = SpeciesMapper()
-    
+
     @Test
     fun testMapFromDb() {
         val dbModel = LocalDataSourceTestUtil.getDbPkmnSpecies()
