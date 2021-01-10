@@ -1,7 +1,7 @@
 package dev.jameido.pokedex.framework.datasource.local.mappers
 
 import dev.jameido.pokedex.framework.datasource.DataTestUtil
-import dev.jameido.pokedex.framework.datasource.local.LocalDataSourceTestUtil
+import dev.jameido.pokedex.framework.datasource.local.LocalDataSourceUnitTestUtil
 import org.junit.Assert
 import org.junit.Test
 
@@ -14,7 +14,7 @@ class SpeciesElementMapperTest {
 
     @Test
     fun testMapFromDb() {
-        val dbModel = LocalDataSourceTestUtil.getDbPkmnSpeciesElement()
+        val dbModel = LocalDataSourceUnitTestUtil.getDbPkmnSpeciesElement()
         val mapped = mapper.mapFromDb(dbModel)
 
         Assert.assertNotNull(mapped)

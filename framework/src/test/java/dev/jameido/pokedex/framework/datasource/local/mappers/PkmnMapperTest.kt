@@ -1,6 +1,6 @@
 package dev.jameido.pokedex.framework.datasource.local.mappers
 
-import dev.jameido.pokedex.framework.datasource.local.LocalDataSourceTestUtil
+import dev.jameido.pokedex.framework.datasource.local.LocalDataSourceUnitTestUtil
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -13,7 +13,7 @@ class PkmnMapperTest {
 
     @Test
     fun testMapFromDb() {
-        val dbModel = LocalDataSourceTestUtil.getDbPkmn()
+        val dbModel = LocalDataSourceUnitTestUtil.getDbPkmn()
         val mapped = mapper.mapFromDb(dbModel)
 
         assertNotNull(mapped)

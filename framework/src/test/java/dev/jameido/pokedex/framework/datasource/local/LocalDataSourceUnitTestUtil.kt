@@ -5,7 +5,7 @@ import dev.jameido.pokedex.framework.datasource.local.models.*
 /**
  * Created by Jameido on 08/01/2021.
  */
-object LocalDataSourceTestUtil {
+object LocalDataSourceUnitTestUtil {
 
     fun getDbPkmnSpecies() = DbPkmnSpecies(getDbPkmnSpeciesData(), listOf(getDbPkmnSpeciesVariety()))
 

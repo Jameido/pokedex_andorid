@@ -26,10 +26,10 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
 
     override suspend fun insertSpecies(species: PkmnSpeciesModel) {
         val mapped = SpeciesMapper().mapToDb(species)
-        dao.insertSpeciesData(mapped.speciesData)
-        mapped.varieties?.let {
-            dao.insertSpeciesVarieties(it.map { speciesVariety -> speciesVariety.pokemon }, it.map { speciesVariety -> speciesVariety.variety })
-        }
+        dao.insertSpecies(
+                mapped.speciesData,
+                mapped.varieties.orEmpty().map { speciesVariety -> speciesVariety.pokemon },
+                mapped.varieties.orEmpty().map { speciesVariety -> speciesVariety.variety })
     }
 
     override suspend fun insertPokemon(pokemon: List<PkmnModel>) {
