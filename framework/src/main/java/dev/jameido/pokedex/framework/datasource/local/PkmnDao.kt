@@ -33,6 +33,10 @@ interface PkmnDao {
     @Query("SELECT * FROM detail WHERE name = :name LIMIT 1")
     suspend fun getDetailByName(name: String): DbPkmnDetail?
 
+    //TODO: use Fuzzy Matching if it will be ever added to Room/standard SQLite
+    @Query("SELECT * FROM species WHERE name LIKE :query COLLATE NOCASE LIMIT :limit OFFSET :offset")
+    suspend fun getPaginatedSpeciesByName(query: String, limit: Int, offset: Int): List<DbPkmnSpeciesElement>?
+
     @Query("SELECT * FROM species LIMIT :limit OFFSET :offset")
     suspend fun getPaginatedSpecies(limit: Int, offset: Int): List<DbPkmnSpeciesElement>?
 

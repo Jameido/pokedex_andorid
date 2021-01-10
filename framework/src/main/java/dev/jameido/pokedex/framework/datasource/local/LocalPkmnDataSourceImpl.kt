@@ -45,9 +45,13 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
         return dao.getRemotePageKey(pageKey)
     }
 
-    override suspend fun list(query: String, pageSize: Int, page: Int): PkmnListModel? {
+    override suspend fun list(query: String?, pageSize: Int, page: Int): PkmnListModel? {
         val offset = page * pageSize
-        val dbList = dao.getPaginatedSpecies(pageSize, offset)
+        val dbList = if (!query?.trim().isNullOrEmpty()) {
+            dao.getPaginatedSpeciesByName(buildLikeParam(query!!), pageSize, offset)
+        } else {
+            dao.getPaginatedSpecies(pageSize, offset)
+        }
         if (dbList.isNullOrEmpty()) {
             return null
         }
@@ -77,5 +81,7 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
             SpeciesMapper().mapFromDb(it)
         }
     }
+
+    private fun buildLikeParam(query: String) = "%$query%"
 
 }

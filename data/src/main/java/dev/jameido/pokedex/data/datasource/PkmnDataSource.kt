@@ -12,7 +12,7 @@ interface PkmnDataSource {
     /**
      * Get list of pokemon species page
      */
-    suspend fun list(query: String, pageSize: Int, page: Int) : PkmnListModel?
+    suspend fun list(query: String?, pageSize: Int, page: Int) : PkmnListModel?
 
     /**
      * Get pokemon detail data
