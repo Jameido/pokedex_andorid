@@ -26,12 +26,16 @@ class PkmnRepositoryImpl(
      * update the local data from the network data source, then read it again from local data source.
      */
     override suspend fun pkmnList(query: String, page: Int, pageSize: Int): PkmnListPageEntity {
+        return pkmnList(query, page, pageSize, false)
+    }
+
+    private suspend fun pkmnList(query: String, page: Int, pageSize: Int, applyExitCondition: Boolean): PkmnListPageEntity {
         var localPage = readListFromDatabase(query, page, pageSize)
         if (localPage.next == null) {
             val nextRemoteKey = localPkmnDataSource.getNextRemotePageKey(REMOTE_SPECIES_LIST)
-            if ((nextRemoteKey?.nextPage != null) || page == 0) {
+            if (nextRemoteKey?.nextPage != null || (page == 0 && !applyExitCondition)) {
                 updateListFromNetwork(query, nextRemoteKey?.nextPage ?: 0, REMOTE_PAGE_SIZE)
-                localPage = readListFromDatabase(query, page, pageSize)
+                localPage = pkmnList(query, page, pageSize, true)
             }
         }
         return localPage
