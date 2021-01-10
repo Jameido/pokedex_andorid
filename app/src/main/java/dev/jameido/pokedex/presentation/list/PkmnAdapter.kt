@@ -14,19 +14,5 @@ class PkmnAdapter(private val onItemClick: (name: String) -> Unit) : PagingDataA
     override fun onBindViewHolder(holder: PkmnViewHolder, position: Int) = holder.bind(getItem(position))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PkmnViewHolder = PkmnViewHolder(parent, onItemClick)
-
-    fun withLoadStateLoaderHeaderFooter(
-            loader: LoadStateAdapter<*>,
-            header: LoadStateAdapter<*>,
-            footer: LoadStateAdapter<*>
-    ): ConcatAdapter {
-        addLoadStateListener { loadStates ->
-            header.loadState = loadStates.prepend
-            footer.loadState = loadStates.append
-            loader.loadState = loadStates.refresh
-        }
-        return ConcatAdapter(header, loader, this, footer)
-    }
-
 }
 

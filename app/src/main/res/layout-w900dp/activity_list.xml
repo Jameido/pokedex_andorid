@@ -19,6 +19,30 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item_pkmn" />
 
+    <dev.jameido.pokedex.views.PokeLoader
+        android:id="@+id/img_list_loading"
+        android:layout_width="@dimen/list_item_loading"
+        android:layout_height="@dimen/list_item_loading"
+        android:layout_margin="@dimen/spacing_16"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/rv_pkmn"
+        app:layout_constraintStart_toStartOf="@+id/rv_pkmn"
+        app:layout_constraintTop_toTopOf="@+id/rv_pkmn"
+        tools:visibility="visible" />
+
+    <include
+        android:id="@+id/container_list_error"
+        layout="@layout/layout_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_16"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/rv_pkmn"
+        app:layout_constraintStart_toStartOf="@+id/rv_pkmn"
+        app:layout_constraintTop_toTopOf="@+id/rv_pkmn"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_pkmn"
+        tools:visibility="visible" />
+
     <View
         android:id="@+id/sep_list"
         android:layout_width="0dp"
