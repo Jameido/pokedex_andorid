@@ -25,11 +25,11 @@ class PkmnRepositoryImpl(
      * First read from local data source. If the retrieved page is empty or not fully populated
      * update the local data from the network data source, then read it again from local data source.
      */
-    override suspend fun pkmnList(query: String, page: Int, pageSize: Int): PkmnListPageEntity {
+    override suspend fun pkmnList(query: String?, page: Int, pageSize: Int): PkmnListPageEntity {
         return pkmnList(query, page, pageSize, false)
     }
 
-    private suspend fun pkmnList(query: String, page: Int, pageSize: Int, applyExitCondition: Boolean): PkmnListPageEntity {
+    private suspend fun pkmnList(query: String?, page: Int, pageSize: Int, applyExitCondition: Boolean): PkmnListPageEntity {
         var localPage = readListFromDatabase(query, page, pageSize)
         if (localPage.next == null) {
             val nextRemoteKey = localPkmnDataSource.getNextRemotePageKey(REMOTE_SPECIES_LIST)
@@ -63,7 +63,7 @@ class PkmnRepositoryImpl(
     /**
      * Get list of pokemon species page from local data source
      */
-    private suspend fun readListFromDatabase(query: String, page: Int, pageSize: Int): PkmnListPageEntity {
+    private suspend fun readListFromDatabase(query: String?, page: Int, pageSize: Int): PkmnListPageEntity {
         return localPkmnDataSource.list(query, pageSize, page)?.let {
             return PkmnListEntityMapper(PkmnEntityMapper(IdMapper(), SpriteMapper())).map(it)
         } ?: PkmnListPageEntity(null, null, emptyList())
@@ -73,7 +73,7 @@ class PkmnRepositoryImpl(
      * Get list of pokemon species page from network data source, then store the retrieved data and
      * next page key into local data source.
      */
-    private suspend fun updateListFromNetwork(query: String, page: Int, pageSize: Int): PkmnListPageEntity {
+    private suspend fun updateListFromNetwork(query: String?, page: Int, pageSize: Int): PkmnListPageEntity {
         return networkDataSource.list(query, pageSize, page)?.let {
             localPkmnDataSource.insertPokemon(it.results)
             localPkmnDataSource.insertNextRemotePageKey(RemotePageKey(REMOTE_SPECIES_LIST, it.next))

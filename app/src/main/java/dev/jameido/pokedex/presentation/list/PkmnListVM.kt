@@ -8,11 +8,19 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import dev.jameido.pokedex.domain.entity.PkmnEntity
+import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
+import dev.jameido.pokedex.framework.pagingsource.PkmnListPagingSource
 
 /**
  * Created by Jameido on 21/12/2020.
  */
-class PkmnListVM(application: Application, factory: () -> PagingSource<Int, PkmnEntity>) : AndroidViewModel(application) {
+class PkmnListVM(application: Application, getPkmnListPage: GetPkmnListPage) : AndroidViewModel(application) {
+
+    private val query: String? = null
+
+    private val factory: () -> PagingSource<Int, PkmnEntity> = {
+        PkmnListPagingSource(query, getPkmnListPage)
+    }
 
     val list = Pager(
             config = PagingConfig(pageSize = 20, initialLoadSize = 20),

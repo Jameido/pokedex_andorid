@@ -10,7 +10,7 @@ import org.koin.dsl.module
  * Created by Jameido on 03/01/2021.
  */
 val viewModelModule = module {
-    viewModel { PkmnListVM(get()) { get() } }
+    viewModel { PkmnListVM(get(), get()) }
     viewModel { PkmnSpeciesVM(get()) }
     viewModel { PkmnVarietyVM(get()) }
 }
