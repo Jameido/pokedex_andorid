@@ -21,7 +21,6 @@ class PokedexApplication : Application() {
                     dataSourceModule,
                     repositoryModule,
                     useCaseModule,
-                    pagingSourceModule,
                     viewModelModule
             ))
         }

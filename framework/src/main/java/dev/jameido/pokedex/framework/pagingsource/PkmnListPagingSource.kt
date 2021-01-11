@@ -8,12 +8,12 @@ import java.lang.Exception
 /**
  * Created by Jameido on 08/01/2021.
  */
-class PkmnListPagingSource(private val getListPage: GetPkmnListPage) : PagingSource<Int, PkmnEntity>() {
+class PkmnListPagingSource(private val query: String?, private val getListPage: GetPkmnListPage) : PagingSource<Int, PkmnEntity>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PkmnEntity> {
         val page = params.key ?: 0
         val size = params.loadSize
         return try {
-            val response = getListPage.load(page, size)
+            val response = getListPage.load(query, page, size)
             LoadResult.Page(
                     data = response.results,
                     prevKey = response.previous,

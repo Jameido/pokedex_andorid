@@ -12,7 +12,7 @@ interface PkmnRepository {
     /**
      * Get list of pokemon species page
      */
-    suspend fun pkmnList(page: Int, pageSize: Int) : PkmnListPageEntity
+    suspend fun pkmnList(query: String?, page: Int, pageSize: Int) : PkmnListPageEntity
 
     /**
      * Get pokemon detail data
