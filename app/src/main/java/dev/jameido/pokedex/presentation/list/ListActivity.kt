@@ -99,8 +99,7 @@ class ListActivity : AppCompatActivity() {
 
     private fun configRecyclerView() {
 
-        rv_pkmn.adapter = adapter.withLoadStateLoaderHeaderFooter(
-                loader = PkmnLoadStateAdapter(adapter::retry),
+        rv_pkmn.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = PkmnLoadStateAdapter(adapter::retry),
                 footer = PkmnLoadStateAdapter(adapter::retry)
         )
