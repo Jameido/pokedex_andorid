@@ -69,7 +69,10 @@ class ListActivity : AppCompatActivity() {
         onEvents(viewModel) { event ->
             when (event.take()) {
                 is PkmnListEvents.QueryChanged -> adapter.refresh()
-                is PkmnListEvents.RefreshContent -> adapter.refresh()
+                is PkmnListEvents.RefreshContent -> {
+                    closeDetail()
+                    adapter.refresh()
+                }
             }
 
         }
@@ -103,7 +106,7 @@ class ListActivity : AppCompatActivity() {
         })
     }
 
-    private fun configRefreshLayout(){
+    private fun configRefreshLayout() {
         swipe_refresh_list.setOnRefreshListener {
             viewModel.refreshContent()
         }
@@ -113,10 +116,21 @@ class ListActivity : AppCompatActivity() {
         if (twoPane) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.container_detail, DetailFragment.newInstance(name))
+                    .replace(R.id.container_detail, DetailFragment.newInstance(name), DetailFragment.TAG)
                     .commit()
         } else {
             startActivity(DetailActivity.getStartIntent(this, name))
+        }
+    }
+
+    private fun closeDetail() {
+        if (twoPane) {
+            supportFragmentManager.findFragmentByTag(DetailFragment.TAG)?.let {
+                supportFragmentManager
+                        .beginTransaction()
+                        .remove(it)
+                        .commit()
+            }
         }
     }
 }
