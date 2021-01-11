@@ -9,7 +9,7 @@ import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
  */
 class GetPkmnListPageImpl(private val repository: PkmnRepository) : GetPkmnListPage {
 
-   override suspend fun load(query: String?, page: Int, pageSize: Int): PkmnListPageEntity {
-        return repository.pkmnList(query, page, pageSize)
+   override suspend fun load(query: String?, page: Int, pageSize: Int, refresh: Boolean): PkmnListPageEntity {
+        return repository.pkmnList(query, page, pageSize, refresh)
     }
 }

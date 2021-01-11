@@ -24,18 +24,23 @@ class PkmnRepositoryImpl(
      * Get list of pokemon species page.
      * First read from local data source. If the retrieved page is empty or not fully populated
      * update the local data from the network data source, then read it again from local data source.
+     * If refresh == true and page == 0 force the local data to be updated by wiping it, this
+     * triggers loading data from network data source.
      */
-    override suspend fun pkmnList(query: String?, page: Int, pageSize: Int): PkmnListPageEntity {
-        return pkmnList(query, page, pageSize, false)
+    override suspend fun pkmnList(query: String?, page: Int, pageSize: Int, refresh: Boolean): PkmnListPageEntity {
+        if (refresh && page == 0) {
+            localPkmnDataSource.wipeData()
+        }
+        return pkmnListInternal(query, page, pageSize, false)
     }
 
-    private suspend fun pkmnList(query: String?, page: Int, pageSize: Int, applyExitCondition: Boolean): PkmnListPageEntity {
+    private suspend fun pkmnListInternal(query: String?, page: Int, pageSize: Int, applyExitCondition: Boolean): PkmnListPageEntity {
         var localPage = readListFromDatabase(query, page, pageSize)
         if (localPage.next == null) {
             val nextRemoteKey = localPkmnDataSource.getNextRemotePageKey(REMOTE_SPECIES_LIST)
             if (nextRemoteKey?.nextPage != null || (page == 0 && !applyExitCondition)) {
                 updateListFromNetwork(query, nextRemoteKey?.nextPage ?: 0, REMOTE_PAGE_SIZE)
-                localPage = pkmnList(query, page, pageSize, true)
+                localPage = pkmnListInternal(query, page, pageSize, true)
             }
         }
         return localPage

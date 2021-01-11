@@ -51,6 +51,11 @@ interface LocalPkmnDataSource : PkmnDataSource {
     suspend fun insertPokemon(pokemon: List<PkmnModel>)
 
     /**
+     * Deletes all content from local storage
+     */
+    suspend fun wipeData()
+
+    /**
      * Insert the next remote page key to load into local storage
      */
     suspend fun insertNextRemotePageKey(pageKey: RemotePageKey)

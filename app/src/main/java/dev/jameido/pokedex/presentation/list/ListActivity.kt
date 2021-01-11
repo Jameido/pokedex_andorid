@@ -3,6 +3,8 @@ package dev.jameido.pokedex.presentation.list
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -22,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListActivity : AppCompatActivity() {
 
     private val viewModel: PkmnListVM by viewModel()
+    private val adapter = PkmnAdapter { name -> openDetail(name) }
     private var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +33,9 @@ class ListActivity : AppCompatActivity() {
 
         twoPane = findViewById<View>(R.id.container_detail) != null
 
-        val adapter = PkmnAdapter { name -> openDetail(name) }
-
-        configRecyclerView(adapter)
+        configRecyclerView()
         configSearchView()
+        configRefreshLayout()
 
         container_list_error.findViewById<View>(R.id.btn_retry).setOnClickListener {
             adapter.refresh()
@@ -49,16 +51,18 @@ class ListActivity : AppCompatActivity() {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 when (loadStates.refresh) {
                     is LoadState.Loading -> {
-                        img_list_loading.visibility = View.VISIBLE
+                        swipe_refresh_list.isRefreshing = true
                         container_list_error.visibility = View.INVISIBLE
                     }
                     is LoadState.Error -> {
-                        img_list_loading.visibility = View.INVISIBLE
+                        viewModel.contentRefreshed()
+                        swipe_refresh_list.isRefreshing = false
                         container_list_error.visibility = View.VISIBLE
                         rv_pkmn.visibility = View.INVISIBLE
                     }
                     is LoadState.NotLoading -> {
-                        img_list_loading.visibility = View.INVISIBLE
+                        viewModel.contentRefreshed()
+                        swipe_refresh_list.isRefreshing = false
                         container_list_error.visibility = View.INVISIBLE
                         rv_pkmn.visibility = View.VISIBLE
                     }
@@ -69,12 +73,31 @@ class ListActivity : AppCompatActivity() {
         onEvents(viewModel) { event ->
             when (event.take()) {
                 is PkmnListEvents.QueryChanged -> adapter.refresh()
+                is PkmnListEvents.RefreshContent -> {
+                    closeDetail()
+                    adapter.refresh()
+                }
             }
 
         }
     }
 
-    private fun configRecyclerView(adapter: PkmnAdapter) {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_list, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_refresh -> {
+                viewModel.refreshContent()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun configRecyclerView() {
 
         rv_pkmn.adapter = adapter.withLoadStateLoaderHeaderFooter(
                 loader = PkmnLoadStateAdapter(adapter::retry),
@@ -87,8 +110,6 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun configSearchView() {
-
-
         search_list.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.applyFilter(query)
@@ -104,14 +125,31 @@ class ListActivity : AppCompatActivity() {
         })
     }
 
+    private fun configRefreshLayout() {
+        swipe_refresh_list.setOnRefreshListener {
+            viewModel.refreshContent()
+        }
+    }
+
     private fun openDetail(name: String) {
         if (twoPane) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.container_detail, DetailFragment.newInstance(name))
+                    .replace(R.id.container_detail, DetailFragment.newInstance(name), DetailFragment.TAG)
                     .commit()
         } else {
             startActivity(DetailActivity.getStartIntent(this, name))
+        }
+    }
+
+    private fun closeDetail() {
+        if (twoPane) {
+            supportFragmentManager.findFragmentByTag(DetailFragment.TAG)?.let {
+                supportFragmentManager
+                        .beginTransaction()
+                        .remove(it)
+                        .commit()
+            }
         }
     }
 

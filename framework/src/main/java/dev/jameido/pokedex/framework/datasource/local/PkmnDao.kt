@@ -1,6 +1,9 @@
 package dev.jameido.pokedex.framework.datasource.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import dev.jameido.pokedex.data.models.RemotePageKey
 import dev.jameido.pokedex.framework.datasource.local.models.*
 
@@ -43,4 +46,46 @@ interface PkmnDao {
     @Query("SELECT * FROM remote_page_key WHERE listName = :listName LIMIT 1")
     suspend fun getRemotePageKey(listName: String): RemotePageKey?
 
+    @Query("DELETE FROM remote_page_key")
+    suspend fun deleteRemotePageKeys()
+
+    @Query("DELETE FROM pokemon_type")
+    suspend fun deletePokemonTypes()
+
+    @Query("DELETE FROM pokemon_stat")
+    suspend fun deletePokemonStats()
+
+    @Query("DELETE FROM type")
+    suspend fun deleteTypes()
+
+    @Query("DELETE FROM stat")
+    suspend fun deleteStats()
+
+    @Query("DELETE FROM species")
+    suspend fun deleteSpeciesElements()
+
+    @Query("DELETE FROM species_data")
+    suspend fun deleteSpeciesData()
+
+    @Query("DELETE FROM species_variety")
+    suspend fun deleteSpeciesVariety()
+
+    @Query("DELETE FROM pokemon")
+    suspend fun deletePokemons()
+
+    @Query("DELETE FROM detail")
+    suspend fun deleteDetailData()
+}
+
+suspend fun PkmnDao.deleteAll(){
+    deleteRemotePageKeys()
+    deletePokemonTypes()
+    deletePokemonStats()
+    deleteTypes()
+    deleteStats()
+    deleteSpeciesElements()
+    deleteSpeciesData()
+    deleteSpeciesVariety()
+    deletePokemons()
+    deleteDetailData()
 }
