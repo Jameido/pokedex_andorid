@@ -7,4 +7,5 @@ import io.uniflow.core.flow.data.UIEvent
  */
 sealed class PkmnListEvents : UIEvent() {
     object QueryChanged : PkmnListEvents()
+    object RefreshContent : PkmnListEvents()
 }
