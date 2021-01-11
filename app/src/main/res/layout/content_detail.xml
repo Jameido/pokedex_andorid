@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,7 +30,7 @@
                     android:layout_marginStart="@dimen/spacing_16"
                     android:layout_marginTop="@dimen/spacing_16"
                     android:src="@drawable/ic_missingno"
-                    app:layout_constraintEnd_toStartOf="@+id/txt_detail_name"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,12 +39,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_16"
-                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_8"
                     android:layout_marginEnd="@dimen/spacing_16"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_detail_sprite"
                     tools:text="@string/nr" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -51,10 +52,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_8"
                     android:layout_marginEnd="@dimen/spacing_16"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_nr"
                     tools:text="Bulbasaur" />
 
@@ -72,7 +74,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toStartOf="@+id/txt_detail_second_type"
-                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_name"
                     tools:visibility="visible" />
 
@@ -107,7 +109,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                     app:layout_constraintEnd_toStartOf="@+id/txt_detail_height"
                     app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_first_type" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -137,7 +139,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/txt_detail_weight"
                     app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/img_detail_sprite"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_height" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -170,7 +172,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/shimmer_detail_data"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <View
             android:id="@+id/sep_detail"

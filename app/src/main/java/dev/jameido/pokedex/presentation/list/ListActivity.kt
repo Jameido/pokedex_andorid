@@ -1,5 +1,7 @@
 package dev.jameido.pokedex.presentation.list
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -18,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class ListActivity : AppCompatActivity() {
 
@@ -150,5 +151,10 @@ class ListActivity : AppCompatActivity() {
                         .commit()
             }
         }
+    }
+
+    companion object {
+        fun getStartIntent(context: Context) =
+                Intent(context, ListActivity::class.java)
     }
 }

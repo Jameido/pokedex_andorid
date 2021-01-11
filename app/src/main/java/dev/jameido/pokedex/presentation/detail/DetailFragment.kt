@@ -107,6 +107,8 @@ class DetailFragment : Fragment() {
 
         displayType(pkmn.types.getOrNull(0), txt_detail_first_type)
         displayType(pkmn.types.getOrNull(1), txt_detail_second_type)
+
+        scroll_detail.smoothScrollTo(0, 0)
     }
 
     private fun displayType(type: String?, txtView: AppCompatTextView) {
