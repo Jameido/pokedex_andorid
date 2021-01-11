@@ -6,26 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".presentation.list.ListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pkmn"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_list"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/sep_list"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/list_item_pkmn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <dev.jameido.pokedex.views.PokeLoader
-        android:id="@+id/img_list_loading"
-        android:layout_width="@dimen/list_item_loading"
-        android:layout_height="@dimen/list_item_loading"
-        android:layout_margin="@dimen/spacing_16"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/rv_pkmn"
-        app:layout_constraintStart_toStartOf="@+id/rv_pkmn"
-        app:layout_constraintTop_toTopOf="@+id/rv_pkmn"
-        tools:visibility="visible" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pkmn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/list_item_pkmn" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
         android:id="@+id/container_list_error"
@@ -34,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_16"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_pkmn"
-        app:layout_constraintEnd_toEndOf="@+id/rv_pkmn"
-        app:layout_constraintStart_toStartOf="@+id/rv_pkmn"
-        app:layout_constraintTop_toTopOf="@+id/rv_pkmn"
+        app:layout_constraintBottom_toBottomOf="@+id/swipe_refresh_list"
+        app:layout_constraintEnd_toEndOf="@+id/swipe_refresh_list"
+        app:layout_constraintStart_toStartOf="@+id/swipe_refresh_list"
+        app:layout_constraintTop_toTopOf="@+id/swipe_refresh_list"
         tools:visibility="visible" />
 
     <View

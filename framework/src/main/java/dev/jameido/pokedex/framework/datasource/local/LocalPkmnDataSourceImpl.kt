@@ -37,6 +37,10 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
         dao.insertSpeciesElement(pokemon.map { mapper.mapToDb(it) })
     }
 
+    override suspend fun wipeData() {
+        dao.deleteAll()
+    }
+
     override suspend fun insertNextRemotePageKey(pageKey: RemotePageKey) {
         dao.insertRemotePageKey(RemotePageKeyMapper().mapToDb(pageKey))
     }

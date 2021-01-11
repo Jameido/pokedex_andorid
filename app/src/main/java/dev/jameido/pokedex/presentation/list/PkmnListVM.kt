@@ -16,9 +16,10 @@ import io.uniflow.androidx.flow.AndroidDataFlow
 class PkmnListVM(getPkmnListPage: GetPkmnListPage) : AndroidDataFlow() {
 
     private var query: String? = null
+    private var refresh: Boolean = false
 
     private val factory: () -> PagingSource<Int, PkmnEntity> = {
-        PkmnListPagingSource(query, getPkmnListPage)
+        PkmnListPagingSource(query, refresh, getPkmnListPage)
     }
 
     val list = Pager(
@@ -29,13 +30,27 @@ class PkmnListVM(getPkmnListPage: GetPkmnListPage) : AndroidDataFlow() {
             .cachedIn(viewModelScope)
 
     /**
-     * Updates the vm query filter and if it was updates fires an event
+     * Updates the query filter and if it was updated fires an event
      */
     fun applyFilter(query: String?) {
         if (query != this.query) {
             this.query = query
             action { sendEvent(PkmnListEvents.QueryChanged) }
         }
+    }
+
+    /**
+     * Updates the refresh flag and fires an event
+     */
+    fun refreshContent() {
+        if (!refresh) {
+            this.refresh = true
+            action { sendEvent(PkmnListEvents.RefreshContent) }
+        }
+    }
+
+    fun contentRefreshed() {
+        this.refresh = false
     }
 }
 
