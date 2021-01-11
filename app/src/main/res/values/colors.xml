@@ -4,8 +4,11 @@
     <color name="colorPrimaryLight">#7993ff</color>
     <color name="colorPrimaryDark">#003c9b</color>
     <color name="colorAccent">#54ff57</color>
-    <color name="colorAccentLight">#54ff57</color>
-    <color name="colorAccentDark">#54ff57</color>
+    <color name="colorAccentLight">#92ff8a</color>
+    <color name="colorAccentDark">#00ca1e</color>
+    <color name="colorGray">#b0bec5</color>
+    <color name="colorGrayLight">#e2f1f8</color>
+    <color name="colorGrayDark">#808e95</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorAccent">#000000</color>
 
