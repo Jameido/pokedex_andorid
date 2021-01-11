@@ -28,12 +28,10 @@ class DetailFragment : Fragment() {
     private val varietyVM: PkmnVarietyVM by viewModel()
     private val speciesVM: PkmnSpeciesVM by viewModel()
 
-    private lateinit var varietyAdapter: VarietyAdapter
+    private val varietyAdapter = VarietyAdapter { name -> varietyVM.load(name) }
+    private val statAdapter = StatAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        varietyAdapter = VarietyAdapter { name -> varietyVM.load(name) }
-
         onStates(speciesVM) { state ->
             when (state) {
                 is PkmnSpeciesStates.Loading -> onSpeciesLoading()
@@ -48,6 +46,7 @@ class DetailFragment : Fragment() {
             }
 
         }
+
         onStates(varietyVM) { state ->
             when (state) {
                 is PkmnVarietyStates.Loading -> onVarietyLoading()
@@ -65,6 +64,8 @@ class DetailFragment : Fragment() {
 
         rv_varieties.adapter = varietyAdapter
         rv_varieties.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.HORIZONTAL))
+
+        rv_stats.adapter = statAdapter
 
         if (savedInstanceState == null) {
             arguments?.getString(KEY_NAME, null)?.let {
@@ -108,6 +109,8 @@ class DetailFragment : Fragment() {
         displayType(pkmn.types.getOrNull(0), txt_detail_first_type)
         displayType(pkmn.types.getOrNull(1), txt_detail_second_type)
 
+        statAdapter.updateItems(pkmn.stats)
+
         scroll_detail.smoothScrollTo(0, 0)
     }
 
@@ -131,6 +134,8 @@ class DetailFragment : Fragment() {
         displayType("", txt_detail_first_type)
         displayType("", txt_detail_second_type)
 
+        statAdapter.updateItems(listOf(null, null, null, null, null, null))
+
         txt_detail_name.setBackgroundResource(R.color.img_loading_shimmer)
         txt_detail_nr.setBackgroundResource(R.color.img_loading_shimmer)
         txt_detail_weight.setBackgroundResource(R.color.img_loading_shimmer)
@@ -139,7 +144,7 @@ class DetailFragment : Fragment() {
 
     private fun onSpeciesLoading() {
         shimmer_varieties.visibility = View.VISIBLE
-        setVarietiesPlaceholder()
+        varietyAdapter.updateItems(listOf(null, null))
         container_varieties_error.visibility = View.INVISIBLE
         shimmer_varieties.showShimmer(true)
     }
@@ -150,10 +155,6 @@ class DetailFragment : Fragment() {
         shimmer_varieties.visibility = View.INVISIBLE
         ErrorViewUtil.showErrorContent(error, container_varieties_error.findViewById(R.id.txt_error), container_varieties_error.findViewById(R.id.img_error))
         container_varieties_error.visibility = View.VISIBLE
-    }
-
-    private fun setVarietiesPlaceholder() {
-        varietyAdapter.updateItems(listOf(null, null))
     }
 
     private fun onSpeciesLoaded(species: PkmnSpeciesEntity) {
