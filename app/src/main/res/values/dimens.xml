@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_item_sprite">80dp</dimen>
+    <dimen name="list_item_sprite_padding">4dp</dimen>
+    <dimen name="list_item_loading">56dp</dimen>
+    <dimen name="detail_sprite">182dp</dimen>
+    <dimen name="detail_sprite_padding">6dp</dimen>
+
+    <dimen name="detail_type_padding">2dp</dimen>
+
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_4">4dp</dimen>
+</resources>

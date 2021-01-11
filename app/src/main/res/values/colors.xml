@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#4066cd</color>
+    <color name="colorPrimaryLight">#7993ff</color>
+    <color name="colorPrimaryDark">#003c9b</color>
+    <color name="colorAccent">#54ff57</color>
+    <color name="colorAccentLight">#54ff57</color>
+    <color name="colorAccentDark">#54ff57</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorAccent">#000000</color>
+
+    <color name="type_bug">#729F3F</color>
+    <color name="type_dark">#707070</color>
+    <color name="type_drag_top">#53A4CF</color>
+    <color name="type_drag_bottom">#F16E57</color>
+    <color name="type_elec">#EDD435</color>
+    <color name="type_fairy">#F8B9E9</color>
+    <color name="type_fight">#D46722</color>
+    <color name="type_fire">#F57D26</color>
+    <color name="type_fly_top">#45C7EF</color>
+    <color name="type_fly_bottom">#BEBAB9</color>
+    <color name="type_ghost">#7B62A3</color>
+    <color name="type_grass">#9ACC4F</color>
+    <color name="type_ground_top">#F7DE40</color>
+    <color name="type_ground_bottom">#AB9843</color>
+    <color name="type_ice">#51C4E7</color>
+    <color name="type_normal">#A4ADB0</color>
+    <color name="type_poison">#B97FC9</color>
+    <color name="type_psy">#F365B9</color>
+    <color name="type_rock">#A38C21</color>
+    <color name="type_steel">#9EB7B8</color>
+    <color name="type_shadow">#081B39</color>
+    <color name="type_unknown">#434343</color>
+    <color name="type_water">#4592C5</color>
+
+    <color name="type_text_light">#ffffff</color>
+    <color name="type_text_dark">#000000</color>
+
+    <color name="img_loading_shimmer">#434343</color>
 </resources>
