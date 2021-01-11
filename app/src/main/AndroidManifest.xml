@@ -15,11 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".presentation.splash.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,8 +23,7 @@
         </activity>
         <activity
             android:name=".presentation.list.ListActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".presentation.detail.DetailActivity"
             android:parentActivityName=".presentation.list.ListActivity"
