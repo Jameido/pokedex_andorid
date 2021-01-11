@@ -1,5 +1,7 @@
 package dev.jameido.pokedex.presentation.list
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -111,5 +113,10 @@ class ListActivity : AppCompatActivity() {
         } else {
             startActivity(DetailActivity.getStartIntent(this, name))
         }
+    }
+
+    companion object {
+        fun getStartIntent(context: Context) =
+                Intent(context, ListActivity::class.java)
     }
 }
