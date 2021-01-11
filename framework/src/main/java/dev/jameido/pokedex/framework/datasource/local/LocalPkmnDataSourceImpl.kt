@@ -38,6 +38,7 @@ class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
     }
 
     override suspend fun wipeData() {
+        dao.deleteAll()
     }
 
     override suspend fun insertNextRemotePageKey(pageKey: RemotePageKey) {
