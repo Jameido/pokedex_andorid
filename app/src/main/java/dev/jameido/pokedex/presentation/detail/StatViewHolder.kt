@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.StatEntity
 import java.util.*
+import kotlin.math.min
 
 /**
  * Created by Jameido on 11/01/2021.
