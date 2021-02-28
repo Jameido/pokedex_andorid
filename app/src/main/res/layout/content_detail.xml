@@ -29,7 +29,7 @@
                     android:layout_height="@dimen/detail_sprite"
                     android:layout_marginStart="@dimen/spacing_16"
                     android:layout_marginTop="@dimen/spacing_16"
-                    android:src="@drawable/ic_missingno"
+                    tools:src="@drawable/ic_missingno"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

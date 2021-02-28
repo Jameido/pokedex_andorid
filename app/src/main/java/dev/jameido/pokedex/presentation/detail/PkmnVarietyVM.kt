@@ -2,34 +2,26 @@ package dev.jameido.pokedex.presentation.detail
 
 import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
 import io.uniflow.androidx.flow.AndroidDataFlow
+import io.uniflow.core.flow.data.UIState
 
 /**
  * Created by Jameido on 03/01/2021.
  */
 class PkmnVarietyVM(private val getDetail: GetPkmnDetail) : AndroidDataFlow() {
 
-    private var lastDetailName = ""
-
     init {
-        action { setState(PkmnVarietyStates.Loading) }
+        action { setState(UIState.Empty) }
     }
 
-    fun reload() {
-        load(lastDetailName)
-    }
-
-    fun load(name: String) {
-        if(name != lastDetailName) {
-            action(
-                    onAction = {
-                        setState(PkmnVarietyStates.Loading)
-                        setState(PkmnVarietyStates.Loaded(getDetail.load(name)))
-                        lastDetailName = name
-                    },
-                    onError = { error, _ ->
-                        setState(PkmnVarietyStates.Error(error, name))
-                    }
-            )
-        }
-    }
+    fun load(name: String) = action(
+            onAction = {
+                if (getCurrentState() !is PkmnVarietyStates.Loading && (getCurrentState() as? PkmnVarietyStates.Loaded)?.name != name) {
+                    setState(PkmnVarietyStates.Loading)
+                    setState(PkmnVarietyStates.Loaded(getDetail.load(name), name))
+                }
+            },
+            onError = { error, _ ->
+                setState(PkmnVarietyStates.Error(error, name))
+            }
+    )
 }

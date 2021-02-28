@@ -2,39 +2,30 @@ package dev.jameido.pokedex.presentation.detail
 
 import dev.jameido.pokedex.domain.usecase.GetPkmnSpecies
 import io.uniflow.androidx.flow.AndroidDataFlow
+import io.uniflow.core.flow.data.UIState
 
 /**
  * Created by Jameido on 03/01/2021.
  */
 class PkmnSpeciesVM(private val getSpecies: GetPkmnSpecies) : AndroidDataFlow() {
 
-    private var lastSpeciesName = ""
-
     init {
-        action { setState(PkmnVarietyStates.Loading) }
+        action { setState(UIState.Empty) }
     }
 
-    fun reload() {
-        load(lastSpeciesName)
-    }
-
-    fun load(name: String) {
-        if (name != lastSpeciesName) {
-            action(
-                    onAction = {
-                        setState(PkmnSpeciesStates.Loading)
-                        val species = getSpecies.load(name)
-                        species.varieties.find { it.isDefault ?: false }?.pokemon?.name?.let {
-                            sendEvent(PkmnSpeciesEvents.SpeciesLoaded(it))
-                        }
-                        setState(PkmnSpeciesStates.Loaded(species))
-                        lastSpeciesName = name
-                    },
-                    onError = { error, _ ->
-                        setState(PkmnSpeciesStates.Error(error, name))
+    fun load(name: String) = action(
+            onAction = {
+                if (getCurrentState() !is PkmnSpeciesStates.Loading && (getCurrentState() as? PkmnSpeciesStates.Loaded)?.name != name) {
+                    setState(PkmnSpeciesStates.Loading)
+                    val species = getSpecies.load(name)
+                    species.varieties.find { it.isDefault ?: false }?.pokemon?.name?.let {
+                        sendEvent(PkmnSpeciesEvents.SpeciesLoaded(it))
                     }
-            )
-        }
-    }
-
+                    setState(PkmnSpeciesStates.Loaded(species, name))
+                }
+            },
+            onError = { error, _ ->
+                setState(PkmnSpeciesStates.Error(error, name))
+            }
+    )
 }

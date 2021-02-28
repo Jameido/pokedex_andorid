@@ -8,6 +8,6 @@ import io.uniflow.core.flow.data.UIState
  */
 open class PkmnVarietyStates : UIState() {
     object Loading : PkmnVarietyStates()
-    data class Loaded(val detail: PkmnDetailEntity) : PkmnVarietyStates()
+    data class Loaded(val detail: PkmnDetailEntity, val name: String) : PkmnVarietyStates()
     data class Error(val error: Throwable, val name: String) : PkmnVarietyStates()
 }
