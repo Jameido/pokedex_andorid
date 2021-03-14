@@ -2,6 +2,7 @@ package dev.jameido.pokedex.framework.repository
 
 import dagger.Binds
 import dagger.Module
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -16,6 +17,6 @@ import javax.inject.Singleton
 @InstallIn(ViewModelComponent::class)
 internal abstract class RepositoryModule {
     @Binds
-    @ViewModelScoped
+    @Reusable
     abstract fun providePkmnRepository(pkmnRepositoryImpl: PkmnRepositoryImpl) : PkmnRepository
 }

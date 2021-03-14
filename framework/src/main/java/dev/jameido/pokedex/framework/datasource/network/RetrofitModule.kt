@@ -4,6 +4,7 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -42,7 +43,7 @@ class RetrofitModule {
     }
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideCertificatePinner(@ApplicationContext appContext: Context, certKeyReader: CertKeyReader): CertificatePinner {
         val pinnerBuilder = CertificatePinner.Builder()
         try {
@@ -54,13 +55,13 @@ class RetrofitModule {
     }
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideCertKeyReader(): CertKeyReader {
         return CertKeyReader()
     }
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
                 .build()
