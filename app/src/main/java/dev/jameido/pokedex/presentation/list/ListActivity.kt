@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.presentation.detail.DetailActivity
 import dev.jameido.pokedex.presentation.detail.DetailFragment
@@ -19,11 +21,12 @@ import io.uniflow.androidx.flow.onEvents
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ListActivity : AppCompatActivity() {
 
-    private val viewModel: PkmnListVM by viewModel()
+    private val viewModel: PkmnListVM by viewModels()
     private val adapter = PkmnAdapter { name -> openDetail(name) }
     private var twoPane: Boolean = false
 

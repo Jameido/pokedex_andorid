@@ -6,11 +6,13 @@ import dev.jameido.pokedex.data.mappers.*
 import dev.jameido.pokedex.data.models.RemotePageKey
 import dev.jameido.pokedex.data.repository.PkmnRepository
 import dev.jameido.pokedex.domain.entity.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Jameido on 17/12/2020.
  */
-class PkmnRepositoryImpl(
+internal class PkmnRepositoryImpl @Inject constructor(
         private val networkDataSource: NetworkPkmnDataSource,
         private val localPkmnDataSource: LocalPkmnDataSource
 ) : PkmnRepository {

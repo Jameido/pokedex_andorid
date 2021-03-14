@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import dev.jameido.pokedex.R
 import kotlinx.android.synthetic.main.activity_detail.*
 
 /**
  * Created by Jameido on 04/01/2021.
  */
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,15 +5,18 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.jameido.pokedex.domain.entity.PkmnEntity
 import dev.jameido.pokedex.domain.usecase.GetPkmnListPage
 import dev.jameido.pokedex.framework.pagingsource.PkmnListPagingSource
 import io.uniflow.androidx.flow.AndroidDataFlow
+import javax.inject.Inject
 
 /**
  * Created by Jameido on 21/12/2020.
  */
-class PkmnListVM(getPkmnListPage: GetPkmnListPage) : AndroidDataFlow() {
+@HiltViewModel
+class PkmnListVM @Inject constructor(getPkmnListPage: GetPkmnListPage) : AndroidDataFlow() {
 
     private var query: String? = null
     private var refresh: Boolean = false

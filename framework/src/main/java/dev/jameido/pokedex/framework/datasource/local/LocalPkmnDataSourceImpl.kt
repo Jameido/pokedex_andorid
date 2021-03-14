@@ -8,11 +8,13 @@ import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesElementMapp
 import dev.jameido.pokedex.framework.datasource.local.mappers.SpeciesMapper
 import dev.jameido.pokedex.framework.datasource.local.models.DbStat
 import dev.jameido.pokedex.framework.datasource.local.models.DbType
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Jameido on 05/01/2021.
  */
-class LocalPkmnDataSourceImpl(val dao: PkmnDao) : LocalPkmnDataSource {
+internal class LocalPkmnDataSourceImpl @Inject constructor(private val dao: PkmnDao) : LocalPkmnDataSource {
     override suspend fun insertDetail(detail: PkmnDetailModel) {
         val mapped = DetailMapper().mapToDb(detail)
         dao.insertDetail(

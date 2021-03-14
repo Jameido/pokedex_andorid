@@ -8,12 +8,14 @@ import dev.jameido.pokedex.framework.datasource.network.mappers.PkmnDetailMapper
 import dev.jameido.pokedex.framework.datasource.network.mappers.PkmnMapper
 import dev.jameido.pokedex.framework.datasource.network.mappers.PkmnSpeciesMapper
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.jvm.Throws
 
 /**
  * Created by Jameido on 04/01/2021.
  */
-class NetworkPkmnDataSourceImpl(val api: PkmnApi) : NetworkPkmnDataSource {
+internal class NetworkPkmnDataSourceImpl @Inject constructor(val api: PkmnApi) : NetworkPkmnDataSource {
     override suspend fun list(query: String?, pageSize: Int, page: Int): PkmnListModel {
         val offset = page * pageSize
         val response = wrapExecution { api.list(pageSize, offset) }

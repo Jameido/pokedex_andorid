@@ -1,13 +1,16 @@
 package dev.jameido.pokedex.presentation.detail
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.jameido.pokedex.domain.usecase.GetPkmnDetail
 import io.uniflow.androidx.flow.AndroidDataFlow
 import io.uniflow.core.flow.data.UIState
+import javax.inject.Inject
 
 /**
  * Created by Jameido on 03/01/2021.
  */
-class PkmnVarietyVM(private val getDetail: GetPkmnDetail) : AndroidDataFlow() {
+@HiltViewModel
+class PkmnVarietyVM @Inject constructor(val getDetail: GetPkmnDetail) : AndroidDataFlow() {
 
     init {
         action { setState(UIState.Empty) }

@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import dev.jameido.pokedex.R
 import dev.jameido.pokedex.domain.entity.PkmnDetailEntity
 import dev.jameido.pokedex.domain.entity.PkmnSpeciesEntity
@@ -17,16 +20,17 @@ import dev.jameido.pokedex.views.ErrorViewUtil
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import kotlinx.android.synthetic.main.content_detail.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by Jameido on 03/01/2021.
  */
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private val varietyVM: PkmnVarietyVM by viewModel()
-    private val speciesVM: PkmnSpeciesVM by viewModel()
+    private val varietyVM: PkmnVarietyVM by viewModels()
+    private val speciesVM: PkmnSpeciesVM by viewModels()
 
     private val varietyAdapter = VarietyAdapter { name -> varietyVM.load(name) }
     private val statAdapter = StatAdapter()
